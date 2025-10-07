@@ -1,52 +1,55 @@
 <%= content_for :title, "E-Mail Übersicht" %>
-<div class="w-full max-w-5xl space-y-6">
-  <section class="card bg-base-100 shadow">
-    <div class="card-body">
-      <h2 class="card-title">Verifizierte Nutzer</h2>
-      <% if @verified_users.any? %>
-        <ul class="space-y-2">
-          <% @verified_users.each do |user| %>
-            <li class="flex items-center justify-between">
-              <span><%= user.email %></span>
-              <span class="badge badge-success">verifiziert</span>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p class="opacity-70">Keine verifizierten Nutzer gefunden.</p>
-      <% end %>
-    </div>
-  </section>
 
-  <section class="card bg-base-100 shadow">
-    <div class="card-body">
-      <h2 class="card-title">Ausstehende Zahlungsprüfungen</h2>
-      <% if @pending_payments.any? %>
-        <div class="overflow-x-auto">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Kunde</th>
-                <th>Plan</th>
-                <th>Status</th>
-                <th>Erstellt</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @pending_payments.each do |payment| %>
+<%= render "shared/under_construction" do %>
+  <div class="w-full max-w-5xl space-y-6">
+    <section class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Verifizierte Nutzer</h2>
+        <% if @verified_users.any? %>
+          <ul class="space-y-2">
+            <% @verified_users.each do |user| %>
+              <li class="flex items-center justify-between">
+                <span><%= user.email %></span>
+                <span class="badge badge-success">verifiziert</span>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="opacity-70">Keine verifizierten Nutzer gefunden.</p>
+        <% end %>
+      </div>
+    </section>
+
+    <section class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Ausstehende Zahlungsprüfungen</h2>
+        <% if @pending_payments.any? %>
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
                 <tr>
-                  <td><%= payment.user&.email %></td>
-                  <td><%= payment.plan %></td>
-                  <td><%= payment.is_verified.presence || "Pending" %></td>
-                  <td><%= l payment.created_at, format: :short %></td>
+                  <th>Kunde</th>
+                  <th>Plan</th>
+                  <th>Status</th>
+                  <th>Erstellt</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      <% else %>
-        <p class="opacity-70">Keine offenen Anfragen.</p>
-      <% end %>
-    </div>
-  </section>
-</div>
+              </thead>
+              <tbody>
+                <% @pending_payments.each do |payment| %>
+                  <tr>
+                    <td><%= payment.user&.email %></td>
+                    <td><%= payment.plan %></td>
+                    <td><%= payment.is_verified.presence || "Pending" %></td>
+                    <td><%= l payment.created_at, format: :short %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p class="opacity-70">Keine offenen Anfragen.</p>
+        <% end %>
+      </div>
+    </section>
+  </div>
+<% end %>

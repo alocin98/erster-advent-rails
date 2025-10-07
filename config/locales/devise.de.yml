@@ -33,7 +33,7 @@ de:
         other: Benutzer
   devise:
     confirmations:
-      confirmed: 
+      confirmed: Dein Konto wurde bestätigt. Du bist jetzt angemeldet.
       new:
         resend_confirmation_instructions: Bestätigungsanleitung erneut senden
       send_instructions: 
