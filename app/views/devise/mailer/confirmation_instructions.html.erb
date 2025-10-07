@@ -1,5 +1,6 @@
-<p>Willkommen <%= @email %>!</p>
+<p>Willkommen zum Ersten Avent Bern
+  <%= @email %>!</p>
 
-<p>Du kannst deine E-Mail-Adresse über den folgenden Link bestätigen:</p>
+<p>Du kannst deine Registrierung über den folgenden Link bestätigen:</p>
 
 <p><%= link_to "Konto bestätigen", user_confirmation_url(confirmation_token: @token) %></p>
