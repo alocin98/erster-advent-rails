@@ -78,7 +78,8 @@ end
     @business ||= current_user.build_business
     @business.business_name ||= current_user.business_name
     @business.phone ||= current_user.phone
-    @business.tags = Array(@business.tags).compact_blank
+    @business.address ||= current_user.address
+    @business.email ||= current_user.email
     @business.categories = Array(@business.categories).compact_blank
   end
 

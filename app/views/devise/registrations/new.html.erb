@@ -78,7 +78,7 @@
 
                 <div class="form-control">
                   <%= f.label :management_name, class: "label" do %>
-                    <span class="label-text font-semibold">Management-Name</span>
+                    <span class="label-text font-semibold">Vor- und Nachname</span>
                   <% end %>
                   <%= f.text_field :management_name,
                                class: "input input-bordered w-full",
@@ -137,28 +137,6 @@
                   <% end %>
                 </div>
 
-                <div class="form-control md:col-span-2">
-                  <%= f.label :category, class: "label" do %>
-                    <span class="label-text font-semibold">Kategorie</span>
-                  <% end %>
-                  <%= f.select :category,
-                           options_for_select(
-                             [
-                               %w[Technologie Technology],
-                               %w[Gesundheitswesen Healthcare],
-                               %w[Finanzen Finance],
-                               %w[Einzelhandel Retail],
-                               %w[Bildung Education],
-                             ],
-                             resource.category,
-                           ),
-                           { prompt: "Kategorie auswählen" },
-                           class: "select select-bordered w-full",
-                           required: true %>
-                  <% if resource.errors[:category].present? %>
-                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:category).first %></span>
-                  <% end %>
-                </div>
               </div>
 
               <div class="flex justify-center">

@@ -58,7 +58,7 @@ button:has(+ #popover-1:popover-open) .icon-up {
               popovertarget="popover-1"
               style="anchor-name:--anchor-1"
             >
-              <%= current_user.business.business_name %>
+              <%= current_user.business&.business_name || current_user.email %>
               <span class="icon-down inline-block w-8 h-8 ml-2">
                 <%= heroicon "arrow-down-circle" %>
               </span>
@@ -74,8 +74,13 @@ button:has(+ #popover-1:popover-open) .icon-up {
               id="popover-1"
               style="position-anchor:--anchor-1"
             >
-              <li><%= link_to "Mein Geschäft", app_mystore_path %></li>
-              <li><%= link_to "Transaktionen", app_transactions_path %></li>
+              <% if !current_user.adminish? %>
+                <li><%= link_to "Mein Geschäft", app_mystore_path %></li>
+                <li><%= link_to "Transaktionen", app_transactions_path %></li>
+              <% else %>
+                <li><%= link_to "Admin Dashboard", admin_root_path %></li>
+              <% end %>
+
               <li><%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %></li>
             </ul>
           <% else %>
