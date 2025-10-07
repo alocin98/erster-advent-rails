@@ -1,0 +1,69 @@
+<section
+  class="min-h-screen bg-gradient-to-br from-primary via-primary to-primary"
+>
+  <div
+    class="
+      flex min-h-screen items-center justify-center px-4 py-10 sm:px-6 lg:px-8
+    "
+  >
+    <div
+      class="
+        relative w-full max-w-xl rounded-3xl bg-base-100 px-8 py-12 shadow-2xl
+      "
+    >
+      <div
+        class="
+          absolute -top-10 left-1/2 flex h-20 w-20 -translate-x-1/2 items-center
+          justify-center rounded-full border-4 border-base-100 bg-secondary
+          text-primary-content shadow-xl
+        "
+      >
+        <%= heroicon "key", options: { class: "h-10 w-10" } %>
+      </div>
+
+      <div class="space-y-3 text-center">
+        <h2 class="text-3xl font-bold text-base-content">
+          Passwort zurücksetzen
+        </h2>
+        <p class="text-base text-base-content/80">
+          Geben Sie Ihre E-Mail-Adresse ein, um Anweisungen zum Zurücksetzen zu erhalten.
+        </p>
+      </div>
+
+      <div class="mt-6">
+        <%= render "devise/shared/error_messages", resource: resource %>
+      </div>
+
+      <%= form_for(
+        resource,
+        as: resource_name,
+        url: password_path(resource_name),
+        html: { method: :post, class: "mt-8" },
+      ) do |f| %>
+        <div class="space-y-6">
+          <div class="form-control">
+            <%= f.label :email, class: "label" do %>
+              <span class="label-text font-semibold">E-Mail-Adresse</span>
+            <% end %>
+            <%= f.email_field :email,
+                          autofocus: true,
+                          autocomplete: "email",
+                          class: "input input-bordered w-full",
+                          placeholder: "Geben Sie Ihre gültige E-Mail ein" %>
+            <% if resource.errors[:email].present? %>
+              <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:email).first %></span>
+            <% end %>
+          </div>
+
+          <div class="pt-2">
+            <%= f.submit "Zurücksetzungslink senden", class: "btn btn-primary w-full" %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</section>

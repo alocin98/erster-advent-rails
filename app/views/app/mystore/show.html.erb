@@ -1,0 +1,40 @@
+<%= content_for :title, "Mein Geschäft" %>
+
+<% if @business&.persisted? %>
+  <%= render "shared/business_profile", business: @business, images: @gallery_images do %>
+    <%= link_to edit_app_mystore_path, class: "btn btn-ghost btn-circle" do %>
+      <span class="sr-only">Geschäft bearbeiten</span>
+      <%= heroicon "pencil-square", options: { class: "h-8 w-8" } %>
+    <% end %>
+  <% end %>
+<% else %>
+  <section class="w-full">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div
+        class="
+          flex flex-col items-center gap-6 rounded-3xl bg-base-100 px-8 py-16 text-center
+          shadow-2xl
+        "
+      >
+        <div
+          class="
+            flex h-20 w-20 items-center justify-center rounded-full border-4 border-base-100
+            bg-primary text-primary-content shadow-lg
+          "
+        >
+          <%= heroicon "building-storefront", options: { class: "h-10 w-10" } %>
+        </div>
+        <div class="space-y-3 max-w-xl">
+          <h2 class="text-3xl font-bold text-base-content">Erstellen Sie Ihr Geschäft</h2>
+          <p class="text-base text-base-content/70">
+            Sie haben noch keine Geschäftsdetails hinterlegt. Ergänzen Sie
+            jetzt alle Informationen und präsentieren Sie Ihr Angebot.
+          </p>
+        </div>
+        <%= link_to "Jetzt Geschäft einrichten",
+        edit_app_mystore_path,
+        class: "btn btn-primary btn-wide" %>
+      </div>
+    </div>
+  </section>
+<% end %>

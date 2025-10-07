@@ -1,0 +1,50 @@
+<%= content_for :title, "Rechnungen" %>
+
+<%= render "shared/under_construction" do %>
+  <div class="w-full max-w-4xl space-y-6">
+    <section class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Aktuelle Bestellungen</h2>
+        <% if @recent_orders.any? %>
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Kunde</th>
+                  <th>Produkt</th>
+                  <th>Menge</th>
+                  <th>Datum</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @recent_orders.each do |order| %>
+                  <tr>
+                    <td><%= order.id %></td>
+                    <td><%= order.customer&.email || "-" %></td>
+                    <td><%= order.product&.title || "-" %></td>
+                    <td><%= order.quantity %></td>
+                    <td><%= l order.created_at, format: :short %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p class="opacity-70">Keine Bestellungen vorhanden.</p>
+        <% end %>
+      </div>
+    </section>
+
+    <section class="card bg-base-100 shadow">
+      <div class="card-body space-y-4">
+        <h2 class="card-title">Export</h2>
+        <p class="opacity-70">
+          Dieser Bereich dient als Platzhalter für den späteren PDF/CSV Export
+          der Rechnungen.
+        </p>
+        <button class="btn" disabled>Export starten</button>
+      </div>
+    </section>
+  </div>
+<% end %>

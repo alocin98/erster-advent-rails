@@ -1,0 +1,7 @@
+<%# This partial renders a single menu item for the admin dashboard.
+  It highlights the item if it corresponds to the current page.
+  Parameters:
+  - link
+  - text %>
+
+  <li><%= link_to text, link, class: "w-full #{"menu-active" if current_page?(link)}" %></li>

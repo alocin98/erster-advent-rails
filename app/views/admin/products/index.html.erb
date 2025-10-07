@@ -1,0 +1,36 @@
+<%= content_for :title, "Produkte" %>
+<div class="w-full max-w-6xl space-y-6">
+  <%= form_with url: admin_products_path, method: :get, class: "join w-full" do %>
+    <%= text_field_tag :q, @q, placeholder: "Produkt oder Store suchen", class: "input input-bordered join-item w-full" %>
+    <%= submit_tag "Suchen", class: "btn btn-primary join-item" %>
+  <% end %>
+
+  <div class="overflow-x-auto bg-base-100 shadow rounded-xl">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Titel</th>
+          <th>Store</th>
+          <th>Preis</th>
+          <th>Bestellungen</th>
+          <th>Erstellt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= product.title %></td>
+            <td><%= product.user&.business&.business_name || "-" %></td>
+            <td><%= number_to_currency(product.price) %></td>
+            <td><%= product.total_orders %></td>
+            <td><%= l product.created_at, format: :short %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flex justify-center">
+    <%== pagy_nav(@pagy) if defined?(@pagy) %>
+  </div>
+</div>

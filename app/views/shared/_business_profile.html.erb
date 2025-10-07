@@ -1,0 +1,87 @@
+<% categories = Array(business.categories).compact_blank %>
+<% gallery_images = Array(images).compact_blank %>
+
+<section class="content-container flex flex-row justify-between items-baseline">
+  <h1 class="text-6xl mt-10 font-bold"><%= business.business_name %></h1>
+  <div class="ml-6 flex items-center gap-4">
+    <%= yield if block_given? %>
+  </div>
+</section>
+<section class="content-container mt-5 mb-16">
+  <% if categories.present? %>
+    <div class="flex flex-wrap gap-1 text-sm text-base-content/60 mb-6">
+      <% categories.each do |tag| %>
+        <span class="badge badge-neutral badge-xl px-3 py-2"><%= tag %></span>
+      <% end %>
+    </div>
+  <% end %>
+</section>
+
+<section class="my-10 overflow-x-scroll">
+  <% if gallery_images.any? %>
+    <div class="flex flex-row overflow-x-scroll justify-center min-w-screen w-max">
+      <% gallery_images.each do |image| %>
+        <div class="rounded-xl overflow-hidden bg-base-200 h-96">
+
+          <%= image_tag image, class: "h-full object-cover", alt: business.business_name %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</section>
+
+<section class="content-container mt-5 mb-10">
+  <% if business.address.present? %>
+    <h3 class="text-6xl font-light">
+      <%= business.address %>
+    </h3>
+  <% end %>
+</section>
+
+<% if business.first_advent_specialities.present? %>
+  <section class="content-container my-5">
+    <h3 class="text-xl mb-2"><b>Besonderes am</b>
+      1. Advent</h3>
+    <p><%= business.first_advent_specialities %></p>
+  </section>
+<% end %>
+<section class="content-container my-5 list-disc">
+  <p><%= business.description %></p>
+</section>
+
+<section class="content-container my-5">
+  <% if business.phone.present? %>
+    <p class="font-bold">
+      Tel:
+      <%= business.phone %></p>
+  <% end %>
+  <% if business.email.present? %>
+    <p class="font-bold">
+      <%= business.email %>
+    </p>
+  <% end %>
+  <% if business.website.present? %>
+    <p class="font-bold">
+      <%= business.website %>
+    </p>
+  <% end %>
+  <% social_links = {
+    instagram: business.instagram,
+    tiktok: business.tiktok,
+    linkedin: business.linkedin,
+    facebook: business.facebook
+  }.compact_blank %>
+  <% if social_links.any? %>
+    <div class="mt-4 flex flex-wrap items-center gap-3">
+      <% social_links.each do |platform, url| %>
+        <%= link_to url,
+                    target: "_blank",
+                    rel: "noopener",
+                    class: "text-base-content hover:text-primary transition" do %>
+          <span class="sr-only"><%= platform.to_s.humanize %></span>
+          <%= render "shared/social_icon", platform: platform %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</section>

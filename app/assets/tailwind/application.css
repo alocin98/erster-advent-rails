@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@source "../../../public/*.html";
+@source "../../../app/helpers/**/*.rb";
+@source "../../../app/javascript/**/*.js";
+@source "../../../app/views/**/*";
+@source "../../../app/views/**/*";
+
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(98% 0 0);
+  --color-base-200: oklch(96% 0.001 286.375);
+  --color-base-300: oklch(92% 0.004 286.32);
+  --color-base-content: oklch(21% 0.006 285.885);
+  --color-primary: #5d3a5d;
+  --color-primary-content: oklch(98% 0.003 247.858);
+  --color-secondary: #d03036;
+  --color-secondary-content: oklch(98% 0.003 247.858);
+  --color-accent: #2b2e34;
+  --color-accent-content: oklch(98% 0.003 247.858);
+  --color-neutral: #000000;
+  --color-neutral-content: oklch(98% 0.003 247.858);
+  --color-info: oklch(60% 0.126 221.723);
+  --color-info-content: oklch(98% 0.019 200.873);
+  --color-success: oklch(62% 0.194 149.214);
+  --color-success-content: oklch(98% 0.018 155.826);
+  --color-warning: oklch(68% 0.162 75.834);
+  --color-warning-content: oklch(98% 0.026 102.212);
+  --color-error: oklch(58% 0.253 17.585);
+  --color-error-content: oklch(97% 0.014 343.198);
+  --radius-selector: 0rem;
+  --radius-field: 1rem;
+  --radius-box: 0rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@layer base {
+  body {
+    font-family: "Plus Jakarta Sans", serif;
+  }
+  .trix-content ul {
+    list-style: disc;
+  }
+  .trix-content ol {
+    list-style: decimal;
+  }
+}
+
+@theme {
+  --spacing-header-height: 32px;
+  --spacing-content-height: calc(100vh - 48px);
+  --spacing-content-width: 1024pxpx;
+}
+
+button:has(+ #popover-1:popover-open) .icon-down {
+  display: none;
+}
+button:has(+ #popover-1:popover-open) .icon-up {
+  display: inline-block;
+}
+
+@utility badge {
+  @apply rounded-full font-light;
+}
+
+@layer components {
+  .full-flex {
+    @apply flex flex-col w-full;
+  }
+  .content-container {
+    @apply max-w-[1024px] w-full mx-auto px-4 lg:px-0;
+  }
+
+  .btn-top-nav {
+    @apply btn btn-ghost bg-base-200 hover:bg-black hover:text-primary-content rounded-4xl border-0 min-w-[200px];
+  }
+
+  .disabled-link {
+    pointer-events: none; /* disables clicks */
+    cursor: default; /* shows default cursor */
+    color: gray; /* optional styling */
+    text-decoration: none; /* optional: remove underline */
+    opacity: 0.6; /* optional: faded look */
+  }
+}

@@ -1,0 +1,37 @@
+<%= content_for :title, "Transaktionsanfragen" %>
+<%= render "shared/under_construction" do %>
+  <div class="w-full max-w-5xl space-y-6">
+    <p class="opacity-70">
+      Hier siehst du alle Zahlungen, die noch auf eine Freigabe warten.
+    </p>
+
+    <div class="overflow-x-auto bg-base-100 shadow rounded-xl">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Kunde</th>
+            <th>Plan</th>
+            <th>Status</th>
+            <th>Erstellt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @payments.each do |payment| %>
+            <tr>
+              <td><%= payment.id %></td>
+              <td><%= payment.user&.email || payment.customer_email %></td>
+              <td><%= payment.plan %></td>
+              <td><span class="badge badge-warning"><%= payment.is_verified.presence || "Pending" %></span></td>
+              <td><%= l payment.created_at, format: :short %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-center">
+      <%== pagy_nav(@pagy) if defined?(@pagy) %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<div class="trix-content">
+  <%= yield -%>
+</div>
+
+<template id="custom-toolbar">
+  <div class="trix-button-row">
+    <span class="trix-button-group trix-button-group--text-tools">
+      <button
+        type="button"
+        class="trix-button trix-button--icon-bold"
+        data-trix-attribute="bold"
+        title="Bold"
+      ></button>
+      <!-- Only include the buttons you want -->
+    </span>
+  </div>
+</template>

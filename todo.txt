@@ -1,0 +1,32 @@
+OK Logo anpassen
+OK Navbar responsive machen
+OK Stores seiten designen
+OK Stores freigeben programmieren -> KI
+OK Schrift einfügen
+OK File upload
+OK Styling stores (edit / show)
+OK Besonderes am
+OK Social media links
+OK Finish / test stores
+OK Login flow komplettieren (Links)
+OK Anzeige Status Geschäft
+OK Srtyling Admin Bereich
+OK Admin dashboard 
+OK Editieren Status Geschäft
+OK Admin Links
+OK Client dashboard links
+OK Homepage desingen
+- check suche mit active text
+- Prod file configuration (file upload)
+- Lösung Admin login
+- Migrationen / seeds überarbeiten
+- Email texts
+- Email versand Seite 
+
+-- Later --
+
+- CMS einbauen
+- Transaktionen (Stripe)
+
+
+

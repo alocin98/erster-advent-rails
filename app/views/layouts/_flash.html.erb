@@ -1,0 +1,26 @@
+<%# Flash message partial
+Parameters:
+- flash: Flash messages to display %>
+
+  <div class="toast toast-top toast-center z-10">
+    <% flash.each do |type, message| %>
+      <div
+        data-controller="flash"
+        class="p-4 mb-4 rounded-lg text-white transition-opacity duration-500"
+        data-flash-timeout-value="5000"
+        style="opacity: 1;"
+        role="alert"
+      >
+        <%# color depends on flash type %>
+        <div
+          class="<%= case type.to_sym
+            when :notice then 'bg-success'
+            when :alert  then 'bg-error'
+              else 'bg-gray-700'
+            end %> p-3 rounded"
+        >
+          <%= message %>
+        </div>
+      </div>
+    <% end %>
+  </div>

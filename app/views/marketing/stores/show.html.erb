@@ -1,0 +1,14 @@
+<section class="h-[300px] bg-primary">
+</section>
+<%= render "shared/business_profile", business: @business, images: @images do %>
+  <%= link_to marketing_stores_path, class: "btn btn-ghost btn-circle" do %>
+    <span class="sr-only">Zurück zur Übersicht</span>
+    <%= heroicon "x-mark", options: { class: "h-8 w-8" } %>
+  <% end %>
+  <% if current_user&.id == @owner&.id %>
+    <%= link_to edit_app_mystore_path, class: "btn btn-ghost btn-circle" do %>
+      <span class="sr-only">Geschäft bearbeiten</span>
+      <%= heroicon "pencil-square", options: { class: "h-8 w-8" } %>
+    <% end %>
+  <% end %>
+<% end %>

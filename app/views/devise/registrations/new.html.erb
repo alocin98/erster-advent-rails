@@ -1,0 +1,177 @@
+<section class="min-h-screen bg-gradient-to-r bg-primary">
+  <div class="hero min-h-screen bg-transparent">
+    <div class="hero-content w-full max-w-4xl flex-col">
+      <div
+        class="
+          card relative w-full overflow-visible bg-base-100 shadow-2xl rounded-3xl
+        "
+      >
+        <div
+          class="
+            absolute -top-10 left-1/2 flex h-20 w-20 -translate-x-1/2 items-center
+            justify-center rounded-full border-4 border-base-100 bg-secondary
+            text-primary-content shadow-xl
+          "
+        >
+          <%= heroicon "user-plus", options: { class: "h-10 w-10" } %>
+        </div>
+
+        <div class="card-body px-6 py-10 lg:px-12">
+          <div class="mt-6 space-y-2 text-center">
+            <h2 class="text-3xl font-bold text-base-content">
+              Registrieren, um ein Konto zu erstellen
+            </h2>
+
+            <p class="text-base text-base-content/80">
+              Haben Sie bereits ein Konto?
+              <%= link_to "Anmelden",
+              new_session_path(resource_name),
+              class: "font-semibold text-secondary hover:underline" %>
+            </p>
+          </div>
+
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "mt-6" }) do |f| %>
+            <div class="space-y-6">
+              <%= render "devise/shared/error_messages", resource: resource %>
+
+              <div class="grid gap-4 md:grid-cols-2">
+                <div class="form-control">
+                  <%= f.label :business_name, class: "label" do %>
+                    <span class="label-text font-semibold">Firmenname</span>
+                  <% end %>
+                  <%= f.text_field :business_name,
+                               class: "input input-bordered w-full",
+                               placeholder: "Geben Sie Ihren Firmennamen ein",
+                               autofocus: true,
+                               required: true %>
+                  <% if resource.errors[:business_name].present? %>
+                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:business_name).first %></span>
+                  <% end %>
+                </div>
+
+                <div class="form-control">
+                  <%= f.label :email, class: "label" do %>
+                    <span class="label-text font-semibold">E-Mail-Adresse</span>
+                  <% end %>
+                  <%= f.email_field :email,
+                                class: "input input-bordered w-full",
+                                placeholder: "Geben Sie Ihre gültige E-Mail ein",
+                                autocomplete: "email",
+                                required: true %>
+                  <% if resource.errors[:email].present? %>
+                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:email).first %></span>
+                  <% end %>
+                </div>
+
+                <div class="form-control">
+                  <%= f.label :address, class: "label" do %>
+                    <span class="label-text font-semibold">Adresse</span>
+                  <% end %>
+                  <%= f.text_field :address,
+                               class: "input input-bordered w-full",
+                               placeholder: "Geben Sie Ihre Postadresse ein",
+                               required: true %>
+                  <% if resource.errors[:address].present? %>
+                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:address).first %></span>
+                  <% end %>
+                </div>
+
+                <div class="form-control">
+                  <%= f.label :management_name, class: "label" do %>
+                    <span class="label-text font-semibold">Management-Name</span>
+                  <% end %>
+                  <%= f.text_field :management_name,
+                               class: "input input-bordered w-full",
+                               placeholder: "Geben Sie den Management-Namen ein",
+                               required: true %>
+                  <% if resource.errors[:management_name].present? %>
+                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:management_name).first %></span>
+                  <% end %>
+                </div>
+
+                <div class="form-control">
+                  <%= f.label :password, class: "label" do %>
+                    <span class="label-text font-semibold">Passwort</span>
+                  <% end %>
+                  <div class="relative" data-controller="password-visibility">
+                    <%= f.password_field :password,
+                                     class: "input input-bordered w-full pr-12",
+                                     placeholder: "Geben Sie Ihr Passwort ein",
+                                     autocomplete: "new-password",
+                                     data: {
+                                       password_visibility_target: "input",
+                                     },
+                                     required: true %>
+                    <button
+                      type="button"
+                      class="
+                        btn btn-ghost btn-xs absolute right-2 top-1/2 -translate-y-1/2
+                      "
+                      data-action="password-visibility#toggle"
+                    >
+                      <%= heroicon "eye", options: { class: "h-5 w-5 password-visibility--show" } %>
+                      <span class="sr-only" data-password-visibility-target="label">Passwort anzeigen</span>
+                    </button>
+
+                  </div>
+                  <% if @minimum_password_length %>
+                    <span class="label-text-alt mt-1 text-base-content/70">Mindestens
+                      <%= @minimum_password_length %>
+                      Zeichen</span>
+                  <% end %>
+                  <% if resource.errors[:password].present? %>
+                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:password).first %></span>
+                  <% end %>
+                </div>
+
+                <div class="form-control">
+                  <%= f.label :phone, class: "label" do %>
+                    <span class="label-text font-semibold">Telefonnummer</span>
+                  <% end %>
+                  <%= f.telephone_field :phone,
+                                    class: "input input-bordered w-full",
+                                    placeholder: "Geben Sie Ihre Telefonnummer ein",
+                                    required: true %>
+                  <% if resource.errors[:phone].present? %>
+                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:phone).first %></span>
+                  <% end %>
+                </div>
+
+                <div class="form-control md:col-span-2">
+                  <%= f.label :category, class: "label" do %>
+                    <span class="label-text font-semibold">Kategorie</span>
+                  <% end %>
+                  <%= f.select :category,
+                           options_for_select(
+                             [
+                               %w[Technologie Technology],
+                               %w[Gesundheitswesen Healthcare],
+                               %w[Finanzen Finance],
+                               %w[Einzelhandel Retail],
+                               %w[Bildung Education],
+                             ],
+                             resource.category,
+                           ),
+                           { prompt: "Kategorie auswählen" },
+                           class: "select select-bordered w-full",
+                           required: true %>
+                  <% if resource.errors[:category].present? %>
+                    <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:category).first %></span>
+                  <% end %>
+                </div>
+              </div>
+
+              <div class="flex justify-center">
+                <%= f.submit "Registrieren", class: "btn btn-primary px-10" %>
+              </div>
+            </div>
+          <% end %>
+          <div class="mt-6">
+            <%= render "devise/shared/links" %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

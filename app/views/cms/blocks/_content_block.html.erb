@@ -1,0 +1,18 @@
+<% if block.image_1 %>
+  <section class="w-full my-8 content-container grid grid-cols-2 gap-4">
+    <div class="col-span-2 md:col-span-1 md:block hidden h-56 md:h-96 w-full">
+      <%= image_tag block.image_1,
+      alt: "Erster Advent Bern",
+      class: "object-cover w-full h-full rounded-xl" %>
+    </div>
+
+    <div class="col-span-2 md:col-span-1 h-56 md:h-96 w-full">
+      <%= raw block.text %>
+    </div>
+  </section>
+<% end %>
+<% if !block.image_1 %>
+  <section class="w-full my-8 content-container">
+    <%= raw block.text %>
+  </section>
+<% end %>

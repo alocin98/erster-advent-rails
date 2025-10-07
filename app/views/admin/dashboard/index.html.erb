@@ -1,0 +1,17 @@
+<%= content_for :title, "Dashboard" %>
+<section class="content-container grid gap-4 md:grid-cols-5">
+  <% @metrics.each do |name, value| %>
+    <article class="stat bg-base-100 shadow">
+      <div class="stat-title"><%= name.to_s.humanize %></div>
+      <div class="stat-value text-primary"><%= number_with_delimiter(value) %></div>
+    </article>
+  <% end %>
+</section>
+
+<section class="content-container my-8">
+
+  <h2 class="text-xl font-bold">Neue Geschäfte</h2>
+  <p class="mb-4">Die letzten 6 neu registrierten Geschäfte, deren Status zu prüfen ist</p>
+
+  <%= render "admin/stores/list", businesses: @recent_businesses %>
+</section>

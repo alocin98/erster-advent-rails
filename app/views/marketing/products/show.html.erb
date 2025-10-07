@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-base-200 py-12 px-6">
+  <div class="max-w-5xl mx-auto space-y-8">
+    <%= link_to "Zurück zur Übersicht", marketing_products_path, class: "btn btn-ghost" %>
+
+    <section class="card bg-base-100 shadow-xl">
+      <div class="card-body grid gap-8 md:grid-cols-2">
+        <div class="space-y-4">
+          <% if @product.main_product_image.present? %>
+            <figure class="aspect-[4/5] rounded-2xl overflow-hidden bg-base-200">
+              <%= image_tag @product.main_product_image, class: "w-full h-full object-cover", alt: @product.title %>
+            </figure>
+          <% end %>
+
+          <% if @product.image_gallery.any? %>
+            <div class="grid grid-cols-3 gap-3">
+              <% @product.image_gallery.first(6).each do |image| %>
+                <div class="aspect-square rounded-lg overflow-hidden bg-base-200">
+                  <%= image_tag image, class: "w-full h-full object-cover", alt: @product.title %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="flex flex-col gap-6">
+          <header class="space-y-2">
+            <span class="text-sm uppercase tracking-wide opacity-60">
+              <%= @seller&.business&.business_name || "Direkt von Erster Advent" %>
+            </span>
+            <h1 class="text-4xl font-bold tracking-tight"><%= @product.title %></h1>
+            <p class="opacity-75"><%= simple_format(@product.description) %></p>
+          </header>
+
+          <div class="flex items-center gap-4">
+            <span class="text-3xl font-semibold"><%= number_to_currency(@product.price) %></span>
+          </div>
+
+          <% if @product.size_options.any? %>
+            <div>
+              <p class="text-sm uppercase tracking-wide opacity-60 mb-2">Verfügbare Größen</p>
+              <div class="flex flex-wrap gap-2">
+                <% @product.size_options.each do |size| %>
+                  <span class="badge badge-outline"><%= size %></span>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <% if @store %>
+            <div class="rounded-2xl border border-base-300 p-4 space-y-2">
+              <p class="text-sm uppercase tracking-wide opacity-60">Verkauft von</p>
+              <h2 class="text-xl font-semibold"><%= @store.business_name %></h2>
+              <p class="text-sm opacity-70"><%= @store.address %></p>
+              <div class="flex gap-3">
+                <%= link_to "Store besuchen", marketing_store_path(@store), class: "btn btn-secondary btn-sm" %>
+                <%= mail_to @seller.email, "Kontakt", class: "btn btn-ghost btn-sm" if @seller&.email.present? %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <% if @related_products.present? %>
+      <section>
+        <header class="mb-4">
+          <h2 class="text-2xl font-semibold">Weitere Produkte</h2>
+        </header>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <% @related_products.each do |product| %>
+            <article class="card bg-base-100 shadow">
+              <% if product.main_product_image.present? %>
+                <figure class="aspect-square overflow-hidden">
+                  <%= image_tag product.main_product_image, class: "w-full h-full object-cover", alt: product.title %>
+                </figure>
+              <% end %>
+              <div class="card-body">
+                <h3 class="card-title text-lg"><%= product.title %></h3>
+                <span class="font-semibold"><%= number_to_currency(product.price) %></span>
+                <div class="card-actions justify-end">
+                  <%= link_to "Ansehen", marketing_product_path(product), class: "btn btn-primary btn-sm" %>
+                </div>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </div>
+</div>

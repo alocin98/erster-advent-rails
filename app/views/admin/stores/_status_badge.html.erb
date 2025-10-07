@@ -1,0 +1,10 @@
+<% case status.to_sym %>
+<% when :confirmed %>
+  <span class="badge badge-success">Bestätigt</span>
+<% when :pending %>
+  <span class="badge badge-warning">Wartend</span>
+<% when :rejected %>
+  <span class="badge badge-error">Abgelehnt</span>
+<% else %>
+  <span class="badge badge-warning">Unbekannt</span>
+<% end %>

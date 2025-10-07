@@ -1,0 +1,26 @@
+<% if resource.errors.any? %>
+  <div
+    id="error_explanation"
+    class="
+      alert alert-error w-full flex flex-col items-center gap-2 rounded-2xl
+    "
+    role="alert"
+    data-turbo-cache="false"
+  >
+    <div class="flex flex-col items-center gap-2">
+      <%= heroicon "exclamation-triangle", options: { class: "h-6 w-6 flex-shrink-0" } %>
+      <h3 class="font-semibold">
+        <%= I18n.t(
+          "errors.messages.not_saved",
+          count: resource.errors.count,
+          resource: resource.class.model_name.human.downcase,
+        ) %>
+      </h3>
+    </div>
+    <ul class="list-disc space-y-1 pl-5 text-sm">
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

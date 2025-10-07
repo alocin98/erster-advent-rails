@@ -1,0 +1,25 @@
+<%# 
+  Required locals:
+  - business: business object %>
+
+  <% if business.confirmed? %>
+    <div role="alert" class="alert alert-success">
+      <%= heroicon "check-circle", options: { class: "h-6 w-6 flex-shrink-0" } %>
+      <span>Ihr Geschäft ist bestätigt und wird auf der Website angezeigt.</span>
+    </div>
+  <% end %>
+  <% if business.pending? %>
+    <div role="alert" class="alert alert-warning">
+      <%= heroicon "exclamation-triangle", options: { class: "h-6 w-6 flex-shrink-0" } %>
+      <span>Ihr Geschäft wird vom Team für den ersten Advent dieses Jahres noch
+        geprüft. Es wird erst nach der Freigabe auf der Website angezeigt.
+      </span>
+    </div>
+  <% end %>
+  <% if business.rejected? %>
+    <div role="alert" class="alert alert-error">
+      <%= heroicon "x-circle", options: { class: "h-6 w-6 flex-shrink-0" } %>
+      <span>Ihr Geschäft wurde für den ersten Advent in diesem Jahr abgelehnt.
+        Nehmen Sie bitte Kontakt mit dem Team auf.</span>
+    </div>
+  <% end %>

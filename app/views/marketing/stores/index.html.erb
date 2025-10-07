@@ -1,0 +1,59 @@
+<section class="h-[300px] bg-primary">
+</section>
+<section class="content-container mt-16 mb-10 text-3xl">
+  <h1 class="font-bold">Wir haben geöffnet</h1>
+  <p>am Ersten Advent</p>
+
+</section>
+<section class="content-container items-start">
+  <%= form_with url: marketing_stores_path, method: :get, local: true, html: { class: "w-full max-w-3xl" } do %>
+    <div class="relative">
+      <%= search_field_tag :q,
+      @search_term,
+      id: "search-bar",
+      class: "block p-4 w-full text-sm rounded-4xl  bg-gray-200 ",
+      placeholder: "Nach Geschäft oder Kategorie suchen" %>
+      <div class="absolute inset-y-0 right-4 flex items-center">
+        <%= heroicon "magnifying-glass", options: { class: "h-5 w-5 text-gray-500" } %>
+      </div>
+    </div>
+  <% end %>
+</section>
+
+<section class="content-container mt-10 mb-32">
+
+  <% if @businesses.any? %>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <% @businesses.each do |business| %>
+        <div class="w-full">
+          <div class="rounded-lg h-64 overflow-hidden">
+            <% if business.main_image.present? %>
+              <%= image_tag business.main_image,
+              alt: business.business_name,
+              class: "object-cover object-center h-full w-full" %>
+            <% else %>
+              <div
+                class="
+                  flex h-full w-full items-center justify-center bg-primary text-gray-400 text-sm
+                "
+              >
+                <%= image_tag "logo.png", alt: "Logo", class: "h-16" %>
+              </div>
+            <% end %>
+          </div>
+          <h2 class="text-xl font-medium title-font text-black mt-5"><%= business.business_name %></h2>
+          <p class="text-base text-black leading-relaxed mt-2"><%= business.description %></p>
+          <%= link_to marketing_store_path(business), class: "text-secondary inline-flex items-center mt-3" do %>
+            Mehr erfahren
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <button class="btn btn-secondary btn-outline rounded-4xl btn-wide mt-10">Mehr Geschäfte laden
+    </button>
+  <% else %>
+    <p class="text-center text-gray-600">Aktuell sind noch keine Geschäfte eingetragen.</p>
+  <% end %>
+
+</section>

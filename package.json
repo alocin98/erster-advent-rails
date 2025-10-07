@@ -1,0 +1,22 @@
+{
+  "name": "umzugsapp.ch",
+  "version": "1.0.0",
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rails/actiontext": "^8.0.300",
+    "daisyui": "^5.1.9",
+    "tailwindcss": "^4.1.13",
+    "trix": "^2.1.15"
+  }
+}

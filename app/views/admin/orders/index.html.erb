@@ -1,0 +1,37 @@
+<%= content_for :title, "Bestellungen" %>
+<%= render "shared/under_construction" do %>
+  <div class="w-full max-w-6xl space-y-6">
+    <div class="overflow-x-auto bg-base-100 shadow rounded-xl">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Produkt</th>
+            <th>Kunde</th>
+            <th>Menge</th>
+            <th>Größe</th>
+            <th>Status</th>
+            <th>Erstellt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr>
+              <td><%= order.id %></td>
+              <td><%= order.product&.title || "-" %></td>
+              <td><%= order.customer&.email || "-" %></td>
+              <td><%= order.quantity %></td>
+              <td><%= order.size %></td>
+              <td><%= order.accept_order %></td>
+              <td><%= l order.created_at, format: :short %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-center">
+      <%== pagy_nav(@pagy) if defined?(@pagy) %>
+    </div>
+  </div>
+<% end %>

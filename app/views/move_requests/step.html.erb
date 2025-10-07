@@ -1,0 +1,181 @@
+<div class="max-w-3xl mx-auto p-4">
+  <ul class="steps w-full mb-6">
+    <li class="step <%= 'step-primary' if @current_step >= 1 %>">Umzug</li>
+    <li class="step <%= 'step-primary' if @current_step >= 2 %>">Personen</li>
+    <li class="step <%= 'step-primary' if @current_step >= 3 %>">Hunde</li>
+    <li class="step <%= 'step-primary' if @current_step >= 4 %>">Krankenversicherung</li>
+    <li class="step <%= 'step-primary' if @current_step >= 5 %>">Haftpflicht &amp; Hausrat</li>
+    <li class="step <%= 'step-primary' if @current_step >= 6 %>">Post</li>
+  </ul>
+
+  <%= form_with url: update_moverequest_step_path(id: @move_request.id, step: @current_step), method: :patch, local: true, class: "space-y-4" do |f| %>
+    <% if flash.now[:alert].present? %>
+      <div class="alert alert-error">
+        <span><%= simple_format(flash.now[:alert]) %></span>
+      </div>
+    <% elsif flash[:notice].present? %>
+      <div class="alert alert-success">
+        <span><%= flash[:notice] %></span>
+      </div>
+    <% end %>
+    <% case @step_key
+       when :umzug %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-2">
+          <h3 class="font-semibold">Alte Adresse</h3>
+          <%= text_field_tag "old_address[street_address]",
+          @move_request.old_address&.street_address,
+          placeholder: "Strasse und Nr.",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "old_address[post_office_box_number]",
+          @move_request.old_address&.post_office_box_number,
+          placeholder: "Postfach",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "old_address[address_locality]",
+          @move_request.old_address&.address_locality,
+          placeholder: "Ort",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "old_address[address_region]",
+          @move_request.old_address&.address_region,
+          placeholder: "Kanton/Region",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "old_address[postal_code]",
+          @move_request.old_address&.postal_code,
+          placeholder: "PLZ",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "old_address[address_country]",
+          @move_request.old_address&.address_country,
+          placeholder: "Land",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "old_address[extended_address]",
+          @move_request.old_address&.extended_address,
+          placeholder: "Adresszusatz",
+          class: "input input-bordered w-full" %>
+        </div>
+        <div class="space-y-2">
+          <h3 class="font-semibold">Neue Adresse</h3>
+          <%= text_field_tag "new_address[street_address]",
+          @move_request.new_address&.street_address,
+          placeholder: "Strasse und Nr.",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "new_address[post_office_box_number]",
+          @move_request.new_address&.post_office_box_number,
+          placeholder: "Postfach",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "new_address[address_locality]",
+          @move_request.new_address&.address_locality,
+          placeholder: "Ort",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "new_address[address_region]",
+          @move_request.new_address&.address_region,
+          placeholder: "Kanton/Region",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "new_address[postal_code]",
+          @move_request.new_address&.postal_code,
+          placeholder: "PLZ",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "new_address[address_country]",
+          @move_request.new_address&.address_country,
+          placeholder: "Land",
+          class: "input input-bordered w-full" %>
+          <%= text_field_tag "new_address[extended_address]",
+          @move_request.new_address&.extended_address,
+          placeholder: "Adresszusatz",
+          class: "input input-bordered w-full" %>
+        </div>
+        <div>
+          <label class="label"><span class="label-text">Stockwerk (neu)</span></label>
+          <%= text_field_tag :new_stockwerk,
+          @move_request.new_stockwerk,
+          class: "input input-bordered w-full" %>
+        </div>
+        <div>
+          <label class="label"><span class="label-text">Umzugsdatum</span></label>
+          <%= date_field_tag :movedate,
+          @move_request.movedate,
+          class: "input input-bordered w-full" %>
+        </div>
+      </div>
+    <% when :personen %>
+      <div class="space-y-2">
+        <p class="text-sm opacity-80">Personen erfassen (Hauptperson, Partner, Kinder)</p>
+        <%= text_field_tag :main_person_name,
+        nil,
+        placeholder: "Hauptperson Name",
+        class: "input input-bordered w-full" %>
+      </div>
+    <% when :hunde %>
+      <div class="space-y-2">
+        <p class="text-sm opacity-80">Hunde erfassen</p>
+        <%= text_field_tag :dog_name,
+        nil,
+        placeholder: "Hundename",
+        class: "input input-bordered w-full" %>
+      </div>
+    <% when :krankenversicherung %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="label"><span class="label-text">Krankenkasse</span></label>
+          <%= text_field_tag :health_insurance_name, nil, class: "input input-bordered w-full" %>
+        </div>
+        <div>
+          <label class="label"><span class="label-text">Versichertennummer</span></label>
+          <%= text_field_tag :health_insurance_number,
+          @move_request.health_insurance_number,
+          class: "input input-bordered w-full" %>
+        </div>
+        <div>
+          <label class="label"><span class="label-text">Police-Nr.</span></label>
+          <%= text_field_tag :health_insurance_policenumber,
+          @move_request.health_insurance_policenumber,
+          class: "input input-bordered w-full" %>
+        </div>
+      </div>
+    <% when :haftpflicht_hausrat %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="label"><span class="label-text">Hausrat Police-Nr.</span></label>
+          <%= text_field_tag :hausrat_policenumber,
+          @move_request.hausrat_policenumber,
+          class: "input input-bordered w-full" %>
+        </div>
+        <div>
+          <label class="label"><span class="label-text">Haftpflicht Police-Nr.</span></label>
+          <%= text_field_tag :haftpflicht_policenumber,
+          @move_request.haftpflicht_policenumber,
+          class: "input input-bordered w-full" %>
+        </div>
+      </div>
+    <% when :post %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="label"><span class="label-text">Nachsendung Dauer (Monate)</span></label>
+          <%= number_field_tag :post_nachsendung_duration,
+          @move_request.post_nachsendung_duration,
+          class: "input input-bordered w-full" %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="flex justify-between mt-6">
+      <% prev_step = [@current_step - 1, 1].max %>
+      <%= link_to "Zurück",
+      moverequest_step_path(id: @move_request.id, step: prev_step),
+      class: "btn" %>
+
+      <div class="space-x-2">
+        <%= submit_tag "Speichern", name: "save", class: "btn" %>
+        <% if @current_step < 6 %>
+          <%= button_tag "Weiter",
+          type: "submit",
+          name: "commit",
+          value: "next",
+          class: "btn btn-primary" %>
+
+        <% else %>
+          <%= submit_tag "Abschliessen", name: "finish", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

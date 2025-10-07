@@ -1,0 +1,1098 @@
+FUNCTION  <SNR>66_HandleTriggerError()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:379
+Called 7 times
+Total time:   0.000171
+ Self time:   0.000058
+
+count  total (s)   self (s)
+    7              0.000011   let a:state.suggestions = []
+    7              0.000006   let a:state.choice = 0
+    7              0.000006   let a:state.error = a:result
+    7              0.000014   if get(b:, '_copilot') is# a:state
+    1   0.000116   0.000003     call s:UpdatePreview()
+    7              0.000002   endif
+
+FUNCTION  <SNR>66_UpdatePreview()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:304
+Called 21 times
+Total time:   0.005114
+ Self time:   0.001904
+
+count  total (s)   self (s)
+   21              0.000011   try
+   21   0.001967   0.000163     let [text, outdent, delete, item] = s:SuggestionTextWithAdjustments()
+   21              0.000066     let text = split(text, "\r\n\\=\\|\n", 1)
+   21              0.000026     if empty(text[-1])
+   13              0.000032       call remove(text, -1)
+   21              0.000006     endif
+   21              0.000110     if empty(text) || !s:has_ghost_text
+   13   0.001015   0.000146       return s:ClearPreview()
+    8              0.000002     endif
+    8              0.000010     if exists('b:_copilot.cycling_callbacks')
+                                  let annot = '(1/…)'
+    8              0.000008     elseif exists('b:_copilot.cycling')
+                                  let annot = '(' . (b:_copilot.choice + 1) . '/' . len(b:_copilot.suggestions) . ')'
+    8              0.000002     else
+    8              0.000005       let annot = ''
+    8              0.000002     endif
+    8   0.000169   0.000040     call s:ClearPreview()
+    8              0.000005     if s:has_nvim_ghost_text
+    8              0.000009       let data = {'id': 1}
+    8              0.000009       let data.virt_text_pos = 'overlay'
+    8              0.000019       let append = strpart(getline('.'), col('.') - 1 + delete)
+    8              0.000034       let data.virt_text = [[text[0] . append . repeat(' ', delete - len(text[0])), s:hlgroup]]
+    8              0.000007       if len(text) > 1
+                                    let data.virt_lines = map(text[1:-1], { _, l -> [[l, s:hlgroup]] })
+                                    if !empty(annot)
+                                      let data.virt_lines[-1] += [[' '], [annot, s:annot_hlgroup]]
+                                    endif
+    8              0.000006       elseif len(annot)
+                                    let data.virt_text += [[' '], [annot, s:annot_hlgroup]]
+    8              0.000002       endif
+    8              0.000006       let data.hl_mode = 'combine'
+    8   0.000134   0.000122       call nvim_buf_set_extmark(0, copilot#NvimNs(), line('.')-1, col('.')-1, data)
+                                elseif s:has_vim_ghost_text
+                                  let new_suffix = text[0]
+                                  let current_suffix = getline('.')[col('.') - 1 :]
+                                  let inset = ''
+                                  while delete > 0 && !empty(new_suffix)
+                                    let last_char = matchstr(new_suffix, '.$')
+                                    let new_suffix = matchstr(new_suffix, '^.\{-\}\ze.$')
+                                    if last_char ==# matchstr(current_suffix, '.$')
+                                      if !empty(inset)
+                                        call prop_add(line('.'), col('.') + len(current_suffix), {'type': s:hlgroup, 'text': inset})
+                                        let inset = ''
+                                      endif
+                                      let current_suffix = matchstr(current_suffix, '^.\{-\}\ze.$')
+                                      let delete -= 1
+                                    else
+                                      let inset = last_char . inset
+                                    endif
+                                  endwhile
+                                  if !empty(new_suffix . inset)
+                                    call prop_add(line('.'), col('.'), {'type': s:hlgroup, 'text': new_suffix . inset})
+                                  endif
+                                  for line in text[1:]
+                                    call prop_add(line('.'), 0, {'type': s:hlgroup, 'text_align': 'below', 'text': line})
+                                  endfor
+                                  if !empty(annot)
+                                    call prop_add(line('.'), col('$'), {'type': s:annot_hlgroup, 'text': ' ' . annot})
+                                  endif
+    8              0.000002     endif
+    8   0.000427   0.000031     call copilot#Notify('textDocument/didShowCompletion', {'item': item})
+                              catch
+                                return copilot#logger#Exception()
+   21              0.000010   endtry
+
+FUNCTION  copilot#util#UTF16ToByteIdx()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/util.vim:27
+Called 22 times
+Total time:   0.000111
+ Self time:   0.000111
+
+count  total (s)   self (s)
+   22              0.000102     return byteidx(a:str, a:utf16_idx, 1)
+
+FUNCTION  <SNR>68_NvimNotify()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:475
+Called 14 times
+Total time:   0.000237
+ Self time:   0.000134
+
+count  total (s)   self (s)
+   14   0.000233   0.000131   call self.AfterInitialized(function('s:NvimDoNotify', [self.client_id, a:method, a:params]))
+
+FUNCTION  copilot#logger#Debug()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/logger.vim:42
+Called 1 time
+Total time:   0.000003
+ Self time:   0.000003
+
+count  total (s)   self (s)
+    1              0.000001   if empty(get(g:, 'copilot_debug'))
+    1              0.000000     return
+                              endif
+                              call copilot#logger#Raw(4, a:000)
+
+FUNCTION  <SNR>66_Start()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:34
+Called 21 times
+Total time:   0.000202
+ Self time:   0.000147
+
+count  total (s)   self (s)
+   21   0.000159   0.000103   if s:Running() || exists('s:client.startup_error')
+   21              0.000025     return
+                              endif
+                              let s:client = copilot#client#New()
+
+FUNCTION  copilot#handlers#window_logMessage()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/handlers.vim:1
+Called 50 times
+Total time:   0.015909
+ Self time:   0.000393
+
+count  total (s)   self (s)
+   50   0.015893   0.000376   call copilot#logger#Raw(get(a:params, 'type', 6), get(a:params, 'message', ''))
+
+FUNCTION  copilot#OnInsertEnter()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:450
+Called 1 time
+Total time:   0.000375
+ Self time:   0.000006
+
+count  total (s)   self (s)
+    1   0.000375   0.000005   return copilot#Schedule()
+
+FUNCTION  <SNR>67_RunDeferred()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/util.vim:12
+Called 54 times
+Total time:   0.003140
+ Self time:   0.000583
+
+count  total (s)   self (s)
+   54              0.000163   if empty(s:deferred)
+   27              0.000018     return
+   27              0.000010   endif
+   27              0.000076   let Fn = remove(s:deferred, 0)
+   27              0.000094   call timer_start(0, function('s:RunDeferred'))
+   27   0.002717   0.000160   call call(Fn, [])
+
+FUNCTION  copilot#logger#Raw()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/logger.vim:17
+Called 50 times
+Total time:   0.015516
+ Self time:   0.015272
+
+count  total (s)   self (s)
+   50              0.000280   let lines = type(a:message) == v:t_list ? copy(a:message) : split(a:message, "\n", 1)
+   50              0.000438   let lines[0] = strftime('[%Y-%m-%d %H:%M:%S] ') . get(s:level_prefixes, a:level, '[UNKNOWN] ') . get(lines, 0, '')
+   50              0.000017   try
+   50   0.001158   0.000913     call map(lines, { k, L -> type(L) == v:t_func ? call(L, []) : L })
+   50              0.000101     call extend(s:logs, lines)
+   50              0.000114     let overflow = len(s:logs) - get(g:, 'copilot_log_history', 10000)
+   50              0.000030     if overflow > 0
+   50              0.000188       call remove(s:logs, 0, overflow - 1)
+   50              0.000014     endif
+   50              0.012600     let bufnr = bufnr('copilot:///log')
+   50              0.000060     if bufnr > 0 && bufloaded(bufnr)
+                                  call setbufvar(bufnr, '&modifiable', 1)
+                                  call setbufline(bufnr, 1, s:logs)
+                                  call setbufvar(bufnr, '&modifiable', 0)
+                                  for winid in win_findbuf(bufnr)
+                                    if has('nvim') && winid != win_getid()
+                                      call nvim_win_set_cursor(winid, [len(s:logs), 0])
+                                    endif
+                                  endfor
+   50              0.000012     endif
+                              catch
+   50              0.000020   endtry
+
+FUNCTION  <SNR>66_HandleTriggerResult()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:371
+Called 6 times
+Total time:   0.001529
+ Self time:   0.000085
+
+count  total (s)   self (s)
+    6              0.000031   let a:state.suggestions = type(a:result) == type([]) ? a:result : get(empty(a:result) ? {} : a:result, 'items', [])
+    6              0.000005   let a:state.choice = 0
+    6              0.000009   if get(b:, '_copilot') is# a:state
+    6   0.001474   0.000031     call s:UpdatePreview()
+    6              0.000002   endif
+
+FUNCTION  <SNR>27_Event()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/plugin/copilot.vim:45
+Called 14 times
+Total time:   0.005374
+ Self time:   0.000251
+
+count  total (s)   self (s)
+   14              0.000018   try
+   14   0.005318   0.000196     call call('copilot#On' . a:type, [])
+                              catch
+                                call copilot#logger#Exception('autocmd.' . a:type)
+   14              0.000005   endtry
+
+FUNCTION  copilot#client#LspHandle()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:483
+Called 62 times
+Total time:   0.018787
+ Self time:   0.000797
+
+count  total (s)   self (s)
+   62              0.000237   if !has_key(s:instances, a:id)
+                                return
+   62              0.000023   endif
+   62   0.018446   0.000456   return s:OnMessage(s:instances[a:id], a:request)
+
+FUNCTION  <SNR>12_Remove_Matches()
+    Defined: /opt/homebrew/Cellar/neovim/0.11.0/share/nvim/runtime/plugin/matchparen.vim:203
+Called 60 times
+Total time:   0.000632
+ Self time:   0.000632
+
+count  total (s)   self (s)
+   60              0.000127   if exists('w:paren_hl_on') && w:paren_hl_on
+    8              0.000014     while !empty(w:matchparen_ids)
+    4              0.000019       silent! call remove(w:matchparen_ids, 0)->matchdelete()
+    8              0.000005     endwhile
+    4              0.000007     let w:paren_hl_on = 0
+   60              0.000016   endif
+
+FUNCTION  <SNR>66_ClearPreview()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:295
+Called 22 times
+Total time:   0.001008
+ Self time:   0.000772
+
+count  total (s)   self (s)
+   22              0.000020   if s:has_nvim_ghost_text
+   22   0.000727   0.000491     call nvim_buf_del_extmark(0, copilot#NvimNs(), 1)
+                              elseif s:has_vim_ghost_text
+                                call prop_remove({'type': s:hlgroup, 'all': v:true})
+                                call prop_remove({'type': s:annot_hlgroup, 'all': v:true})
+   22              0.000008   endif
+
+FUNCTION  copilot#util#UTF16Width()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/util.vim:21
+Called 13 times
+Total time:   0.000134
+ Self time:   0.000134
+
+count  total (s)   self (s)
+   13              0.000130   return strchars(substitute(a:str, "\\%#=2[^\u0001-\uffff]", "  ", 'g'))
+
+FUNCTION  <SNR>66_BufferDisabled()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:121
+Called 13 times
+Total time:   0.000485
+ Self time:   0.000485
+
+count  total (s)   self (s)
+   13              0.000124   if &buftype =~# '^\%(help\|prompt\|quickfix\|terminal\)$'
+                                return 5
+   13              0.000004   endif
+   13              0.000016   if exists('b:copilot_disabled')
+                                return empty(b:copilot_disabled) ? 0 : 3
+   13              0.000003   endif
+   13              0.000012   if exists('b:copilot_enabled')
+                                return empty(b:copilot_enabled) ? 4 : 0
+   13              0.000003   endif
+   13              0.000066   let short = empty(&l:filetype) ? '.' : split(&l:filetype, '\.', 1)[0]
+   13              0.000019   let config = {}
+   13              0.000027   if type(get(g:, 'copilot_filetypes')) == v:t_dict
+                                let config = g:copilot_filetypes
+   13              0.000003   endif
+   13              0.000016   if has_key(config, &l:filetype)
+                                return empty(config[&l:filetype])
+   13              0.000046   elseif has_key(config, short)
+                                return empty(config[short])
+   13              0.000010   elseif has_key(config, '*')
+                                return empty(config['*'])
+   13              0.000004   else
+   13              0.000024     return get(s:filetype_defaults, short, 1) == 0 ? 2 : 0
+                              endif
+
+FUNCTION  copilot#client#Error()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:743
+Called 13 times
+Total time:   0.000062
+ Self time:   0.000062
+
+count  total (s)   self (s)
+   13              0.000014   if has_key(a:request, 'reject')
+   13              0.000014     call add(a:request.reject, a:callback)
+                              elseif has_key(a:request, 'error')
+                                let a:request.waiting[timer_start(0, function('s:Callback', [a:request, 'error', a:callback]))] = 1
+   13              0.000003   endif
+
+FUNCTION  copilot#OnCursorMovedI()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:462
+Called 12 times
+Total time:   0.004394
+ Self time:   0.000121
+
+count  total (s)   self (s)
+   12   0.004387   0.000114   return copilot#Schedule()
+
+FUNCTION  <SNR>68_SetUpRequest()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:129
+Called 13 times
+Total time:   0.000340
+ Self time:   0.000340
+
+count  total (s)   self (s)
+   13              0.000154   let request = { 'client_id': a:instance.id, 'id': a:id, 'method': a:method, 'params': a:params, 'Client': function('s:RequestClient'), 'Wait': function('s:RequestWait'), 'Await': function('s:RequestAwait'), 'Cancel': function('s:RequestCancel'), 'resolve': [], 'reject': [], 'progress': a:progress, 'status': 'running'}
+   13              0.000027   let args = a:000[2:-1]
+   13              0.000010   if len(args)
+                                if !empty(a:1)
+                                  call add(request.resolve, { v -> call(a:1, [v] + args)})
+                                endif
+                                if !empty(a:2)
+                                  call add(request.reject, { v -> call(a:2, [v] + args)})
+                                endif
+                                return request
+   13              0.000003   endif
+   13              0.000010   if a:0 && !empty(a:1)
+                                call add(request.resolve, a:1)
+   13              0.000003   endif
+   13              0.000010   if a:0 > 1 && !empty(a:2)
+                                call add(request.reject, a:2)
+   13              0.000003   endif
+   13              0.000006   return request
+
+FUNCTION  <SNR>12_Highlight_Matching_Pair()
+    Defined: /opt/homebrew/Cellar/neovim/0.11.0/share/nvim/runtime/plugin/matchparen.vim:45
+Called 60 times
+Total time:   0.004893
+ Self time:   0.004261
+
+count  total (s)   self (s)
+   60              0.000330   if !exists("w:matchparen_ids")
+                                let w:matchparen_ids = []
+   60              0.000042   endif
+                              " Remove any previous match.
+   60   0.001057   0.000425   call s:Remove_Matches()
+                            
+                              " Avoid that we remove the popup menu.
+                              " Return when there are no colors (looks like the cursor jumps).
+   60              0.000165   if pumvisible() || (&t_Co < 8 && !has("gui_running"))
+                                return
+   60              0.000014   endif
+                            
+                              " Get the character under the cursor and check if it's in 'matchpairs'.
+   60              0.000117   let c_lnum = line('.')
+   60              0.000074   let c_col = col('.')
+   60              0.000036   let before = 0
+                            
+   60              0.000099   let text = getline(c_lnum)
+   60              0.000203   let c_before = text->strpart(0, c_col - 1)->slice(-1)
+   60              0.000123   let c = text->strpart(c_col - 1)->slice(0, 1)
+   60              0.000630   let plist = split(&matchpairs, '.\zs[:,]')
+   60              0.000117   let i = index(plist, c)
+   60              0.000036   if i < 0
+                                " not found, in Insert mode try character before the cursor
+   57              0.000104     if c_col > 1 && (mode() == 'i' || mode() == 'R')
+   28              0.000048       let before = strlen(c_before)
+   28              0.000019       let c = c_before
+   28              0.000029       let i = index(plist, c)
+   57              0.000017     endif
+   57              0.000025     if i < 0
+                                  " not found, nothing to do
+   57              0.000033       return
+                                endif
+    3              0.000001   endif
+                            
+                              " Figure out the arguments for searchpairpos().
+    3              0.000002   if i % 2 == 0
+    1              0.000001     let s_flags = 'nW'
+    1              0.000002     let c2 = plist[i + 1]
+    2              0.000001   else
+    2              0.000001     let s_flags = 'nbW'
+    2              0.000001     let c2 = c
+    2              0.000002     let c = plist[i - 1]
+    3              0.000001   endif
+    3              0.000002   if c == '['
+                                let c = '\['
+                                let c2 = '\]'
+    3              0.000001   endif
+                            
+                              " Find the match.  When it was just before the cursor move it there for a
+                              " moment.
+    3              0.000001   if before > 0
+                                let save_cursor = getcurpos()
+                                call cursor(c_lnum, c_col - before)
+                                defer setpos('.', save_cursor)
+    3              0.000001   endif
+                            
+    3              0.000009   if !has("syntax") || !exists("g:syntax_on")
+                                let s_skip = "0"
+    3              0.000008   elseif exists("b:ts_highlight") && &syntax != 'on'
+    3              0.000009     let s_skip = "match(v:lua.vim.treesitter.get_captures_at_cursor(), '" .. 'string\|character\|singlequote\|escape\|symbol\|comment' .. "') != -1"
+                              else
+                                " do not attempt to match when the syntax item where the cursor is
+                                " indicates there does not exist a matching parenthesis, e.g. for shells
+                                " case statement: "case $var in foobar)"
+                                "
+                                " add the check behind a filetype check, so it only needs to be
+                                " evaluated for certain filetypes
+                                if ['sh']->index(&filetype) >= 0 && synstack(".", col("."))->indexof({_, id -> synIDattr(id, "name") =~? "shSnglCase"}) >= 0
+                                  return
+                                endif
+                                " Build an expression that detects whether the current cursor position is
+                                " in certain syntax types (string, comment, etc.), for use as
+                                " searchpairpos()'s skip argument.
+                                " We match "escape" for special items, such as lispEscapeSpecial, and
+                                " match "symbol" for lispBarSymbol.
+                                let s_skip = 'synstack(".", col("."))' . '->indexof({_, id -> synIDattr(id, "name") =~? ' . '"string\\|character\\|singlequote\\|escape\\|symbol\\|comment"}) >= 0'
+                                " If executing the expression determines that the cursor is currently in
+                                " one of the syntax types, then we want searchpairpos() to find the pair
+                                " within those syntax types (i.e., not skip).  Otherwise, the cursor is
+                                " outside of the syntax types and s_skip should keep its value so we skip
+                                " any matching pair inside the syntax types.
+                                " Catch if this throws E363: pattern uses more memory than 'maxmempattern'.
+                                try
+                                  execute 'if ' . s_skip . ' | let s_skip = "0" | endif'
+                                catch /^Vim\%((\a\+)\)\=:E363/
+                                  " We won't find anything, so skip searching, should keep Vim responsive.
+                                  return
+                                endtry
+    3              0.000001   endif
+                            
+                              " Limit the search to lines visible in the window.
+    3              0.000005   let stoplinebottom = line('w$')
+    3              0.000004   let stoplinetop = line('w0')
+    3              0.000002   if i % 2 == 0
+    1              0.000001     let stopline = stoplinebottom
+    2              0.000001   else
+    2              0.000002     let stopline = stoplinetop
+    3              0.000001   endif
+                            
+                              " Limit the search time to 300 msec to avoid a hang on very long lines.
+                              " This fails when a timeout is not supported.
+    3              0.000005   if mode() == 'i' || mode() == 'R'
+                                let timeout = exists("b:matchparen_insert_timeout") ? b:matchparen_insert_timeout : g:matchparen_insert_timeout
+    3              0.000001   else
+    3              0.000010     let timeout = exists("b:matchparen_timeout") ? b:matchparen_timeout : g:matchparen_timeout
+    3              0.000001   endif
+    3              0.000001   try
+    3              0.000788     let [m_lnum, m_col] = searchpairpos(c, '', c2, s_flags, s_skip, stopline, timeout)
+                              catch /E118/
+                                " Can't use the timeout, restrict the stopline a bit more to avoid taking
+                                " a long time on closed folds and long lines.
+                                " The "viewable" variables give a range in which we can scroll while
+                                " keeping the cursor at the same position.
+                                " adjustedScrolloff accounts for very large numbers of scrolloff.
+                                let adjustedScrolloff = min([&scrolloff, (line('w$') - line('w0')) / 2])
+                                let bottom_viewable = min([line('$'), c_lnum + &lines - adjustedScrolloff - 2])
+                                let top_viewable = max([1, c_lnum-&lines+adjustedScrolloff + 2])
+                                " one of these stoplines will be adjusted below, but the current values are
+                                " minimal boundaries within the current window
+                                if i % 2 == 0
+                                  if has("byte_offset") && has("syntax_items") && &smc > 0
+                            	let stopbyte = min([line2byte("$"), line2byte(".") + col(".") + &smc * 2])
+                            	let stopline = min([bottom_viewable, byte2line(stopbyte)])
+                                  else
+                            	let stopline = min([bottom_viewable, c_lnum + 100])
+                                  endif
+                                  let stoplinebottom = stopline
+                                else
+                                  if has("byte_offset") && has("syntax_items") && &smc > 0
+                            	let stopbyte = max([1, line2byte(".") + col(".") - &smc * 2])
+                            	let stopline = max([top_viewable, byte2line(stopbyte)])
+                                  else
+                            	let stopline = max([top_viewable, c_lnum - 100])
+                                  endif
+                                  let stoplinetop = stopline
+                                endif
+                                let [m_lnum, m_col] = searchpairpos(c, '', c2, s_flags, s_skip, stopline)
+    3              0.000001   endtry
+                            
+                              " If a match is found setup match highlighting.
+    3              0.000005   if m_lnum > 0 && m_lnum >= stoplinetop && m_lnum <= stoplinebottom
+    3              0.000003     if !g:matchparen_disable_cursor_hl
+    3              0.000019       call add(w:matchparen_ids, matchaddpos('MatchParen', [[c_lnum, c_col - before], [m_lnum, m_col]], 10))
+                                else
+                                  call add(w:matchparen_ids, matchaddpos('MatchParen', [[m_lnum, m_col]], 10))
+    3              0.000001     endif
+    3              0.000003     let w:paren_hl_on = 1
+    3              0.000001   endif
+
+FUNCTION  <SNR>68_RequestCancel()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:292
+Called 13 times
+Total time:   0.000674
+ Self time:   0.000188
+
+count  total (s)   self (s)
+   13   0.000116   0.000074   let instance = self.Client()
+   13              0.000015   if !empty(instance)
+   13   0.000489   0.000045     call instance.Cancel(self)
+                              elseif get(self, 'status', '') ==# 'running'
+                                call s:RejectRequest(self, s:error_canceled)
+   13              0.000003   endif
+   13              0.000006   return self
+
+FUNCTION  copilot#Clear()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:94
+Called 1 time
+Total time:   0.000337
+ Self time:   0.000026
+
+count  total (s)   self (s)
+    1              0.000003   if exists('g:_copilot_timer')
+                                call timer_stop(remove(g:, '_copilot_timer'))
+    1              0.000000   endif
+    1              0.000002   if exists('b:_copilot')
+    1   0.000060   0.000007     call copilot#client#Cancel(get(b:_copilot, 'first', {}))
+    1   0.000007   0.000004     call copilot#client#Cancel(get(b:_copilot, 'cycling', {}))
+    1              0.000000   endif
+    1   0.000260   0.000005   call s:UpdatePreview()
+    1              0.000002   unlet! b:_copilot
+    1              0.000000   return ''
+
+FUNCTION  copilot#Notify()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:85
+Called 8 times
+Total time:   0.000396
+ Self time:   0.000119
+
+count  total (s)   self (s)
+    8   0.000216   0.000052   let client = copilot#Client()
+    8   0.000176   0.000064   return call(client.Notify, [a:method, a:params] + a:000)
+
+FUNCTION  <SNR>66_Trigger()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:400
+Called 13 times
+Total time:   0.006076
+ Self time:   0.000356
+
+count  total (s)   self (s)
+   13              0.000148   let timer = get(g:, '_copilot_timer', -1)
+   13              0.000059   if a:bufnr !=# bufnr('') || a:timer isnot# timer || mode() !=# 'i'
+                                return
+   13              0.000014   endif
+   13              0.000025   unlet! g:_copilot_timer
+   13   0.005788   0.000068   return copilot#Suggest()
+
+FUNCTION  copilot#util#AppendPosition()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/util.vim:56
+Called 13 times
+Total time:   0.000366
+ Self time:   0.000232
+
+count  total (s)   self (s)
+   13              0.000024   let line = getline('.')
+   13              0.000100   let col_byte = col('.') - (mode() =~# '^[iR]' || empty(line))
+   13   0.000204   0.000070   let col_utf16 = copilot#util#UTF16Width(strpart(line, 0, col_byte))
+   13              0.000026   return {'line': line('.') - 1, 'character': col_utf16}
+
+FUNCTION  copilot#Enabled()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:147
+Called 13 times
+Total time:   0.000702
+ Self time:   0.000217
+
+count  total (s)   self (s)
+   13   0.000596   0.000111   return get(g:, 'copilot_enabled', 1) && empty(s:BufferDisabled())
+
+FUNCTION  <SNR>68_NvimDoNotify()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:479
+Called 14 times
+Total time:   0.000661
+ Self time:   0.000661
+
+count  total (s)   self (s)
+   14              0.000653   return eval("v:lua.require'_copilot'.rpc_notify(a:client_id, a:method, a:params)")
+
+FUNCTION  <SNR>68_Cancel()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:285
+Called 13 times
+Total time:   0.000444
+ Self time:   0.000147
+
+count  total (s)   self (s)
+   13              0.000026   if has_key(self.requests, get(a:request, 'id', ''))
+    6   0.000169   0.000043     call self.Notify('$/cancelRequest', {'id': a:request.id})
+    6   0.000213   0.000042     call s:RejectRequest(remove(self.requests, a:request.id), s:error_canceled)
+   13              0.000004   endif
+
+FUNCTION  <SNR>68_NvimRequest()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:443
+Called 13 times
+Total time:   0.002852
+ Self time:   0.000343
+
+count  total (s)   self (s)
+   13              0.000044   let params = deepcopy(a:params)
+   13   0.002171   0.000078   let [bufnr, progress] = s:PreprocessParams(self, params)
+   13   0.000446   0.000106   let request = call('s:SetUpRequest', [self, v:null, a:method, params, progress] + a:000)
+   13   0.000172   0.000097   call self.AfterInitialized(function('s:NvimDoRequest', [self, request, bufnr]))
+   13              0.000006   return request
+
+FUNCTION  copilot#NvimNs()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:90
+Called 30 times
+Total time:   0.000248
+ Self time:   0.000248
+
+count  total (s)   self (s)
+   30              0.000237   return nvim_create_namespace('github-copilot')
+
+FUNCTION  copilot#client#Result()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:735
+Called 13 times
+Total time:   0.000076
+ Self time:   0.000076
+
+count  total (s)   self (s)
+   13              0.000015   if has_key(a:request, 'resolve')
+   13              0.000016     call add(a:request.resolve, a:callback)
+                              elseif has_key(a:request, 'result')
+                                let a:request.waiting[timer_start(0, function('s:Callback', [a:request, 'result', a:callback]))] = 1
+   13              0.000003   endif
+
+FUNCTION  copilot#OnInsertLeavePre()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:445
+Called 1 time
+Total time:   0.000353
+ Self time:   0.000008
+
+count  total (s)   self (s)
+    1   0.000341   0.000004   call copilot#Clear()
+    1   0.000012   0.000003   call s:ClearPreview()
+
+FUNCTION  copilot#Schedule()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:409
+Called 13 times
+Total time:   0.004643
+ Self time:   0.000576
+
+count  total (s)   self (s)
+   13   0.000857   0.000094   if !s:has_ghost_text || !s:Running() || !copilot#Enabled()
+                                call copilot#Clear()
+                                return
+   13              0.000003   endif
+   13   0.003489   0.000185   call s:UpdatePreview()
+   13              0.000027   let delay = get(g:, 'copilot_idle_delay', 45)
+   13              0.000040   call timer_stop(get(g:, '_copilot_timer', -1))
+   13              0.000091   let g:_copilot_timer = timer_start(delay, function('s:Trigger', [bufnr('')]))
+
+FUNCTION  <SNR>68_RequestClient()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:118
+Called 13 times
+Total time:   0.000043
+ Self time:   0.000043
+
+count  total (s)   self (s)
+   13              0.000034   return get(s:instances, self.client_id, v:null)
+
+FUNCTION  <SNR>66_SuggestionTextWithAdjustments()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:193
+Called 21 times
+Total time:   0.001804
+ Self time:   0.001538
+
+count  total (s)   self (s)
+   21              0.000031   let empty = ['', 0, 0, {}]
+   21              0.000006   try
+   21   0.000561   0.000406     if mode() !~# '^[iR]' || (s:HideDuringCompletion() && pumvisible()) || !exists('b:_copilot.suggestions')
+    9              0.000007       return empty
+   12              0.000005     endif
+   12              0.000027     let choice = get(b:_copilot.suggestions, b:_copilot.choice, {})
+   12              0.000048     if !has_key(choice, 'range') || choice.range.start.line != line('.') - 1 || type(choice.insertText) !=# v:t_string
+    1              0.000001       return empty
+   11              0.000003     endif
+   11              0.000017     let line = getline('.')
+   11              0.000015     let offset = col('.') - 1
+   11   0.000115   0.000084     let byte_offset = copilot#util#UTF16ToByteIdx(line, choice.range.start.character)
+   11              0.000143     let choice_text = strpart(line, 0, byte_offset) . substitute(choice.insertText, "\n*$", '', '')
+   11              0.000020     let typed = strpart(line, 0, offset)
+   11   0.000187   0.000108     let end_offset = copilot#util#UTF16ToByteIdx(line, choice.range.end.character)
+   11              0.000009     if end_offset < 0
+                                  let end_offset = len(line)
+   11              0.000003     endif
+   11              0.000018     let delete = strpart(line, offset, end_offset - offset)
+   11              0.000036     if typed =~# '^\s*$'
+                                  let leading = strpart(matchstr(choice_text, '^\s\+'), 0, len(typed))
+                                  let unindented = strpart(choice_text, len(leading))
+                                  if strpart(typed, 0, len(leading)) ==# leading && unindented !=# delete
+                                    return [unindented, len(typed) - len(leading), strchars(delete), choice]
+                                  endif
+   11              0.000021     elseif typed ==# strpart(choice_text, 0, offset)
+    8              0.000023       return [strpart(choice_text, offset), 0, strchars(delete), choice]
+    3              0.000001     endif
+                              catch
+                                call copilot#logger#Exception()
+   21              0.000024   endtry
+    3              0.000002   return empty
+
+FUNCTION  <SNR>68_Callback()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:728
+Called 13 times
+Total time:   0.001888
+ Self time:   0.000188
+
+count  total (s)   self (s)
+   13              0.000047   call remove(a:request.waiting, a:timer)
+   13              0.000019   if has_key(a:request, a:type)
+   13   0.001811   0.000111     call a:callback(a:request[a:type])
+   13              0.000003   endif
+
+FUNCTION  <SNR>68_NvimAttach()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:431
+Called 13 times
+Total time:   0.000763
+ Self time:   0.000763
+
+count  total (s)   self (s)
+   13              0.000018   if !bufloaded(a:bufnr)
+                                return {'uri': '', 'version': 0}
+   13              0.000003   endif
+   13              0.000327   call luaeval('pcall(vim.lsp.buf_attach_client, _A[1], _A[2])', [a:bufnr, self.id])
+   13              0.000393   return luaeval('{uri = vim.uri_from_bufnr(_A), version = vim.lsp.util.buf_versions[_A]}', a:bufnr)
+
+FUNCTION  copilot#Client()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:48
+Called 21 times
+Total time:   0.000358
+ Self time:   0.000156
+
+count  total (s)   self (s)
+   21   0.000339   0.000137   call s:Start()
+   21              0.000012   return s:client
+
+FUNCTION  copilot#Suggest()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:388
+Called 13 times
+Total time:   0.005719
+ Self time:   0.000284
+
+count  total (s)   self (s)
+   13   0.000137   0.000077   if !s:Running()
+                                return ''
+   13              0.000004   endif
+   13              0.000008   try
+   13   0.005511   0.000136     call copilot#Complete(function('s:HandleTriggerResult'), function('s:HandleTriggerError'))
+                              catch
+                                call copilot#logger#Exception()
+   13              0.000010   endtry
+   13              0.000005   return ''
+
+FUNCTION  <SNR>66_HideDuringCompletion()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:189
+Called 20 times
+Total time:   0.000155
+ Self time:   0.000155
+
+count  total (s)   self (s)
+   20              0.000147   return get(g:, 'copilot_hide_during_completion', 1)
+
+FUNCTION  copilot#client#LspResponse()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:424
+Called 7 times
+Total time:   0.000371
+ Self time:   0.000060
+
+count  total (s)   self (s)
+    7              0.000016   if !has_key(s:instances, a:id)
+                                return
+    7              0.000002   endif
+    7   0.000345   0.000035   call s:OnResponse(s:instances[a:id], a:opts)
+
+FUNCTION  <SNR>68_DispatchMessage()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:302
+Called 62 times
+Total time:   0.017027
+ Self time:   0.001088
+
+count  total (s)   self (s)
+   62              0.000025   try
+   62   0.016344   0.000405     let response = {'result': call(a:handler, [a:params, a:instance])}
+   62              0.000047     if response.result is# 0
+   62              0.000057       let response.result = v:null
+   62              0.000015     endif
+                              catch
+                                call copilot#logger#Exception('lsp.request.' . a:method)
+                                let response = {'error': {'code': -32000, 'message': v:exception}}
+   62              0.000018   endtry
+   62              0.000047   if a:id isnot# v:null
+                                call s:Send(a:instance, extend({'id': a:id}, response))
+   62              0.000014   endif
+   62              0.000079   if !has_key(s:notifications, a:method)
+                                return response
+   62              0.000012   endif
+
+FUNCTION  <SNR>68_UriFromPath()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:175
+Called 13 times
+Total time:   0.000209
+ Self time:   0.000209
+
+count  total (s)   self (s)
+   13              0.000013   let absolute = a:absolute
+   13              0.000039   if has('win32') && absolute =~# '^\a://\@!'
+                                return 'file:///' . strpart(absolute, 0, 2) . s:UrlEncode(strpart(absolute, 2))
+   13              0.000027   elseif absolute =~# '^/'
+                                return 'file://' . s:UrlEncode(absolute)
+   13              0.000068   elseif absolute =~# '^\a[[:alnum:].+-]*:\|^$'
+   13              0.000008     return absolute
+                              else
+                                return ''
+                              endif
+
+FUNCTION  <SNR>68_OnMessage()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:320
+Called 62 times
+Total time:   0.017990
+ Self time:   0.000963
+
+count  total (s)   self (s)
+   62              0.000089   if !has_key(a:body, 'method')
+                                return s:OnResponse(a:instance, a:body)
+   62              0.000015   endif
+   62              0.000071   let request = a:body
+   62              0.000087   let id = get(request, 'id', v:null)
+   62              0.000075   let params = get(request, 'params', v:null)
+   62              0.000095   if has_key(a:instance.methods, request.method)
+   62   0.017415   0.000388     return s:DispatchMessage(a:instance, request.method, a:instance.methods[request.method], id, params)
+                              elseif id isnot# v:null
+                                call s:Send(a:instance, {"id": id, "error": {"code": -32700, "message": "Method not found: " . request.method}})
+                                call copilot#logger#Debug('Unexpected request ' . request.method . ' called with ' . json_encode(params))
+                              elseif request.method !~# '^\$/'
+                                call copilot#logger#Debug('Unexpected notification ' . request.method . ' called with ' . json_encode(params))
+                              endif
+
+FUNCTION  <SNR>68_RegisterWorkspaceFolderForBuffer()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:203
+Called 13 times
+Total time:   0.000415
+ Self time:   0.000206
+
+count  total (s)   self (s)
+   13              0.000029   let root = getbufvar(a:buf, 'workspace_folder')
+   13              0.000015   if type(root) != v:t_string
+                                return
+   13              0.000004   endif
+   13   0.000325   0.000116   let root = s:UriFromPath(substitute(root, '[\/]$', '', ''))
+   13              0.000021   if empty(root) || has_key(a:instance.workspaceFolders, root)
+   13              0.000004     return
+                              endif
+                              let a:instance.workspaceFolders[root] = v:true
+                              call a:instance.Notify('workspace/didChangeWorkspaceFolders', {'event': {'added': [{'uri': root, 'name': fnamemodify(root, ':t')}], 'removed': []}})
+
+FUNCTION  <SNR>68_PreprocessParams()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:216
+Called 13 times
+Total time:   0.002094
+ Self time:   0.000916
+
+count  total (s)   self (s)
+   13              0.000012   let bufnr = v:null
+   26              0.000096   for doc in filter([get(a:params, 'textDocument', {})], 'type(get(v:val, "uri", "")) == v:t_number')
+   13              0.000013     let bufnr = doc.uri
+   13   0.000587   0.000172     call s:RegisterWorkspaceFolderForBuffer(a:instance, bufnr)
+   13   0.000876   0.000113     call extend(doc, a:instance.Attach(bufnr))
+   26              0.000017   endfor
+   13              0.000012   let progress_tokens = []
+   65              0.000069   for key in keys(a:params)
+   52              0.000100     if key =~# 'Token$' && type(a:params[key]) == v:t_func
+                                  let s:progress_token_id += 1
+                                  let a:instance.progress[s:progress_token_id] = a:params[key]
+                                  call add(progress_tokens, s:progress_token_id)
+                                  let a:params[key] = s:progress_token_id
+   52              0.000013     endif
+   65              0.000018   endfor
+   13              0.000012   return [bufnr, progress_tokens]
+
+FUNCTION  <SNR>68_NvimDoRequest()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:451
+Called 13 times
+Total time:   0.001896
+ Self time:   0.001720
+
+count  total (s)   self (s)
+   13              0.000014   let request = a:request
+   13              0.000028   if has_key(a:client, 'client_id') && !has_key(a:client, 'kill')
+   13   0.001689   0.001513     let request.id = eval("v:lua.require'_copilot'.lsp_request(a:client.id, a:request.method, a:request.params, a:bufnr)")
+   13              0.000009   endif
+   13              0.000016   if request.id isnot# v:null
+   13              0.000029     let a:client.requests[request.id] = request
+                              else
+                                if has_key(a:client, 'client_id')
+                                  call copilot#client#LspExit(a:client.client_id, -1, -1)
+                                endif
+                                call copilot#util#Defer(function('s:RejectRequest'), request, s:error_connection_inactive)
+   13              0.000003   endif
+   13              0.000007   return request
+
+FUNCTION  copilot#Complete()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:155
+Called 13 times
+Total time:   0.005375
+ Self time:   0.000901
+
+count  total (s)   self (s)
+   13              0.000023   if exists('g:_copilot_timer')
+                                call timer_stop(remove(g:, '_copilot_timer'))
+   13              0.000003   endif
+   13              0.000061   let target = [bufnr(''), getbufvar('', 'changedtick'), line('.'), col('.')]
+   13              0.000049   if !exists('b:_copilot.target') || b:_copilot.target !=# target
+   13              0.000017     if exists('b:_copilot.first')
+   12   0.000821   0.000067       call copilot#client#Cancel(b:_copilot.first)
+   13              0.000003     endif
+   13              0.000015     if exists('b:_copilot.cycling')
+                                  call copilot#client#Cancel(b:_copilot.cycling)
+   13              0.000003     endif
+   13   0.000533   0.000167     let params = { 'textDocument': {'uri': bufnr('')}, 'position': copilot#util#AppendPosition(), 'formattingOptions': {'insertSpaces': &expandtab ? v:true : v:false, 'tabSize': shiftwidth()}, 'context': {'triggerKind': s:inline_automatic}}
+   13   0.003348   0.000132     let b:_copilot = { 'target': target, 'params': params, 'first': copilot#Request('textDocument/inlineCompletion', params)}
+   13              0.000086     let g:_copilot_last = b:_copilot
+   13              0.000004   endif
+   13              0.000013   let completion = b:_copilot.first
+   13              0.000006   if !a:0
+                                return completion.Await()
+   13              0.000004   else
+   13   0.000143   0.000067     call copilot#client#Result(completion, function(a:1, [b:_copilot]))
+   13              0.000007     if a:0 > 1
+   13   0.000134   0.000072       call copilot#client#Error(completion, function(a:2, [b:_copilot]))
+   13              0.000004     endif
+   13              0.000003   endif
+
+FUNCTION  <SNR>68_RejectRequest()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:49
+Called 7 times
+Total time:   0.000212
+ Self time:   0.000210
+
+count  total (s)   self (s)
+    7              0.000008   if a:request.status !=# 'running'
+                                return
+    7              0.000002   endif
+    7              0.000010   let a:request.waiting = {}
+    7              0.000016   call remove(a:request, 'resolve')
+    7              0.000015   let reject = remove(a:request, 'reject')
+    7              0.000006   let a:request.status = 'error'
+    7              0.000022   let a:request.error = deepcopy(a:error)
+   14              0.000022   for Cb in reject
+    7              0.000041     let a:request.waiting[timer_start(0, function('s:Callback', [a:request, 'error', Cb]))] = 1
+   14              0.000008   endfor
+    7              0.000021   if index([s:error_canceled.code, s:error_connection_inactive.code], a:error.code) != -1
+    6              0.000004     return
+    1              0.000000   endif
+    1              0.000006   let msg = 'Method ' . a:request.method . ' errored with E' . a:error.code . ': ' . json_encode(a:error.message)
+    1              0.000001   if empty(reject)
+                                call copilot#logger#Error(msg)
+    1              0.000000   else
+    1   0.000007   0.000004     call copilot#logger#Debug(msg)
+    1              0.000000   endif
+
+FUNCTION  <SNR>68_OnResponse()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:337
+Called 7 times
+Total time:   0.000310
+ Self time:   0.000269
+
+count  total (s)   self (s)
+    7              0.000008   let response = a:response
+    7              0.000010   let id = get(a:response, 'id', v:null)
+    7              0.000009   if !has_key(a:instance.requests, id)
+                                return
+    7              0.000002   endif
+    7              0.000012   let request = remove(a:instance.requests, id)
+    7              0.000013   for progress_token in request.progress
+                                if has_key(a:instance.progress, progress_token)
+                                  call remove(a:instance.progress, progress_token)
+                                endif
+    7              0.000004   endfor
+    7              0.000008   if request.status !=# 'running'
+                                return
+    7              0.000001   endif
+    7              0.000006   if has_key(response, 'result')
+    6              0.000008     let request.waiting = {}
+    6              0.000008     let resolve = remove(request, 'resolve')
+    6              0.000016     call remove(request, 'reject')
+    6              0.000005     let request.status = 'success'
+    6              0.000006     let request.result = response.result
+   12              0.000013     for Cb in resolve
+    6              0.000044       let request.waiting[timer_start(0, function('s:Callback', [request, 'result', Cb]))] = 1
+   12              0.000018     endfor
+    1              0.000000   else
+    1   0.000056   0.000015     call s:RejectRequest(request, response.error)
+    7              0.000002   endif
+
+FUNCTION  copilot#Request()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:75
+Called 13 times
+Total time:   0.003216
+ Self time:   0.000171
+
+count  total (s)   self (s)
+   13   0.000243   0.000050   let client = copilot#Client()
+   13   0.002965   0.000114   return call(client.Request, [a:method, a:params] + a:000)
+
+FUNCTION  copilot#client#Cancel()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:722
+Called 14 times
+Total time:   0.000810
+ Self time:   0.000136
+
+count  total (s)   self (s)
+   14              0.000050   if type(a:request) == type({}) && has_key(a:request, 'Cancel')
+   13   0.000748   0.000074     call a:request.Cancel()
+   14              0.000004   endif
+
+FUNCTION  <SNR>66_Running()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot.vim:30
+Called 47 times
+Total time:   0.000176
+ Self time:   0.000176
+
+count  total (s)   self (s)
+   47              0.000156   return exists('s:client.job') || exists('s:client.client_id')
+
+FUNCTION  <SNR>68_StatusNotification()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/client.vim:595
+Called 12 times
+Total time:   0.000029
+ Self time:   0.000029
+
+count  total (s)   self (s)
+   12              0.000026   let a:instance.status = a:params
+
+FUNCTION  copilot#util#Defer()
+    Defined: ~/.local/share/nvim/site/pack/packer/start/copilot.vim/autoload/copilot/util.vim:7
+Called 27 times
+Total time:   0.000178
+ Self time:   0.000178
+
+count  total (s)   self (s)
+   27              0.000078   call add(s:deferred, function(a:fn, a:000))
+   27              0.000088   return timer_start(0, function('s:RunDeferred'))
+
+FUNCTIONS SORTED ON TOTAL TIME
+count  total (s)   self (s)  function
+   62   0.018787   0.000797  copilot#client#LspHandle()
+   62   0.017990   0.000963  <SNR>68_OnMessage()
+   62   0.017027   0.001088  <SNR>68_DispatchMessage()
+   50   0.015909   0.000393  copilot#handlers#window_logMessage()
+   50   0.015516   0.015272  copilot#logger#Raw()
+   13   0.006076   0.000356  <SNR>66_Trigger()
+   13   0.005719   0.000284  copilot#Suggest()
+   13   0.005375   0.000901  copilot#Complete()
+   14   0.005374   0.000251  <SNR>27_Event()
+   21   0.005114   0.001904  <SNR>66_UpdatePreview()
+   60   0.004893   0.004261  <SNR>12_Highlight_Matching_Pair()
+   13   0.004643   0.000576  copilot#Schedule()
+   12   0.004394   0.000121  copilot#OnCursorMovedI()
+   13   0.003216   0.000171  copilot#Request()
+   54   0.003140   0.000583  <SNR>67_RunDeferred()
+   13   0.002852   0.000343  <SNR>68_NvimRequest()
+   13   0.002094   0.000916  <SNR>68_PreprocessParams()
+   13   0.001896   0.001720  <SNR>68_NvimDoRequest()
+   13   0.001888   0.000188  <SNR>68_Callback()
+   21   0.001804   0.001538  <SNR>66_SuggestionTextWithAdjustments()
+
+FUNCTIONS SORTED ON SELF TIME
+count  total (s)   self (s)  function
+   50   0.015516   0.015272  copilot#logger#Raw()
+   60   0.004893   0.004261  <SNR>12_Highlight_Matching_Pair()
+   21   0.005114   0.001904  <SNR>66_UpdatePreview()
+   13   0.001896   0.001720  <SNR>68_NvimDoRequest()
+   21   0.001804   0.001538  <SNR>66_SuggestionTextWithAdjustments()
+   62   0.017027   0.001088  <SNR>68_DispatchMessage()
+   62   0.017990   0.000963  <SNR>68_OnMessage()
+   13   0.002094   0.000916  <SNR>68_PreprocessParams()
+   13   0.005375   0.000901  copilot#Complete()
+   62   0.018787   0.000797  copilot#client#LspHandle()
+   22   0.001008   0.000772  <SNR>66_ClearPreview()
+   13              0.000763  <SNR>68_NvimAttach()
+   14              0.000661  <SNR>68_NvimDoNotify()
+   60              0.000632  <SNR>12_Remove_Matches()
+   54   0.003140   0.000583  <SNR>67_RunDeferred()
+   13   0.004643   0.000576  copilot#Schedule()
+   13              0.000485  <SNR>66_BufferDisabled()
+   50   0.015909   0.000393  copilot#handlers#window_logMessage()
+   13   0.006076   0.000356  <SNR>66_Trigger()
+   13   0.002852   0.000343  <SNR>68_NvimRequest()
+

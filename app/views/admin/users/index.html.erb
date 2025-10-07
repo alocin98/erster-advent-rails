@@ -1,0 +1,66 @@
+<%= content_for :title, "Benutzer" %>
+<div class="w-full flex justify-center">
+  <%= form_with url: admin_users_path, method: :get, data: { controller: "search", turbo_frame: "users_table" } do %>
+    <label class="input px-auto">
+      <%= heroicon "magnifying-glass", options: { class: "inline w-6 h-6 mr-2" } %>
+      <input
+        type="search"
+        name="q"
+        value="<%= @q %>"
+        placeholder="Search"
+        data-search-target="input"
+        class="grow min-w-64"
+      />
+    </label>
+  <% end %>
+</div>
+
+<%= turbo_frame_tag "users_table" do %>
+  <div class="overflow-x-auto h-[80vh] w-[70vw]">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Geschäft</th>
+          <th>Aktionen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr class="hover:bg-base-400">
+            <td><%= user.name.presence || "-" %></td>
+            <td><%= user.email %></td>
+            <!-- This will show if business is loaded -->
+            <td><%= user.business&.business_name || user.business_name || "-" %></td>
+            <td class="flex gap-2">
+              <% if user.business.present? %>
+                <%= link_to "Geschäft anzeigen",
+                admin_store_path(user.business),
+                class: "btn btn-sm btn-secondary",
+                data: {
+                  turbo_frame: "_top",
+                } %>
+              <% else %>
+                <button class="btn btn-sm btn-secondary btn-disabled" disabled>Kein Geschäft</button>
+              <% end %>
+
+              <%= link_to "Löschen",
+              admin_user_path(user),
+              class: "btn btn-sm btn-error",
+              data: {
+                turbo_confirm: "Soll der Benutzer wirklich gelöscht werden?",
+                turbo_method: :delete,
+              } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-4 flex justify-center">
+    <%== pagy_nav(@pagy) %>
+  </div>
+
+<% end %>

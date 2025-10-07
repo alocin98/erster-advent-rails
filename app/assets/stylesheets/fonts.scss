@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "Korolev";
+  src: url('<%= asset_path("Korolev-Regular.woff2") %>') format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Frank Ruhl Libre";
+  src: url('<%= asset_path("FrankRuhlLibre-Light.woff2") %>') format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url('<%= asset_path("PlusJakartaSans.ttf") %>')
+    format("truetype-variations");
+  font-weight: 100 900; /* available weight range */
+  font-stretch: 75% 125%; /* optional width axis */
+  font-style: normal; /* or normal italic  */
+}

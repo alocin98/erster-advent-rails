@@ -1,0 +1,30 @@
+<%# 
+    Business list partial.
+    Parameters:
+    - businesses: Collection of business records to display. %>
+  <div class="overflow-x-auto bg-base-100 shadow rounded-xl">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Inhaber</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% businesses.each do |business| %>
+          <tr>
+            <td><%= business.business_name %></td>
+            <td><%= business.user&.email %></td>
+            <td>
+              <%= render "admin/stores/status_badge", status: business.status %>
+            </td>
+            <td class="text-right">
+              <%= link_to "Details", admin_store_path(business), class: "btn btn-sm btn-outline" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>

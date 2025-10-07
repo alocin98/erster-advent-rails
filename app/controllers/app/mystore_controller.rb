@@ -1,0 +1,128 @@
+class App::MystoreController < App::BaseController
+  before_action :set_business, except: :create
+  before_action :initialize_business, only: [ :edit, :create, :update ]
+  before_action :set_categories, only: [ :edit, :update ]
+
+
+  def show
+    return unless @business
+
+    prepare_view_data(@business)
+  end
+
+  def edit
+    prepare_form_data
+  end
+
+  def create
+  purge_removed_images
+  if @business.update(business_params)
+    redirect_to app_mystore_path, notice: "Geschäft erfolgreich erstellt."
+  else
+    prepare_form_data
+    render :edit, status: :unprocessable_entity
+  end
+end
+
+  def update
+    if @business.update(business_params)
+      redirect_to app_mystore_path, notice: "Geschäft wurde aktualisiert."
+    else
+      prepare_form_data
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def edit_main_image
+    @mystore = current_user.mystore
+    # render a form to upload new image here
+  end
+
+  # No the best method, but works for now
+  def purge_image
+    puts "Purge image called"
+    puts params
+    image = params[:image]
+    case params[:image]
+    when "main_image"
+      @business.main_image.purge
+    when "image_gallery1"
+      @business.image_gallery1.purge
+    when "image_gallery2"
+      @business.image_gallery2.purge
+    when "image_gallery3"
+      @business.image_gallery3.purge
+    end
+    render turbo_stream: turbo_stream.replace("preview-#{params[:image]}") {
+      view_context.image_tag(
+      view_context.asset_path("placeholder.png"),
+      id: "preview-#{params[:image]}",
+      class: "h-full object-cover"
+      )
+    }
+ end
+
+  private
+
+
+  def set_categories
+  @categories = BUSINESS_CATEGORIES
+  @selected_categories = @business.categories || []
+  end
+
+  def set_business
+    @business = current_user.business
+  end
+
+  def initialize_business
+    @business ||= current_user.build_business
+    @business.business_name ||= current_user.business_name
+    @business.phone ||= current_user.phone
+    @business.tags = Array(@business.tags).compact_blank
+    @business.categories = Array(@business.categories).compact_blank
+  end
+
+  def business_params
+    return {} unless params[:business]
+
+    permitted = params.require(:business).permit(
+      :business_name,
+      :phone,
+      :address,
+      :email,
+      :website,
+      :instagram,
+      :tiktok,
+      :linkedin,
+      :facebook,
+      :billing_address,
+      :map_link,
+      :description,
+      :first_advent_specialities,
+      :main_image,
+      :image_gallery1,
+      :image_gallery2,
+      :image_gallery3,
+      categories: []
+    )
+
+    permitted[:tags] = Array(permitted[:tags]).compact_blank
+    permitted[:categories] = Array(permitted[:categories]).compact_blank
+    permitted
+  end
+
+  def prepare_view_data(business)
+    @gallery_images = [
+      business.main_image,
+      business.image_gallery1,
+      business.image_gallery2,
+      business.image_gallery3
+    ].compact_blank
+  end
+
+  def prepare_form_data
+    prepare_view_data(@business) if @business&.persisted?
+
+    @selected_categories = Array(@business&.categories).compact_blank
+  end
+end

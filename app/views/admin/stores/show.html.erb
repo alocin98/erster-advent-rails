@@ -1,0 +1,23 @@
+<%= content_for :title, "Store Details" %>
+
+<div
+  class="
+    w-full justify-between items-center flex-row flex border rounded-xl px-2
+  "
+>
+  <%= render "admin/stores/status_badge", status: @business.status %>
+  <%= form_with model: @business, url: admin_store_path(@business), method: :patch, class: "w-full flex flex-row justify-end  items-center m-2", local: true do |f| %>
+    <div class="form-control w-48">
+      <select name="business[status]" class="select select-bordered">
+        <option value="pending" <%= "selected" if @business.pending? %>>Wartend</option>
+        <option value="confirmed" <%= "selected" if @business.confirmed? %>>Bestätigt</option>
+        <option value="rejected" <%= "selected" if @business.rejected? %>>Abgelehnt</option>
+      </select>
+    </div>
+    <div class="form-control">
+      <%= f.submit "Aktualisieren", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>
+<%= render "shared/business_profile", business: @business, images: @images %>

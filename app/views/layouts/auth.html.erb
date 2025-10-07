@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="de">
+  <head>
+    <title><%= content_for(:title) || "Umzugsapp Ch" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+
+    <%= render "layouts/head" %>
+
+    <style>
+    button:has(+ #popover-1:popover-open) .icon-down {
+  display: none;
+}
+button:has(+ #popover-1:popover-open) .icon-up {
+  display: inline-block;
+}
+    </style>
+
+  </head>
+
+  <body class="bg-base-200">
+    <div
+      data-controller="scroll-nav"
+      class="
+        fixed top-0 left-0 w-full z-10 transition-colors duration-200 ease-in-out
+      "
+    >
+    </div>
+
+    <main class="min-h-screen flex flex-col relative">
+
+      <div class="absolute top-6 right-6">
+        <%= link_to root_path(locale: I18n.locale) do %>
+          <%= heroicon "x-mark", options: { class: "h-8  mr-2" } %>
+        <% end %>
+      </div>
+
+      <div class="toast toast-top toast-end">
+        <% flash.each do |k, v| %>
+          <div class="alert alert-info <%= k %>"><%= v %></div>
+        <% end %>
+      </div>
+
+      <%= yield %>
+
+    </main>
+
+  </body>
+</html>

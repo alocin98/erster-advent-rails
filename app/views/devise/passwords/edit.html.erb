@@ -1,0 +1,115 @@
+<section
+  class="min-h-screen bg-gradient-to-br from-primary via-primary to-primary"
+>
+  <div
+    class="
+      flex min-h-screen items-center justify-center px-4 py-10 sm:px-6 lg:px-8
+    "
+  >
+    <div
+      class="
+        relative w-full max-w-xl rounded-3xl bg-base-100 px-8 py-12 shadow-2xl
+      "
+    >
+      <div
+        class="
+          absolute -top-10 left-1/2 flex h-20 w-20 -translate-x-1/2 items-center
+          justify-center rounded-full border-4 border-base-100 bg-secondary
+          text-primary-content shadow-xl
+        "
+      >
+        <%= heroicon "lock-open", options: { class: "h-10 w-10" } %>
+      </div>
+
+      <div class="space-y-3 text-center">
+        <h2 class="text-3xl font-bold text-base-content">
+          Neues Passwort festlegen
+        </h2>
+        <p class="text-base text-base-content/80">
+          Setzen Sie Ihr Passwort zurück, um den Zugriff auf Ihr Konto zu sichern.
+        </p>
+      </div>
+
+      <div class="mt-6">
+        <%= render "devise/shared/error_messages", resource: resource %>
+      </div>
+
+      <%= form_for(
+        resource,
+        as: resource_name,
+        url: password_path(resource_name),
+        html: { method: :put, class: "mt-8" },
+      ) do |f| %>
+        <%= f.hidden_field :reset_password_token %>
+
+        <div class="space-y-6">
+          <div class="form-control">
+            <%= f.label :password, class: "label" do %>
+              <span class="label-text font-semibold">Neues Passwort</span>
+            <% end %>
+            <div class="relative" data-controller="password-visibility">
+              <%= f.password_field :password,
+                               autofocus: true,
+                               autocomplete: "new-password",
+                               class: "input input-bordered w-full pr-12",
+                               placeholder: "Geben Sie Ihr neues Passwort ein",
+                               data: {
+                                 password_visibility_target: "input",
+                               } %>
+              <button
+                type="button"
+                class="btn btn-ghost btn-xs absolute right-2 top-1/2 -translate-y-1/2"
+                data-action="password-visibility#toggle"
+              >
+                <%= heroicon "eye", options: { class: "h-5 w-5 password-visibility--show" } %>
+                <span class="sr-only" data-password-visibility-target="label">Passwort anzeigen</span>
+              </button>
+            </div>
+            <% if @minimum_password_length %>
+              <span class="label-text-alt mt-1 text-base-content/70">
+                Mindestens <%= @minimum_password_length %> Zeichen
+              </span>
+            <% end %>
+            <% if resource.errors[:password].present? %>
+              <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:password).first %></span>
+            <% end %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :password_confirmation, class: "label" do %>
+              <span class="label-text font-semibold">Passwort bestätigen</span>
+            <% end %>
+            <div class="relative" data-controller="password-visibility">
+              <%= f.password_field :password_confirmation,
+                               autocomplete: "new-password",
+                               class: "input input-bordered w-full pr-12",
+                               placeholder: "Bestätigen Sie Ihr neues Passwort",
+                               data: {
+                                 password_visibility_target: "input",
+                               } %>
+              <button
+                type="button"
+                class="btn btn-ghost btn-xs absolute right-2 top-1/2 -translate-y-1/2"
+                data-action="password-visibility#toggle"
+              >
+                <%= heroicon "eye", options: { class: "h-5 w-5 password-visibility--show" } %>
+                <span class="sr-only" data-password-visibility-target="label">Passwort anzeigen</span>
+              </button>
+            </div>
+            <% if resource.errors[:password_confirmation].present? %>
+              <span class="label-text-alt mt-1 text-error"><%= resource.errors.full_messages_for(:password_confirmation).first %></span>
+            <% end %>
+          </div>
+
+          <div class="pt-2">
+            <%= f.submit "Passwort aktualisieren", class: "btn btn-primary w-full" %>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="mt-6">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</section>

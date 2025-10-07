@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="de">
+  <head>
+    <title><%= content_for(:title) || "Umzugsapp Ch" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%= render "layouts/head" %>
+  </head>
+
+  <body class="h-screen ">
+    <%= render "layouts/flash", { flash: flash } %>
+
+    <div class="flex h-full flex-col">
+
+      <div class="drawer relative flex-1 lg:drawer-open">
+        <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
+        <div class="drawer-content h-full overflow-y-scroll">
+          <div class=" mx-auto flex h-full w-full flex-col">
+            <div class="px-4 py-8 sm:px-6 lg:px-8">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+        <div class="drawer-side">
+          <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+          <aside
+            class="
+              h-full w-72 max-w-full border-r border-base-300 bg-primary text-primary-content
+              backdrop-blur-lg
+            "
+          >
+            <div class="flex h-full flex-col gap-4 px-4 py-6">
+              <div class="hidden lg:flex items-center gap-3">
+                <a
+                  href="<%= root_path %>"
+                  class="
+                    flex h-12 w-12 items-center justify-center rounded-full bg-secondary
+                    text-secondary-content
+                  "
+                >
+                  <%= image_tag "logo.png", alt: "Erster Advent Logo", class: "h-8 w-8" %>
+                </a>
+                <div>
+                  <p class="text-sm font-semibold"><%= current_user.business_name.presence || current_user.email %></p>
+                  <p class="text-xs">Dashboard</p>
+                </div>
+              </div>
+              <ul class="menu flex-1 gap-1 w-full ">
+                <%= render "layouts/menu_item", link: admin_root_path, text: "Dashboard" %>
+                <%= render "layouts/menu_item", link: admin_stores_path, text: "Geschäfte" %>
+                <%= render "layouts/menu_item", link: admin_products_path, text: "Produkte" %>
+                <%= render "layouts/menu_item", link: admin_users_path, text: "Benutzer" %>
+                <%= render "layouts/menu_item", link: admin_orders_path, text: "Bestellungen" %>
+                <%= render "layouts/menu_item",
+                link: admin_transaction_requests_path,
+                text: "Anfragen" %>
+                <%= render "layouts/menu_item", link: admin_transactions_path, text: "Trnsaktionen" %>
+                <%= render "layouts/menu_item", link: admin_emails_path, text: "E-Mails" %>
+                <%= render "layouts/menu_item", link: edit_admin_cms_path, text: "Frontpage CMS" %>
+              </ul>
+              <div class="space-y-3">
+                <%= button_to "Logout",
+                destroy_user_session_path,
+                method: :delete,
+                class: "btn btn-outline w-full" %>
+                <% if current_user.adminish? %>
+                  <%= link_to "Admin", admin_users_path, class: "link link-primary" %>
+                <% end %>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

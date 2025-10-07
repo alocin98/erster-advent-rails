@@ -1,0 +1,18 @@
+<%= content_for :title, "Geschäfte" %>
+<section class="content-container mb-8">
+  <div class="w-full max-w-5xl space-y-6">
+    <%= form_with url: admin_stores_path, method: :get, class: "join w-full" do %>
+      <%= text_field_tag :q,
+      @q,
+      placeholder: "Geschäft suchen...",
+      class: "input input-bordered join-item w-full" %>
+      <%= submit_tag "Suchen", class: "btn btn-primary join-item" %>
+    <% end %>
+
+    <%= render "admin/stores/list", businesses: @businesses %>
+
+    <div class="flex justify-center">
+      <%== pagy_nav(@pagy) if defined?(@pagy) %>
+    </div>
+  </div>
+</section>

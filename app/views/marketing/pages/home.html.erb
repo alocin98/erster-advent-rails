@@ -1,0 +1,123 @@
+<section
+  class="
+    h-[600px] bg-cover bg-center bg-fixed w-full flex flex-col justify-end relative
+  "
+  style="background-image: url('<%= image_path('hero_image.png') %>'); background-color: rgba(0,0,0,0.3); background-blend-mode: multiply;"
+>
+  <div class="content-container text-primary-content mb-10">
+    <div class="w-full">
+      <p class="text-md lg:text-xl">Noch
+        <strong>234</strong>
+        Tage bis zum</p>
+      <h1 class="text-6xl md:text-7xl tracking-tight"><strong>Ersten Advent</strong>
+        in der Unteren Altstadt Bern</h1>
+    </div>
+  </div>
+</section>
+<section class="w-full">
+  <div class="content-container">
+    <p class="mt-12 text-xl">
+      Seit mehr als 30 Jahren
+      <strong class="text-secondary">öffnen zahlreiche Geschäfte, Werkstätte, Galerien, Restaurants und
+        Cafés der Unteren Altstadt von Bern von 11 bis 17 Uhr Ihre Türen</strong>
+      und läuten am Ersten Advent gemeinsam mit Ihnen die besinnliche
+      Weihnachtszeit ein.
+    </p>
+    <p class="mt-6 text-xl">
+      Entdecken Sie die Vielfalt der Inhabergeführten Geschäfte und
+      liebevollen Gastronomiebetriebe, freuen Sie sich über Trouvaillen und
+      allerhand Einzigartiges. Wir freuen uns Sie «uf dr Gass» anzutreffen.
+    </p>
+    <%= link_to marketing_stores_path,
+    class: "btn btn-outline btn-secondary mt-6 rounded-4xl" do %>
+      Geschäfte entdecken
+    <% end %>
+  </div>
+</section>
+<% require "ostruct" %>
+
+<% imageblock1 =
+  OpenStruct.new(
+    image_1: image_path("home/bild_1.png"),
+    image_2: image_path("home/bild_2.png"),
+  ) %>
+
+<%= render "cms/blocks/images_block", block: imageblock1 %>
+<% imageblock2 =
+  OpenStruct.new(
+    image_1: image_path("home/bild_3.png"),
+    image_2: image_path("home/bild_4.png"),
+  ) %>
+<%= render "cms/blocks/images_block", block: imageblock2 %>
+<% imageblock3 = OpenStruct.new(image_1: image_path("home/bild_5.png")) %>
+<%= render "cms/blocks/images_block", block: imageblock3 %>
+
+<section class="w-full my-8 content-container grid grid-cols-2 gap-4">
+  <div class="col-span-2 md:col-span-1 md:block hidden h-56 md:h-96 w-full">
+    <%= image_tag image_path("home/bild_6.png"),
+    alt: "Erster Advent Bern",
+    class: "object-cover w-full h-full rounded-xl" %>
+  </div>
+
+  <div class="col-span-2 md:col-span-1 w-full">
+    <h3 class="text-2xl mb-4"><b>Informationen</b>
+      für Besucherinnen und Besucher</h3>
+    <p>
+      Die Untere Altstadt umfasst das in der idyllischen Aareschlaufe
+      eingebettete Gebiet vom Matte-Quartier bis zum Zytglogge. Im Gegensatz
+      zur Oberen Altstadt finden sich hier noch zahlreiche unabhängige und
+      eingesessene Geschäfte, Ateliers, Buchhandlungen, Handwerksbetriebe und
+      Galerien. Wer einzigartige Kleidungsstücke, in Bern hergestellten
+      Schmuck oder eine liebevoll sortierte Buchhandlung und Objekte mit
+      Geschichte schätzt, wird beim Schlendern durch die historischen Lauben
+      sicherlich fündig.
+    </p>
+    <%= link_to marketing_stores_path,
+    class: "btn btn-outline btn-secondary mt-6 rounded-4xl" do %>
+      Teilnehmende Geschäfte entdecken
+    <% end %>
+
+  </div>
+</section>
+
+<section class="w-full my-8 content-container grid grid-cols-2 gap-4">
+  <div class="col-span-2 md:col-span-1 w-full">
+    <h3 class="text-2xl mb-4"><b>Informationen</b>
+      für Geschäfte und Gastronomiebetriebe</h3>
+    <p>
+      Die Aufforderung zur Anmeldung wird wie üblich nach den Sommerferien
+      verschickt. Bitte registrieren Sie sich über das Kontaktformular für
+      den Verteiler. Geschäfte der Unteren Altstadt beteiligen sich mit einem
+      pauschalen Teilnahmebeitrag von CHF 200. Aus damit zur Verfügung
+      stehenden Budget wird der Anlass weit über die Stadtgrenzen hinaus
+      beworben. Zudem werden damit auch attraktive Rahmenprogramme finanziert
+      und gefördert.
+    </p>
+    <%= link_to new_user_session_path,
+    class: "btn btn-outline btn-secondary mt-6 rounded-4xl" do %>
+      Jetzt mein Geschäft anmelden
+    <% end %>
+
+  </div>
+  <div class="col-span-2 md:col-span-1 md:block hidden h-56 md:h-96 w-full">
+    <%= image_tag image_path("home/bild_6.png"),
+    alt: "Erster Advent Bern",
+    class: "object-cover w-full h-full rounded-xl" %>
+  </div>
+</section>
+
+<% imageblock4 = OpenStruct.new(image_1: image_path("home/bild_7.png")) %>
+<%= render "cms/blocks/images_block", block: imageblock4 %>
+
+<section class="w-full my-8 content-container grid grid-cols-2 gap-4">
+  <h3 class="text-2xl mb-4 col-span-2">Über den
+    <b>Verein Erster Advent</b></h3>
+  <p class="col-span-2">
+    Der Erste Advent ist ein Anlass, der seit 30 Jahren Tradition hat, mit
+    seinem Ursprung an der beschaulichen Postgasse. Benachbarte Ladengeschäfte
+    schlossen sich zusammen, um am Ersten Advent gemeinsam den Besucherinnen
+    und Besuchern auch die weniger frequentierten Gassen näherzubringen. Das
+    Konzept wird mittlerweile von der gesamten Unteren Altstadt getragen und
+    durch den Mitgliederbeitrag eines jeden einzelnen Geschäftes gestützt.
+  </p>
+</section>
