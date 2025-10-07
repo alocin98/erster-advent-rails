@@ -16,7 +16,7 @@ OK Editieren Status Geschäft
 OK Admin Links
 OK Client dashboard links
 OK Homepage desingen
-- check suche mit active text
+OK check suche mit active text
 - Prod file configuration (file upload)
 - Lösung Admin login
 - Migrationen / seeds überarbeiten

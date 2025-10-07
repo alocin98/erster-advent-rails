@@ -63,14 +63,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_094014) do
     t.string "image_gallery1"
     t.string "image_gallery2"
     t.string "image_gallery3"
-    t.jsonb "tags", null: false
     t.text "map_link", null: false
-    t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "confirmed", default: false, null: false
     t.jsonb "categories", default: [], null: false
-    t.string "name", default: "", null: false
+    t.string "contact_name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "website", default: "", null: false
     t.string "first_advent_specialities", default: [], array: true
