@@ -42,7 +42,7 @@
             <% end %>
           </div>
           <h2 class="text-xl font-medium title-font text-black mt-5"><%= business.business_name %></h2>
-          <p class="text-base text-black leading-relaxed mt-2"><%= business.description %></p>
+          <p class=" text-base text-black leading-relaxed mt-2 line-clamp-5 "><%= business.description&.to_plain_text %></p>
           <%= link_to marketing_store_path(business), class: "text-secondary inline-flex items-center mt-3" do %>
             Mehr erfahren
           <% end %>
@@ -50,8 +50,6 @@
       <% end %>
     </div>
 
-    <button class="btn btn-secondary btn-outline rounded-4xl btn-wide mt-10">Mehr Geschäfte laden
-    </button>
   <% else %>
     <p class="text-center text-gray-600">Aktuell sind noch keine Geschäfte eingetragen.</p>
   <% end %>
