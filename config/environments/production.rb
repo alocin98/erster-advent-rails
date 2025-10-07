@@ -64,9 +64,9 @@ Rails.application.configure do
    config.action_mailer.smtp_settings = {
      user_name: ENV.fetch("SMTP_USERNAME", Rails.application.credentials.dig(:smtp, :username)),
      password: ENV.fetch("SMTP_PASSWORD", Rails.application.credentials.dig(:smtp, :password)),
-     address: ENV.fetch("SMTP_ADDRESS", "smtp.google.com"),
+     address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
      port: ENV.fetch("SMTP_PORT", 587),
-     authentication: :plain,
+     authentication: :login,
      enable_starttls_auto: true
    }
 
