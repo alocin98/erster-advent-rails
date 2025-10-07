@@ -32,7 +32,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
@@ -71,6 +71,16 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+   config.action_mailer.smtp_settings = {
+     user_name: Rails.application.credentials.dig(:smtp, :user_name),
+     password: Rails.application.credentials.dig(:smtp, :password),
+     address: "smtp.google.com",
+     port: 587,
+     authentication: :plain,
+     enable_starttls: true
+   }
+
+
 
   config.assets.debug = true
 
@@ -78,6 +88,6 @@ Rails.application.configure do
   config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload
 
   # Use letter_opener to open emails in the browser instead of sending them.
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.perform_deliveries = true
 end
