@@ -15,7 +15,6 @@ class App::MystoreController < App::BaseController
   end
 
   def create
-  purge_removed_images
   if @business.update(business_params)
     redirect_to app_mystore_path, notice: "Geschäft erfolgreich erstellt."
   else
@@ -25,6 +24,7 @@ class App::MystoreController < App::BaseController
 end
 
   def update
+    business_params.delete(:loginemail)
     if @business.update(business_params)
       redirect_to app_mystore_path, notice: "Geschäft wurde aktualisiert."
     else
@@ -76,11 +76,13 @@ end
 
   def initialize_business
     @business ||= current_user.build_business
+
     @business.business_name ||= current_user.business_name
     @business.phone ||= current_user.phone
     @business.address ||= current_user.address
+    @business.billing_address ||= current_user.address
     @business.email ||= current_user.email
-    @business.categories = Array(@business.categories).compact_blank
+    @business.contact_name ||= current_user.name
   end
 
   def business_params
@@ -96,7 +98,6 @@ end
       :tiktok,
       :linkedin,
       :facebook,
-      :billing_address,
       :map_link,
       :description,
       :first_advent_specialities,
@@ -104,10 +105,11 @@ end
       :image_gallery1,
       :image_gallery2,
       :image_gallery3,
+      :contact_name,
+      :billing_address,
       categories: []
     )
 
-    permitted[:tags] = Array(permitted[:tags]).compact_blank
     permitted[:categories] = Array(permitted[:categories]).compact_blank
     permitted
   end

@@ -52,7 +52,7 @@ class InitSchema < ActiveRecord::Migration[8.0]
       t.datetime "updated_at", null: false
       t.boolean "confirmed", default: false, null: false
       t.jsonb "categories", default: [], null: false
-      t.string "name", default: "", null: false
+      t.string "contact_name", default: "", null: false
       t.string "email", default: "", null: false
       t.string "website", default: "", null: false
       t.string "instagram", default: "", null: false

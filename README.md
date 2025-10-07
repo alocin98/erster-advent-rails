@@ -10,7 +10,7 @@ To set up the development environment, follow these steps:
    ```
 2. Start the local database container:
    ```bash
-   cd ./infrastructure/umzugsapp-db
+   cd ./infrastructure/erster-advent
    docker-compose up -d
    ```
 

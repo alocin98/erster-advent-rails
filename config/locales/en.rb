@@ -1,6 +1,6 @@
 {
   en: {
-    title: "Umzugsapp.ch",
+    title: "Erster Advent Bern",
     from: "from"
    }
 }
