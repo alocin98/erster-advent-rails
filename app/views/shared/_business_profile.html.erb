@@ -17,7 +17,7 @@
   <% end %>
 </section>
 
-<section class="my-10 overflow-x-scroll">
+<section class="content-container my-10 overflow-x-scroll">
   <% if gallery_images.any? %>
     <div class="flex flex-row overflow-x-scroll justify-center min-w-screen w-max">
       <% gallery_images.each do |image| %>
@@ -26,6 +26,15 @@
           <%= image_tag image, class: "h-full object-cover", alt: business.business_name %>
         </div>
       <% end %>
+    </div>
+  <% else %>
+    <div
+      class="
+        flex h-96 w-96 items-center justify-center bg-primary text-gray-400 text-sm
+        rounded-xl
+      "
+    >
+      <%= image_tag "logo.png", alt: "Logo", class: "h-16" %>
     </div>
   <% end %>
 </section>
