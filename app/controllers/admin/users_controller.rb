@@ -23,7 +23,7 @@ class Admin::UsersController < Admin::BaseController
 
     session[:admin_impersonator_id] = current_user.id
     sign_in(:user, user)
-    redirect_to app_root_path, notice: "Sie sind jetzt als #{user.email} angemeldet.", status: :see_other
+    redirect_to app_mystore_path, notice: "Sie sind jetzt als #{user.email} angemeldet.", status: :see_other
   end
 
   def destroy
