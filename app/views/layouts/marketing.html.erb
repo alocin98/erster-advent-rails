@@ -53,36 +53,40 @@ button:has(+ #popover-1:popover-open) .icon-up {
           <%= link_to "Geschäfte entdecken", marketing_stores_path, class: "btn-top-nav" %>
 
           <% if current_user %>
-            <button
-              class="btn-top-nav justify-between hidden md:flex"
-              popovertarget="popover-1"
-              style="anchor-name:--anchor-1"
-            >
-              <%= current_user.business&.business_name || current_user.email %>
-              <span class="icon-down inline-block w-8 h-8 ml-2">
-                <%= heroicon "arrow-down-circle" %>
-              </span>
-              <span class="icon-up hidden w-8 h-8 ml-2">
-                <%= heroicon "arrow-up-circle" %>
-              </span>
-            </button>
-            <ul
-              class="
-                dropdown menu rounded-2xl bg-base-100 shadow-sm absolute min-w-[200px]
-              "
-              popover
-              id="popover-1"
-              style="position-anchor:--anchor-1"
-            >
-              <% if !current_user.adminish? %>
-                <li><%= link_to "Mein Geschäft", app_mystore_path %></li>
-                <li><%= link_to "Transaktionen", app_transactions_path %></li>
-              <% else %>
-                <li><%= link_to "Admin Dashboard", admin_root_path %></li>
-              <% end %>
 
-              <li><%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %></li>
-            </ul>
+            <div class="dropdown w-full group">
+              <div
+                tabindex="0"
+                role="button"
+                class="
+                  btn-top-nav justify-between hidden md:flex group-focus-within:bg-black
+                  group-focus-within:text-white
+                "
+              >
+                <span>
+                  <%= current_user.business&.business_name || current_user.email %>
+                </span>
+                <span class="icon-up w-8 h-8 group-focus-within:rotate-180">
+                  <%= heroicon "arrow-down-circle", options: { class: "asdf" } %>
+                </span>
+              </div>
+              <ul
+                tabindex="0"
+                class="
+                  dropdown-content menu rounded-2xl w-full bg-base-100 shadow-sm absolute
+                  min-w-[200px]
+                "
+              >
+                <% if !current_user.adminish? %>
+                  <li><%= link_to "Mein Geschäft", app_mystore_path %></li>
+                  <li><%= link_to "Transaktionen", app_transactions_path %></li>
+                <% else %>
+                  <li><%= link_to "Admin Dashboard", admin_root_path %></li>
+                <% end %>
+
+                <li><%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %></li>
+              </ul>
+            </div>
           <% else %>
             <%= link_to "Anmeldung für Geschäfte",
             new_user_session_path,
