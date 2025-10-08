@@ -46,7 +46,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
      devise_parameter_sanitizer.permit(:sign_up, keys: [
        :business_name,
        :address,
-       :management_name,
+       :name,
        :phone,
        :category
      ])

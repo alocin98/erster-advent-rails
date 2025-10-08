@@ -75,14 +75,15 @@ end
   end
 
   def initialize_business
+    puts current_user.email
     @business ||= current_user.build_business
 
     @business.business_name ||= current_user.business_name
     @business.phone ||= current_user.phone
     @business.address ||= current_user.address
     @business.billing_address ||= current_user.address
-    @business.email ||= current_user.email
-    @business.contact_name ||= current_user.name
+    @business.email = @business.email.presence || current_user.email
+    @business.contact_name = @business.contact_name.presence || current_user.name
   end
 
   def business_params

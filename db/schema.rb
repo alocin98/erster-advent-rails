@@ -71,7 +71,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_215045) do
     t.string "contact_name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "website", default: "", null: false
-    t.string "first_advent_specialities", default: [], array: true
     t.string "instagram", default: "", null: false
     t.string "tiktok", default: "", null: false
     t.string "linkedin", default: "", null: false
