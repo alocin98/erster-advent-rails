@@ -4,14 +4,13 @@
 <%= favicon_link_tag "logo.png" %>
 
 <link rel="icon" href="<%= asset_path("logo.png") %>" type="image/png">
-<link rel="apple-touch-icon" href="asset_path("logo.png")">
-<script type="module">
-  if (!("anchorName" in document.documentElement.style)) {
-    import("https://unpkg.com/@oddbird/css-anchor-positioning");
-  }
-</script>
+<link rel="apple-touch-icon" href="<%=asset_path("logo.png") %>">
 
 <%# Includes all stylesheet files in app/assets/stylesheets %>
 <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+<%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
 <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+<%= stylesheet_link_tag "application",
+media: "all",
+"data-turbolinks-track": "reload" %>
 <%= javascript_importmap_tags %>
