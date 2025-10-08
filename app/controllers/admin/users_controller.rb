@@ -10,6 +10,22 @@ class Admin::UsersController < Admin::BaseController
     @user = User.find(params[:id])
   end
 
+  def impersonate
+    user = User.find(params[:id])
+
+    if user.deleted?
+      redirect_to admin_user_path(user), alert: "Dieser Benutzer ist deaktiviert und kann nicht angemeldet werden.", status: :see_other and return
+    end
+
+    if user == current_user
+      redirect_to admin_user_path(user), notice: "Sie sind bereits als dieser Benutzer angemeldet.", status: :see_other and return
+    end
+
+    session[:admin_impersonator_id] = current_user.id
+    sign_in(:user, user)
+    redirect_to app_root_path, notice: "Sie sind jetzt als #{user.email} angemeldet.", status: :see_other
+  end
+
   def destroy
     @user = User.find(params[:id])
 

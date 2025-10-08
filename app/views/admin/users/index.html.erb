@@ -34,6 +34,13 @@
             <!-- This will show if business is loaded -->
             <td><%= user.business&.business_name || user.business_name || "-" %></td>
             <td class="flex gap-2">
+              <%= link_to "Details",
+              admin_user_path(user),
+              class: "btn btn-sm btn-primary",
+              data: {
+                turbo_frame: "_top",
+              } %>
+
               <% if user.business.present? %>
                 <%= link_to "Geschäft anzeigen",
                 admin_store_path(user.business),

@@ -2,6 +2,21 @@
 
   <%= heroicon "user", options: { class: "inline w-6 h-6 mr-2" } %>
   <%= @user.email %></h1>
+
+<div class="flex justify-center my-4 gap-2">
+  <% unless @user.deleted? %>
+    <%= button_to "Als Benutzer anmelden",
+      impersonate_admin_user_path(@user),
+      method: :post,
+      class: "btn btn-primary",
+      data: { turbo_confirm: "Möchten Sie sich wirklich als #{@user.email} anmelden?" } %>
+  <% else %>
+    <div class="alert alert-warning shadow-lg max-w-xl">
+      <span>Dieser Benutzer ist deaktiviert und kann nicht angemeldet werden.</span>
+    </div>
+  <% end %>
+</div>
+
 <p>
   <strong>Id:</strong>
   <%= @user.id %>
