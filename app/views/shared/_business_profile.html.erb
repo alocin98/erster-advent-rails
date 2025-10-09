@@ -2,12 +2,12 @@
 <% gallery_images = Array(images).compact_blank %>
 
 <section class="content-container flex flex-row justify-between items-baseline">
-  <h1 class="text-5xl mt-10 font-bold"><%= business.business_name %></h1>
+  <h1 class=" text-3xl md:text-5xl mt-10 font-bold"><%= business.business_name %></h1>
   <div class="ml-6 flex items-center gap-4">
     <%= yield if block_given? %>
   </div>
 </section>
-<section class="content-container mt-5 mb-16">
+<section class="content-container mt-5 md:mb-5">
   <% if categories.present? %>
     <div class="flex flex-wrap gap-1 text-sm text-base-content/60 mb-6">
       <% categories.each do |tag| %>
@@ -17,7 +17,7 @@
   <% end %>
 </section>
 
-<section class="content-container my-10 overflow-x-scroll">
+<section class="content-container my-3 md:my-10 overflow-x-scroll">
   <% if gallery_images.any? %>
     <div class="flex flex-row overflow-x-scroll justify-center min-w-screen w-max">
       <% gallery_images.each do |image| %>
@@ -30,8 +30,8 @@
   <% else %>
     <div
       class="
-        flex h-96 w-96 items-center justify-center bg-primary text-gray-400 text-sm
-        rounded-xl
+        flex w-full h-52 md:h-96 items-center justify-center bg-primary text-gray-400
+        text-sm rounded-xl
       "
     >
       <%= image_tag "logo.png", alt: "Logo", class: "h-16" %>
@@ -39,22 +39,23 @@
   <% end %>
 </section>
 
-<section class="content-container mt-5 mb-10">
-  <% if business.address.present? %>
-    <h3 class="text-4xl font-light">
+<% if business.address.present? %>
+  <section class="content-container my-5 ">
+    <h3 class="text-2xl md:text-4xl font-light">
       <%= business.address %>
     </h3>
-  <% end %>
-</section>
+  </section>
+
+<% end %>
 
 <% if business.first_advent_specialities.present? %>
-  <section class="content-container my-5">
+  <section class="content-container md:my-5">
     <h3 class="text-xl mb-2"><b>Besonderes am</b>
       1. Advent</h3>
     <p><%= business.first_advent_specialities %></p>
   </section>
 <% end %>
-<section class="content-container my-5 list-disc">
+<section class="content-container md:my-5 list-disc">
   <p><%= business.description %></p>
 </section>
 
