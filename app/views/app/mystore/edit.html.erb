@@ -118,6 +118,23 @@
 
     </div>
 
+    <section class="space-y-6">
+      <div class="form-control">
+        <%= form.label :first_advent_specialities,
+                   "Besonderes am 1. Advent (optional)",
+                   class: "label-text font-semibold" %>
+        <%= form.rich_textarea :first_advent_specialities %>
+      </div>
+
+      <div class="form-control">
+        <%= form.label :description,
+                   "Allgemeiner Beschrieb",
+                   class: "label-text font-semibold" %>
+        <%= form.rich_textarea :description %>
+      </div>
+
+    </section>
+
     <section class="w-full my-10 gap-6">
       <h3 class="text-xl">Hauptbild</h3>
       <p class="text-sm text-base-content/70 mb-5">Wird auf der Übersichtsseite angezeigt</p>
@@ -151,23 +168,6 @@
         delete_path: purge_image_app_mystore_path(image: :image_gallery3),
         form: form,
         image_field: :image_gallery3 %>
-      </div>
-
-    </section>
-
-    <section class="space-y-6">
-      <div class="form-control">
-        <%= form.label :first_advent_specialities,
-                   "Besonderes am 1. Advent (optional)",
-                   class: "label-text font-semibold" %>
-        <%= form.rich_textarea :first_advent_specialities %>
-      </div>
-
-      <div class="form-control">
-        <%= form.label :description,
-                   "Text für die Website",
-                   class: "label-text font-semibold" %>
-        <%= form.rich_textarea :description %>
       </div>
 
     </section>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_07_215045) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_13_141405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -63,7 +63,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_215045) do
     t.string "image_gallery1"
     t.string "image_gallery2"
     t.string "image_gallery3"
+    t.jsonb "tags", null: false
     t.text "map_link", null: false
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "confirmed", default: false, null: false
@@ -71,6 +73,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_07_215045) do
     t.string "contact_name", default: "", null: false
     t.string "email", default: "", null: false
     t.string "website", default: "", null: false
+    t.string "first_advent_specialities", default: [], array: true
     t.string "instagram", default: "", null: false
     t.string "tiktok", default: "", null: false
     t.string "linkedin", default: "", null: false

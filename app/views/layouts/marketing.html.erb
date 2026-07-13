@@ -26,14 +26,21 @@ button:has(+ #popover-1:popover-open) .icon-up {
 
     <div
       class="
-        fixed top-0 left-0 w-full z-10 duration-200 ease-in-out
-        transition-[height,background-color] group-[.small]:bg-primary
-        group-[.small]:h-20 group-[.large]:h-32
+        fixed top-0 left-0 w-full z-10 duration-300 ease-in-out will-change-transform
+        transition-[translate,opacity] translate-y-0 opacity-100
+        group-[.small.down]:-translate-y-full group-[.small.down]:opacity-0
+        group-[.small.up]:translate-y-0 group-[.small.up]:opacity-100
       "
     >
-      <header class="navbar bg-transparent content-container h-full items-start">
+      <header
+        class="
+          navbar bg-transparent content-container h-full items-start duration-300
+          ease-in-out transition-[height,background-color] group-[.small]:bg-primary
+          group-[.small]:h-20 group-[.large]:h-32
+        "
+      >
         <!-- left / brand -->
-        <div class="navbar-start h-full">
+        <div class="navbar-start h-full font-['Korolev'] font-bold tracking-normal">
           <a href="<%= root_path %>" class="flex h-full">
             <%= image_tag "logo.png", alt: "Erster Advent Logo", class: "h-full w-auto mr-4" %>
             <div class="leading-4 hidden sm:block">
@@ -42,14 +49,13 @@ button:has(+ #popover-1:popover-open) .icon-up {
                 1. Advent<br>Untere<br>Altstadt<br>Bern
               </p>
               <p class="text-primary-content">
-                Sonntag<br>30.11.2025<br>
-                11-17 Uhr
+                Sonntag<br>30.11.2025<br>11-17 Uhr
               </p>
             </div>
           </a>
         </div>
         <!-- desktop nav -->
-        <div class="navbar-end gap-2 mt-3 flex">
+        <div class="navbar-end gap-2 mt-3 flex font-['Plus Jakarta Sans']">
           <%= link_to "Geschäfte entdecken", marketing_stores_path, class: "btn-top-nav" %>
 
           <% if current_user %>
@@ -63,11 +69,12 @@ button:has(+ #popover-1:popover-open) .icon-up {
                   group-focus-within:text-white w-min
                 "
               >
+
                 <span>
                   <%= current_user.business&.business_name || current_user.email %>
                 </span>
-                <span class="icon-up w-8 h-8 group-focus-within:rotate-180">
-                  <%= heroicon "arrow-down-circle", options: { class: "asdf" } %>
+                <span class="icon-up shrink-0 group-focus-within:rotate-180">
+                  <%= heroicon "arrow-down-circle", variant: :outline, options: { class: "w-4 h-4" } %>
                 </span>
               </div>
               <ul

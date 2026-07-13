@@ -81,7 +81,7 @@ button:has(+ #popover-1:popover-open) .icon-up {
   }
 
   .btn-top-nav {
-    @apply btn btn-ghost bg-base-200 hover:bg-black hover:text-primary-content rounded-4xl border-0 min-w-[200px];
+    @apply btn btn-ghost bg-base-200 hover:bg-black hover:text-primary-content rounded-4xl border-1 border-[#C6C6C6] font-light min-w-[200px] w-fit shrink-0 whitespace-nowrap hover:border-1 hover:border-black;
   }
 
   .disabled-link {
