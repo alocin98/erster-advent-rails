@@ -7,13 +7,17 @@
 </section>
 <section class="content-container items-start">
   <%= form_with url: marketing_stores_path, method: :get, local: true, html: { class: "w-full max-w-3xl" } do %>
-    <div class="relative">
+    <div class="relative" data-controller="search-bar">
       <%= search_field_tag :q,
       @search_term,
       id: "search-bar",
-      class: "block p-4 w-full text-sm rounded-4xl  bg-gray-200 ",
-      placeholder: "Nach Geschäft oder Kategorie suchen" %>
-      <div class="absolute inset-y-0 right-4 flex items-center">
+      class: "block p-4 pr-16 w-full text-sm rounded-4xl bg-gray-200 border-2 border-transparent focus:border-black focus:outline-none [&::-webkit-search-cancel-button]:appearance-none",
+      placeholder: "Nach Geschäft oder Kategorie suchen",
+      data: { search_bar_target: "input", action: "input->search-bar#toggleClear" } %>
+      <div class="absolute inset-y-0 right-4 flex items-center gap-2">
+        <button type="button" class="hidden" data-search-bar-target="clear" data-action="click->search-bar#clear">
+          <%= heroicon "x-mark", options: { class: "h-5 w-5 text-black" } %>
+        </button>
         <%= heroicon "magnifying-glass", options: { class: "h-5 w-5 text-gray-500" } %>
       </div>
     </div>
