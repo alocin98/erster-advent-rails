@@ -259,6 +259,31 @@ businesses = [
       [ "Nydegg Klangstern", "Kleines handgefertigtes Klangobjekt aus Holz und Messing, zum Aufhaengen oder Verschenken.", 32.00, [ "Hell", "Warm", "Tief" ], "3-5 Tage" ],
       [ "Kinder-Rhythmusset", "Ein kleines Set mit Rassel, Schellenband und Spielkarte fuer gemeinsame Adventslieder.", 26.00, [ "Set" ], "Sofort abholbereit" ]
     ]
+  },
+  {
+    email: "brunngass.atelier@erster-advent-bern.ch",
+    password: "bern-seed-2026",
+    owner: "Selina Baumann",
+    business_name: "Brunngass Atelier",
+    phone: "+41 31 311 58 12",
+    address: "Brunngasse 9\n3011 Bern",
+    categories: [ "Handgemachte Waren", "Einzelhandel" ],
+    tags: [ "Atelier", "Keramik", "Papier" ],
+    website: "https://erster-advent-bern.ch/brunngass-atelier",
+    instagram: "https://instagram.com/brunngassatelier",
+    map_query: "Brunngasse 9 Bern",
+    image: nil,
+    gallery: [],
+    description: "Das Brunngass Atelier ist ein bewusst schlicht gehaltener Seed-Store ohne Bildmaterial. Es zeigt, wie die Store-Uebersicht und Detailseite aussehen, wenn ein teilnehmendes Geschaeft noch keine Fotos hochgeladen hat. Inhaltlich steht das Atelier fuer kleine Keramikserien, Papierobjekte und ruhige Geschenkideen aus der Unteren Altstadt.",
+    specialities: [
+      "Seed-Beispiel ohne Store-Bilder fuer den Platzhalter-Test",
+      "Kleine Keramikschalen und Karten in limitierten Serien",
+      "Persoenliche Beratung fuer reduzierte Adventsgeschenke"
+    ],
+    products: [
+      [ "Brunngass Keramikschale", "Kleine handgeformte Schale aus heller Keramik, ideal fuer Schmuck, Salz oder Adventsnuesse.", 36.00, [ "Klein", "Mittel" ], "4-6 Tage" ],
+      [ "Papierlicht Set", "Gefaltete Papierlichter mit feiner Lochstruktur fuer LED-Teelichter und Fensterbaenke.", 22.00, [ "3er Set", "6er Set" ], "2-3 Tage" ]
+    ]
   }
 ]
 
@@ -298,7 +323,7 @@ businesses.each.with_index do |seed, index|
     status: :confirmed
   )
 
-  attach_asset!(business, :main_image, seed.fetch(:image))
+  attach_asset!(business, :main_image, seed.fetch(:image)) if seed.fetch(:image).present?
   seed.fetch(:gallery).each.with_index(1) do |filename, gallery_index|
     attach_asset!(business, "image_gallery#{gallery_index}", filename)
   end

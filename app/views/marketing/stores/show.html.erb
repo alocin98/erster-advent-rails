@@ -2,14 +2,34 @@
 </section>
 <section
   class="
-    page-container sticky top-24 lg:top-28 z-[6] w-full flex justify-end h-0
+    page-container sticky top-2 lg:top-2 z-[6] w-full flex justify-end h-0
   "
 >
   <%= link_to marketing_stores_path,
-  class: "flex items-center justify-center h-12 w-12 mt-16 lg:h-16 lg:w-16
-    transition-colors hover:bg-black hover:text-white top-28" do %>
+  class: "flex items-center justify-center h-12 w-12 mt-16 mr-16 md:h-14 md:w-14 lg:h-20 lg:w-20
+    transition-[margin,color,background-color] group-[.small.up]:mt-[calc(var(--nav-small-height)_+_1rem)]
+    hover:bg-black hover:text-white top-28" do %>
     <span class="sr-only">Zurück zur Übersicht</span>
-    <%= heroicon "x-mark", options: { class: "h-14 w-14 lg:h-32 lg:w-32" } %>
+    <svg
+      class="h-full w-full"
+      viewBox="0 0 80 80"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M0.5 0.5L79.5 79.5"
+        stroke="currentColor"
+        stroke-width="1.5"
+        vector-effect="non-scaling-stroke"
+      />
+      <path
+        d="M79.5 0.5L0.5 79.5"
+        stroke="currentColor"
+        stroke-width="1.5"
+        vector-effect="non-scaling-stroke"
+      />
+    </svg>
   <% end %>
 </section>
 
