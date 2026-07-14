@@ -1,17 +1,25 @@
 <%= content_for :title, "Dashboard" %>
-<section class="page-container grid gap-4 md:grid-cols-5">
+
+<%= render "admin/shared/page_header",
+title: "Dashboard",
+subtitle: "Überblick über Geschäfte und Benutzer" %>
+
+<section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
   <% @metrics.each do |name, value| %>
-    <article class="stat bg-base-100 shadow">
-      <div class="stat-title"><%= name.to_s.humanize %></div>
-      <div class="stat-value text-primary"><%= number_with_delimiter(value) %></div>
+    <article class="admin-card p-6">
+      <p class="admin-subtitle"><%= name.to_s.humanize %></p>
+      <p class="mt-1 font-frank font-light text-4xl text-primary">
+        <%= number_with_delimiter(value) %>
+      </p>
     </article>
   <% end %>
 </section>
 
-<section class="page-container my-8">
-
-  <h2 class="text-xl font-bold">Neue Geschäfte</h2>
-  <p class="mb-4">Die letzten 6 neu registrierten Geschäfte, deren Status zu prüfen ist</p>
+<section class="mt-12">
+  <h2 class="font-jakarta font-bold text-xl md:text-2xl">Neue Geschäfte</h2>
+  <p class="admin-subtitle mt-1 mb-4">
+    Die zuletzt registrierten Geschäfte, deren Status zu prüfen ist
+  </p>
 
   <%= render "admin/stores/list", businesses: @recent_businesses %>
 </section>

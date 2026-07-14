@@ -376,6 +376,94 @@ button:has(+ #popover-1:popover-open) .icon-up {
     inset-inline-end: 0.75rem;
   }
 
+  /*
+   * ------------------------------------------------------------------
+   * Admin area: same design language as the storefront, scaled down
+   * for dense back-office screens.
+   * ------------------------------------------------------------------
+   */
+
+  /* Serif page title, the admin-sized sibling of .heading-serif */
+  .admin-heading {
+    @apply font-frank font-light;
+    font-size: clamp(1.75rem, 2.29vw, 2.5rem);
+    line-height: 1.2;
+  }
+  .admin-heading b,
+  .admin-heading strong {
+    @apply font-jakarta font-bold;
+    font-size: 0.909em;
+  }
+
+  .admin-subtitle {
+    @apply font-jakarta font-light text-base-content/60 text-sm md:text-base;
+  }
+
+  /* White card with the storefront's 28px radius and #C6C6C6 hairline */
+  .admin-card {
+    @apply overflow-hidden rounded-[28px] border border-[#C6C6C6] bg-base-100;
+  }
+
+  /* Tables inside admin cards: light PJS body, subtle uppercase header */
+  .admin-card .table thead th {
+    @apply font-jakarta text-xs font-semibold uppercase tracking-wider
+      text-base-content/50 border-b border-[#C6C6C6] bg-base-100;
+  }
+  .admin-card .table tbody td {
+    @apply font-jakarta font-light;
+  }
+  .admin-card .table tbody tr {
+    @apply border-b border-base-200 last:border-b-0 transition-colors;
+  }
+
+  /* Search pill, admin-sized version of .search-pill */
+  .admin-search {
+    @apply flex w-full items-center gap-3 rounded-full border-2
+      border-transparent bg-[#F2F2F2] px-5 font-jakarta font-light text-black
+      focus-within:border-black;
+    height: 3rem;
+  }
+  .admin-search input {
+    @apply w-full bg-transparent focus:outline-none;
+  }
+  .admin-search input::placeholder {
+    @apply text-black/40;
+  }
+
+  /* Pagy pagination below admin lists: white pills echoing .btn-navbar,
+     active page and hover invert to black */
+  .pagy-nav {
+    @apply flex flex-wrap items-center justify-center gap-2 font-jakarta
+      font-light text-sm;
+  }
+  .pagy-nav .page a,
+  .pagy-nav .page.active,
+  .pagy-nav .page.gap,
+  .pagy-nav .page.disabled {
+    @apply inline-flex h-10 min-w-10 items-center justify-center
+      whitespace-nowrap rounded-full border border-[#C6C6C6] bg-white px-3
+      text-black transition-colors;
+  }
+  .pagy-nav .page a:hover {
+    @apply border-black bg-black text-white;
+  }
+  .pagy-nav .page.active {
+    @apply border-black bg-black font-normal text-white;
+  }
+  .pagy-nav .page.gap,
+  .pagy-nav .page.disabled {
+    @apply border-transparent bg-transparent text-black/30;
+  }
+
+  /* Sidebar menu item: white pill on hover/active, echoing .btn-navbar */
+  .admin-menu-item {
+    @apply flex w-full items-center gap-3 rounded-full px-4 py-2.5 font-jakarta
+      font-light text-primary-content transition-colors hover:bg-white/10;
+  }
+  .admin-menu-item.menu-active {
+    @apply bg-white font-normal text-black hover:bg-white;
+  }
+
   .disabled-link {
     pointer-events: none; /* disables clicks */
     cursor: default; /* shows default cursor */

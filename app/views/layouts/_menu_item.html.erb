@@ -1,7 +1,15 @@
-<%# This partial renders a single menu item for the admin dashboard.
+<%# This partial renders a single menu item for the admin sidebar.
   It highlights the item if it corresponds to the current page.
   Parameters:
   - link
-  - text %>
+  - text
+  - icon (optional heroicon name) %>
 
-  <li><%= link_to text, link, class: "w-full #{"menu-active" if current_page?(link)}" %></li>
+<li>
+  <%= link_to link, class: "admin-menu-item #{"menu-active" if current_page?(link)}" do %>
+    <% if local_assigns[:icon].present? %>
+      <%= heroicon icon, variant: :outline, options: { class: "w-5 h-5 shrink-0" } %>
+    <% end %>
+    <span class="truncate"><%= text %></span>
+  <% end %>
+</li>

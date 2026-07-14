@@ -1,0 +1,17 @@
+<%# Admin page header, matching the storefront type system.
+  Parameters:
+  - title
+  - subtitle (optional)
+  - actions (optional block content rendered on the right) %>
+
+<header class="mb-8 flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="admin-heading"><%= title %></h1>
+    <% if local_assigns[:subtitle].present? %>
+      <p class="admin-subtitle mt-1"><%= subtitle %></p>
+    <% end %>
+  </div>
+  <% if local_assigns[:actions].present? %>
+    <div class="flex flex-wrap items-center gap-2"><%= actions %></div>
+  <% end %>
+</header>

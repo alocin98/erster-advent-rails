@@ -13,64 +13,138 @@
     <%= render "layouts/head" %>
   </head>
 
-  <body class="h-screen ">
+  <body class="h-screen bg-base-200">
     <%= render "layouts/flash", { flash: flash } %>
 
     <div class="flex h-full flex-col">
 
       <div class="drawer relative flex-1 lg:drawer-open">
         <input id="my-drawer" type="checkbox" class="drawer-toggle"/>
-        <div class="drawer-content h-full overflow-y-scroll">
-          <div class=" mx-auto flex h-full w-full flex-col">
-            <div class="page-container py-8">
+        <div class="drawer-content h-full overflow-y-auto bg-base-200">
+          <div class="mx-auto flex min-h-full w-full flex-col">
+
+            <!-- Mobile top bar with drawer toggle -->
+            <div
+              class="
+                sticky top-0 z-10 flex items-center gap-3 bg-primary px-4 py-3
+                text-primary-content lg:hidden
+              "
+            >
+              <label
+                for="my-drawer"
+                aria-label="Menü öffnen"
+                class="btn btn-ghost btn-square btn-sm text-primary-content"
+              >
+                <%= heroicon "bars-3", variant: :outline, options: { class: "w-6 h-6" } %>
+              </label>
+              <%= image_tag "logo.svg", alt: "Erster Advent Logo", class: "h-7 w-auto" %>
+              <span class="font-jakarta font-bold"><%= content_for(:title) || "Admin" %></span>
+            </div>
+
+            <div
+              class="
+                mx-auto w-full max-w-[1400px] flex-1 px-5 py-8 sm:px-8 lg:px-12 lg:py-10
+              "
+            >
               <%= yield %>
             </div>
           </div>
         </div>
-        <div class="drawer-side">
+        <div class="drawer-side z-20">
           <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-          <aside
-            class="
-              h-full w-72 max-w-full border-r border-base-300 bg-primary text-primary-content
-              backdrop-blur-lg
-            "
-          >
-            <div class="flex h-full flex-col gap-4 px-4 py-6">
-              <div class="hidden lg:flex items-center gap-3">
-                <a
-                  href="<%= root_path %>"
+          <aside class="h-full w-72 max-w-full bg-primary text-primary-content">
+            <div class="flex h-full flex-col gap-6 px-4 py-6">
+              <a href="<%= root_path %>" class="flex items-center gap-3 px-2">
+                <span
                   class="
-                    flex h-12 w-12 items-center justify-center rounded-full bg-secondary
-                    text-secondary-content
+                    flex h-12 w-12 shrink-0 items-center justify-center rounded-full
+                    bg-secondary text-secondary-content
                   "
                 >
                   <%= image_tag "logo.svg", alt: "Erster Advent Logo", class: "h-8 w-auto" %>
-                </a>
-                <div>
-                  <p class="text-sm font-semibold"><%= current_user.business_name.presence || current_user.email %></p>
-                  <p class="text-xs">Dashboard</p>
-                </div>
-              </div>
-              <ul class="menu flex-1 gap-1 w-full ">
-                <%= render "layouts/menu_item", link: admin_root_path, text: "Dashboard" %>
-                <%= render "layouts/menu_item", link: admin_stores_path, text: "Geschäfte" %>
-                <%= render "layouts/menu_item", link: admin_products_path, text: "Produkte" %>
-                <%= render "layouts/menu_item", link: admin_users_path, text: "Benutzer" %>
-                <%= render "layouts/menu_item", link: admin_orders_path, text: "Bestellungen" %>
+                </span>
+                <span>
+                  <span class="block font-jakarta font-bold text-sm leading-tight">
+                    1. Advent Untere Altstadt
+                  </span>
+                  <span class="block font-jakarta font-light text-xs opacity-70">
+                    Admin Dashboard
+                  </span>
+                </span>
+              </a>
+
+              <ul class="flex-1 space-y-1 overflow-y-auto">
+                <%= render "layouts/menu_item",
+                link: admin_root_path,
+                text: "Dashboard",
+                icon: "squares-2x2" %>
+                <%= render "layouts/menu_item",
+                link: admin_stores_path,
+                text: "Geschäfte",
+                icon: "building-storefront" %>
+                <%= render "layouts/menu_item",
+                link: admin_products_path,
+                text: "Produkte",
+                icon: "shopping-bag" %>
+                <%= render "layouts/menu_item",
+                link: admin_users_path,
+                text: "Benutzer",
+                icon: "users" %>
+                <%= render "layouts/menu_item",
+                link: admin_orders_path,
+                text: "Bestellungen",
+                icon: "clipboard-document-list" %>
                 <%= render "layouts/menu_item",
                 link: admin_transaction_requests_path,
-                text: "Anfragen" %>
-                <%= render "layouts/menu_item", link: admin_transactions_path, text: "Transaktionen" %>
-                <%= render "layouts/menu_item", link: admin_emails_path, text: "E-Mails" %>
-                <%= render "layouts/menu_item", link: edit_admin_cms_path, text: "Frontpage CMS" %>
+                text: "Anfragen",
+                icon: "inbox-arrow-down" %>
+                <%= render "layouts/menu_item",
+                link: admin_transactions_path,
+                text: "Transaktionen",
+                icon: "banknotes" %>
+                <%= render "layouts/menu_item",
+                link: admin_emails_path,
+                text: "E-Mails",
+                icon: "envelope" %>
+                <%= render "layouts/menu_item",
+                link: edit_admin_cms_path,
+                text: "Frontpage CMS",
+                icon: "pencil-square" %>
               </ul>
-              <div class="space-y-3">
-                <%= button_to "Logout",
-                destroy_user_session_path,
+
+              <div class="space-y-3 border-t border-white/20 pt-4">
+                <div class="flex items-center gap-3 px-2">
+                  <span
+                    class="
+                      flex h-9 w-9 shrink-0 items-center justify-center rounded-full
+                      bg-white/10
+                    "
+                  >
+                    <%= heroicon "user", variant: :outline, options: { class: "w-5 h-5" } %>
+                  </span>
+                  <p class="truncate font-jakarta font-light text-sm">
+                    <%= current_user.business_name.presence || current_user.email %>
+                  </p>
+                </div>
+                <%= link_to marketing_stores_path,
+                class: "admin-menu-item text-sm" do %>
+                  <%= heroicon "arrow-top-right-on-square",
+                  variant: :outline,
+                  options: {
+                    class: "w-5 h-5 shrink-0",
+                  } %>
+                  Zur Website
+                <% end %>
+                <%= button_to destroy_user_session_path,
                 method: :delete,
-                class: "btn btn-outline w-full" %>
-                <% if current_user.adminish? %>
-                  <%= link_to "Admin", admin_users_path, class: "link link-primary" %>
+                form_class: "w-full",
+                class: "admin-menu-item text-sm cursor-pointer" do %>
+                  <%= heroicon "arrow-right-on-rectangle",
+                  variant: :outline,
+                  options: {
+                    class: "w-5 h-5 shrink-0",
+                  } %>
+                  Logout
                 <% end %>
               </div>
             </div>

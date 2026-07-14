@@ -1,27 +1,72 @@
-<h1 class="text-3xl my-4 text-center">
+<%= content_for :title, @user.email %>
 
-  <%= heroicon "user", options: { class: "inline w-6 h-6 mr-2" } %>
-  <%= @user.email %></h1>
+<%= link_to admin_users_path,
+class: "mb-4 inline-flex items-center gap-1 link-more text-sm md:text-base" do %>
+  <%= heroicon "chevron-left", options: { class: "w-4 h-4" } %>
+  Zurück zu allen Benutzern
+<% end %>
 
-<div class="flex justify-center my-4 gap-2">
-  <% unless @user.deleted? %>
-    <%= button_to "Als Benutzer anmelden",
-      impersonate_admin_user_path(@user),
-      method: :post,
-      class: "btn btn-primary",
-      data: { turbo_confirm: "Möchten Sie sich wirklich als #{@user.email} anmelden?" } %>
-  <% else %>
-    <div class="alert alert-warning shadow-lg max-w-xl">
-      <span>Dieser Benutzer ist deaktiviert und kann nicht angemeldet werden.</span>
+<div class="w-full max-w-3xl space-y-6">
+  <div class="admin-card p-6">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <span
+          class="
+            flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary
+            text-primary-content
+          "
+        >
+          <%= heroicon "user", options: { class: "w-7 h-7" } %>
+        </span>
+        <div>
+          <h1 class="font-jakarta font-bold text-xl break-all"><%= @user.email %></h1>
+          <p class="admin-subtitle">Benutzer #<%= @user.id %></p>
+        </div>
+      </div>
+
+      <% unless @user.deleted? %>
+        <%= button_to "Als Benutzer anmelden",
+        impersonate_admin_user_path(@user),
+        method: :post,
+        class: "btn btn-primary rounded-full",
+        data: {
+          turbo_confirm: "Möchten Sie sich wirklich als #{@user.email} anmelden?",
+        } %>
+      <% end %>
     </div>
-  <% end %>
-</div>
 
-<p>
-  <strong>Id:</strong>
-  <%= @user.id %>
-</p>
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+    <% if @user.deleted? %>
+      <div class="alert alert-warning mt-4 rounded-2xl">
+        <%= heroicon "exclamation-triangle", options: { class: "w-5 h-5" } %>
+        <span>Dieser Benutzer ist deaktiviert und kann nicht angemeldet werden.</span>
+      </div>
+    <% end %>
+
+    <dl class="mt-6 divide-y divide-base-200 font-jakarta">
+      <div class="flex items-center justify-between gap-4 py-3">
+        <dt class="font-light text-base-content/60">Name</dt>
+        <dd><%= @user.name.presence || "-" %></dd>
+      </div>
+      <div class="flex items-center justify-between gap-4 py-3">
+        <dt class="font-light text-base-content/60">Email</dt>
+        <dd class="break-all"><%= @user.email %></dd>
+      </div>
+      <div class="flex items-center justify-between gap-4 py-3">
+        <dt class="font-light text-base-content/60">Geschäft</dt>
+        <dd>
+          <% if @user.business.present? %>
+            <%= link_to @user.business.business_name,
+            admin_store_path(@user.business),
+            class: "link-more text-sm md:text-base" %>
+          <% else %>
+            -
+          <% end %>
+        </dd>
+      </div>
+      <div class="flex items-center justify-between gap-4 py-3">
+        <dt class="font-light text-base-content/60">Registriert am</dt>
+        <dd><%= l @user.created_at, format: :short %></dd>
+      </div>
+    </dl>
+  </div>
+</div>
