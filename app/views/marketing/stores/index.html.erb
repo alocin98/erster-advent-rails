@@ -40,50 +40,17 @@
 <section class="page-container mt-12 md:mt-16 xl:mt-24 mb-20 md:mb-28 lg:mb-32">
 
   <% if @businesses.any? %>
-    <div class="responsive-grid gap-y-12 md:gap-y-16 xl:gap-y-24">
-      <% @businesses.each do |business| %>
-        <div
-          class="
-            col-span-4 md:col-span-4 lg:col-span-4 w-full flex flex-col items-start
-          "
-        >
-          <div class="relative w-full aspect-[4/3] rounded-[15px] overflow-hidden">
-            <% if business.main_image.present? %>
-              <%= image_tag business.main_image,
-              alt: business.business_name,
-              class: "object-cover object-center h-full w-full" %>
-            <% else %>
-              <div class="flex h-full w-full items-center justify-center bg-primary">
-                <%= image_tag "logo.svg", alt: "Logo", class: "h-16" %>
-              </div>
-            <% end %>
-            <% categories = Array(business.categories).compact_blank %>
-            <% if categories.any? %>
-              <div class="absolute top-5 left-5 flex flex-wrap gap-2">
-                <% categories.each do |tag| %>
-                  <span class="tag-pill"><%= tag %></span>
-                <% end %>
-              </div>
-            <% end %>
-          </div>
-          <h2
-            class="
-              font-jakarta font-bold text-xl lg:text-[32px] lg:leading-[40px] mt-5 lg:mt-6
-            "
-          >
-            <%= business.business_name %>
-          </h2>
-          <% if business.address.present? %>
-            <p class="text-body mt-1 lg:mt-2"><%= business.address %></p>
-          <% end %>
-          <p class="text-body mt-3 lg:mt-4 line-clamp-3"><%= business.description&.to_plain_text %></p>
-          <%= link_to "Mehr erfahren",
-          marketing_store_path(business),
-          class: "link-more mt-4 lg:mt-6 hover:underline" %>
-        </div>
-      <% end %>
+    <div id="stores-list" class="responsive-grid gap-y-12 md:gap-y-16 xl:gap-y-24">
+      <%= render partial: "marketing/stores/store_card",
+                 collection: @businesses,
+                 as: :business %>
     </div>
 
+    <% if @has_more_stores %>
+      <%= render "marketing/stores/load_more", search_term: @search_term, next_page: @next_page %>
+    <% else %>
+      <div id="stores-load-more"></div>
+    <% end %>
   <% else %>
     <p class="text-body text-center">Aktuell sind noch keine Geschäfte eingetragen.</p>
   <% end %>

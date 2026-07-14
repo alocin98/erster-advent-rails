@@ -1,0 +1,12 @@
+<div id="stores-load-more" class="mt-12 md:mt-32 flex justify-start">
+  <%= link_to "Mehr Geschäfte laden",
+  marketing_stores_path(
+    q: search_term.presence,
+    page: next_page,
+    format: :turbo_stream,
+  ),
+  class: "btn-cta",
+  data: {
+    turbo_stream: true,
+  } %>
+</div>

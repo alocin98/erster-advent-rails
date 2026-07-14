@@ -261,6 +261,81 @@ businesses = [
     ]
   },
   {
+    email: "junkerngass.mode@erster-advent-bern.ch",
+    password: "bern-seed-2026",
+    owner: "Anouk Reber",
+    business_name: "Junkerngass Mode",
+    phone: "+41 31 311 83 21",
+    address: "Junkerngasse 31\n3011 Bern",
+    categories: [ "Mode", "Einzelhandel" ],
+    tags: [ "Mode", "Textilien", "Junkerngasse" ],
+    website: "https://erster-advent-bern.ch/junkerngass-mode",
+    instagram: "https://instagram.com/junkerngassmode",
+    map_query: "Junkerngasse 31 Bern",
+    image: "home/bild_2.png",
+    gallery: [ "home/bild_3.png", "home/bild_5.png", "home/bild_7.png" ],
+    description: "Junkerngass Mode fuehrt kleine Labels, warme Strickteile und langlebige Accessoires fuer die Winterzeit. Am Ersten Advent legt das Team den Fokus auf faire Materialien, ruhige Farben und Geschenke, die lange getragen werden. Besucherinnen koennen Schals, Muetzen und Jacken direkt kombinieren und reservieren.",
+    specialities: [
+      "Winterstyling-Beratung ohne Termin von 11 bis 17 Uhr",
+      "Limitierte Schalserie aus Schweizer Wolle",
+      "Geschenkverpackung mit Stoffband statt Einwegpapier"
+    ],
+    products: [
+      [ "Junkerngass Wollschal", "Weicher Schal aus mulesingfreier Wolle in gedeckten Winterfarben, gefertigt in kleiner Serie.", 89.00, [ "Salbei", "Sand", "Nachtblau" ], "2-3 Tage" ],
+      [ "Altstadt Muetze", "Schlichte Rippenmuetze aus warmer Merinowolle, passend fuer kalte Spaziergaenge durch die Lauben.", 48.00, [ "S/M", "M/L" ], "Sofort abholbereit" ]
+    ]
+  },
+  {
+    email: "kramgass.spiel@erster-advent-bern.ch",
+    password: "bern-seed-2026",
+    owner: "David Luthi",
+    business_name: "Kramgass Spielwaren",
+    phone: "+41 31 312 09 41",
+    address: "Kramgasse 22\n3011 Bern",
+    categories: [ "Spielwaren", "Einzelhandel" ],
+    tags: [ "Kinder", "Spiele", "Kramgasse" ],
+    website: "https://erster-advent-bern.ch/kramgass-spielwaren",
+    instagram: "https://instagram.com/kramgassspielwaren",
+    map_query: "Kramgasse 22 Bern",
+    image: "home/bild_5.png",
+    gallery: [ "home/bild_1.png", "home/bild_4.png", "home/bild_6.png" ],
+    description: "Kramgass Spielwaren sammelt Holzspielzeug, Kartenspiele, Puzzles und kleine Entdeckungen fuer Kinder und Familien. Zum Ersten Advent entstehen im Laden kurze Spielrunden, Empfehlungen fuer verschiedene Altersstufen und ein Packtisch fuer Geschenke, die sofort unter den Baum koennen.",
+    specialities: [
+      "Spielberatung nach Alter und Gruppengroesse",
+      "Offene Puzzle- und Kartenrunde im Laden",
+      "Kleine Wichtelgeschenke unter 20 Franken"
+    ],
+    products: [
+      [ "Berner Lauben Puzzle", "Illustriertes 500-Teile-Puzzle mit Motiven der Unteren Altstadt und kleinen Adventsdetails.", 27.50, [ "500 Teile" ], "Sofort abholbereit" ],
+      [ "Familienkarten Advent", "Schnelles Kartenspiel fuer Familienabende mit einfachen Regeln und winterlichen Berner Motiven.", 18.00, [ "Standard" ], "1-2 Tage" ]
+    ]
+  },
+  {
+    email: "gerechtigkeitsgass.design@erster-advent-bern.ch",
+    password: "bern-seed-2026",
+    owner: "Noemi Schmid",
+    business_name: "Gerechtigkeitsgass Design",
+    phone: "+41 31 311 64 55",
+    address: "Gerechtigkeitsgasse 19\n3011 Bern",
+    categories: [ "Design", "Dekoration" ],
+    tags: [ "Design", "Wohnaccessoires", "Geschenke" ],
+    website: "https://erster-advent-bern.ch/gerechtigkeitsgass-design",
+    instagram: "https://instagram.com/gerechtigkeitsgassdesign",
+    map_query: "Gerechtigkeitsgasse 19 Bern",
+    image: "home/bild_6.png",
+    gallery: [ "home/bild_2.png", "home/bild_4.png", "home/bild_7.png" ],
+    description: "Gerechtigkeitsgass Design kuratiert Wohnaccessoires, Leuchten, Textilien und kleine Objekte von unabhaengigen Gestalterinnen. Am Ersten Advent zeigt der Laden Tischideen fuer Winteressen, reduzierte Dekoration und Geschenke fuer Menschen, die klare Formen moegen.",
+    specialities: [
+      "Tischdekorationen fuer Adventsessen zum Mitnehmen",
+      "Designberatung fuer kleine Wohnungen und Schaufenster",
+      "Limitierte Kerzenstaender aus pulverbeschichtetem Metall"
+    ],
+    products: [
+      [ "Sandstein Kerzenstaender", "Reduzierter Kerzenstaender aus Metall in warmem Sandsteinton, inspiriert von Berner Fassaden.", 44.00, [ "Einzeln", "2er Set" ], "2-3 Tage" ],
+      [ "Gerechtigkeitsgass Tablett", "Flaches Serviertablett aus geformtem Holz fuer Kaffee, Gebaeck oder Adventslicht.", 62.00, [ "Natur", "Schwarz" ], "3-5 Tage" ]
+    ]
+  },
+  {
     email: "brunngass.atelier@erster-advent-bern.ch",
     password: "bern-seed-2026",
     owner: "Selina Baumann",

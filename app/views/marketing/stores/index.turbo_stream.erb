@@ -1,0 +1,11 @@
+<%= turbo_stream.append "stores-list" do %>
+  <%= render partial: "marketing/stores/store_card",
+             collection: @businesses,
+             as: :business %>
+<% end %>
+
+<%= turbo_stream.replace "stores-load-more" do %>
+  <% if @has_more_stores %>
+    <%= render "marketing/stores/load_more", search_term: @search_term, next_page: @next_page %>
+  <% end %>
+<% end %>
