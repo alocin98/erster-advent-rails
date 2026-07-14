@@ -312,7 +312,7 @@ button:has(+ #popover-1:popover-open) .icon-up {
 
   /* Search pill: 85px tall, #F2F2F2, PJS Light 30px, placeholder 40% black */
   .search-pill {
-    @apply block w-full rounded-full border-2 border-transparent bg-[#F2F2F2]
+    @apply block w-full rounded-full border-2 border-transparent bg-[#dcdcdc]
       font-jakarta font-light text-black focus:border-black focus:outline-none;
     height: clamp(3.25rem, 4.43vw, 5.3125rem);
     padding-inline: clamp(1.25rem, 1.875vw, 2.25rem);

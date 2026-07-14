@@ -1,4 +1,7 @@
-<section class="h-[200px] md:h-[300px] xl:h-[480px] bg-primary" data-nav-boundary="bottom">
+<section
+  class="h-[200px] md:h-[300px] xl:h-[480px] bg-primary"
+  data-nav-boundary="bottom"
+>
 </section>
 <section class="page-container mt-10 md:mt-14 xl:mt-20 mb-8 md:mb-12">
   <h1 class="heading-serif"><b>Wir haben geöffnet</b><br>am Ersten Advent</h1>
@@ -9,14 +12,26 @@
       <%= search_field_tag :q,
       @search_term,
       id: "search-bar",
-      class: "search-pill pr-16 lg:pr-24 [&::-webkit-search-cancel-button]:appearance-none",
+      class:
+        "search-pill pr-16 lg:pr-24 [&::-webkit-search-cancel-button]:appearance-none",
       placeholder: "Nach Geschäft oder Kategorie suchen",
-      data: { search_bar_target: "input", action: "input->search-bar#toggleClear" } %>
-      <div class="absolute inset-y-0 right-5 lg:right-9 flex items-center gap-3">
-        <button type="button" class="hidden" data-search-bar-target="clear" data-action="click->search-bar#clear">
+      data: {
+        search_bar_target: "input",
+        action: "input->search-bar#toggleClear",
+      } %>
+      <div class=" absolute inset-y-0 right-5 lg:right-9 flex items-center gap-3 ">
+        <button
+          type="button"
+          class="hidden"
+          data-search-bar-target="clear"
+          data-action="click->search-bar#clear"
+        >
           <%= heroicon "x-mark", options: { class: "h-5 w-5 lg:h-7 lg:w-7 text-black" } %>
         </button>
-        <%= heroicon "magnifying-glass", options: { class: "h-5 w-5 lg:h-8 lg:w-8 text-black" } %>
+        <%= heroicon "magnifying-glass",
+        options: {
+          class: "h-5 w-5 lg:h-8 lg:w-8 text-black",
+        } %>
       </div>
     </div>
   <% end %>
@@ -27,7 +42,11 @@
   <% if @businesses.any? %>
     <div class="responsive-grid gap-y-12 md:gap-y-16 xl:gap-y-24">
       <% @businesses.each do |business| %>
-        <div class="col-span-4 md:col-span-4 lg:col-span-4 w-full flex flex-col items-start">
+        <div
+          class="
+            col-span-4 md:col-span-4 lg:col-span-4 w-full flex flex-col items-start
+          "
+        >
           <div class="relative w-full aspect-[4/3] rounded-[15px] overflow-hidden">
             <% if business.main_image.present? %>
               <%= image_tag business.main_image,
@@ -47,7 +66,11 @@
               </div>
             <% end %>
           </div>
-          <h2 class="font-jakarta font-bold text-xl lg:text-[32px] lg:leading-[40px] mt-5 lg:mt-6">
+          <h2
+            class="
+              font-jakarta font-bold text-xl lg:text-[32px] lg:leading-[40px] mt-5 lg:mt-6
+            "
+          >
             <%= business.business_name %>
           </h2>
           <% if business.address.present? %>
