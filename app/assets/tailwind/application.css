@@ -229,7 +229,7 @@ button:has(+ #popover-1:popover-open) .icon-up {
 
   /* Default body copy: Plus Jakarta Sans Light 24/40 */
   .text-body {
-    @apply font-jakarta font-light;
+    @apply font-jakarta font-light max-w-[674px];
     font-size: clamp(1rem, 1.25vw, 1.5rem);
     line-height: 1.667;
   }

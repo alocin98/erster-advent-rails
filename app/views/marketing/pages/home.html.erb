@@ -1,9 +1,16 @@
 <section
   data-hero
-  class="h-[100svh] bg-cover bg-center w-full flex flex-col justify-end fixed top-0 left-0 z-0"
+  class="
+    h-[100svh] bg-cover bg-center w-full flex flex-col justify-end fixed top-0
+    left-0 z-0
+  "
   style="background-image: url('<%= image_path('hero_image.png') %>');"
 >
-  <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-black/60"></div>
+  <div
+    class="
+      absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent to-black/60
+    "
+  ></div>
   <div class="page-container relative text-primary-content mb-12 lg:mb-20">
     <p class="text-lead">Noch
       <strong>
@@ -28,7 +35,8 @@
         <p class="mt-8 lg:mt-14">
           Entdecken Sie die Vielfalt der Inhabergeführten Geschäfte und
           liebevollen Gastronomiebetriebe, freuen Sie sich über Trouvaillen und
-          allerhand Einzigartiges. Wir freuen uns Sie «uf dr Gass» anzutreffen.
+          allerhand Einzigartiges. Wir freuen uns Sie «uf dr Gass»
+          anzutreffen.
         </p>
       </div>
       <%= link_to "Geschäfte entdecken",
@@ -40,7 +48,11 @@
   <section class="w-full py-section">
     <div class="page-container">
       <div class="responsive-grid gap-y-4 items-end">
-        <div class="col-span-2 md:col-span-4 lg:col-span-6 flex flex-col gap-3 sm:gap-4">
+        <div
+          class="
+            col-span-2 md:col-span-4 lg:col-span-6 flex flex-col gap-3 sm:gap-4
+          "
+        >
           <%= image_tag image_path("home/bild_1.png"),
           alt: "Erster Advent Bern",
           class: "w-full h-auto rounded-[15px]" %>
@@ -49,7 +61,11 @@
           class: "w-full h-auto rounded-[15px]" %>
         </div>
 
-        <div class="col-span-2 md:col-span-4 lg:col-span-6 flex flex-col gap-3 sm:gap-4">
+        <div
+          class="
+            col-span-2 md:col-span-4 lg:col-span-6 flex flex-col gap-3 sm:gap-4
+          "
+        >
           <%= image_tag image_path("home/bild_2.png"),
           alt: "Erster Advent Bern",
           class: "w-full h-auto rounded-[15px]" %>
@@ -73,21 +89,22 @@
         <div class="hidden md:block">
           <%= image_tag image_path("home/bild_6.png"),
           alt: "Erster Advent Bern",
-          class: "object-cover w-full aspect-square rounded-[15px]" %>
+          class:
+            "object-cover w-full aspect-square rounded-[15px] max-w-[748px] max-h-[748px]" %>
         </div>
 
         <div>
-          <h3 class="heading-serif mb-6 lg:mb-10"><b>Informationen</b><br>
+          <h3 class="heading-serif mb-6 lg:mb-10 lg:mt-10"><b>Informationen</b><br>
             für Besucherinnen und Besucher</h3>
           <p class="text-body">
             Die Untere Altstadt umfasst das in der idyllischen Aareschlaufe
-            eingebettete Gebiet vom Matte-Quartier bis zum Zytglogge. Im Gegensatz
-            zur Oberen Altstadt finden sich hier noch zahlreiche unabhängige und
-            eingesessene Geschäfte, Ateliers, Buchhandlungen, Handwerksbetriebe und
-            Galerien. Wer einzigartige Kleidungsstücke, in Bern hergestellten
-            Schmuck oder eine liebevoll sortierte Buchhandlung und Objekte mit
-            Geschichte schätzt, wird beim Schlendern durch die historischen Lauben
-            sicherlich fündig.
+            eingebettete Gebiet vom Matte-Quartier bis zum Zytglogge. Im
+            Gegensatz zur Oberen Altstadt finden sich hier noch zahlreiche
+            unabhängige und eingesessene Geschäfte, Ateliers, Buchhandlungen,
+            Handwerksbetriebe und Galerien. Wer einzigartige Kleidungsstücke,
+            in Bern hergestellten Schmuck oder eine liebevoll sortierte
+            Buchhandlung und Objekte mit Geschichte schätzt, wird beim
+            Schlendern durch die historischen Lauben sicherlich fündig.
           </p>
           <%= link_to "Teilnehmende Geschäfte entdecken",
           marketing_stores_path,
@@ -101,16 +118,16 @@
     <div class="page-container">
       <div class="split-section">
         <div>
-          <h3 class="heading-serif mb-6 lg:mb-10"><b>Informationen</b>
+          <h3 class="heading-serif mb-6 lg:mb-10 lg:mt-10"><b>Informationen</b>
             für Geschäfte und Gastronomiebetriebe</h3>
           <p class="text-body">
-            Die Aufforderung zur Anmeldung wird wie üblich nach den Sommerferien
-            verschickt. Bitte registrieren Sie sich über das Kontaktformular für
-            den Verteiler. Geschäfte der Unteren Altstadt beteiligen sich mit einem
-            pauschalen Teilnahmebeitrag von CHF 200. Aus damit zur Verfügung
-            stehenden Budget wird der Anlass weit über die Stadtgrenzen hinaus
-            beworben. Zudem werden damit auch attraktive Rahmenprogramme finanziert
-            und gefördert.
+            Die Aufforderung zur Anmeldung wird wie üblich nach den
+            Sommerferien verschickt. Bitte registrieren Sie sich über das
+            Kontaktformular für den Verteiler. Geschäfte der Unteren Altstadt
+            beteiligen sich mit einem pauschalen Teilnahmebeitrag von CHF 200.
+            Aus damit zur Verfügung stehenden Budget wird der Anlass weit über
+            die Stadtgrenzen hinaus beworben. Zudem werden damit auch
+            attraktive Rahmenprogramme finanziert und gefördert.
           </p>
           <%= link_to "Jetzt mein Geschäft anmelden",
           new_user_session_path,
@@ -136,8 +153,8 @@
       <p class="text-body lg:max-w-[1226px]">
         Der Erste Advent ist ein Anlass, der seit 30 Jahren Tradition hat, mit
         seinem Ursprung an der beschaulichen Postgasse. Benachbarte
-        Ladengeschäfte schlossen sich zusammen, um am Ersten Advent gemeinsam den
-        Besucherinnen und Besuchern auch die weniger frequentierten Gassen
+        Ladengeschäfte schlossen sich zusammen, um am Ersten Advent gemeinsam
+        den Besucherinnen und Besuchern auch die weniger frequentierten Gassen
         näherzubringen. Das Konzept wird mittlerweile von der gesamten Unteren
         Altstadt getragen und durch den Mitgliederbeitrag eines jeden einzelnen
         Geschäftes gestützt.
@@ -148,7 +165,8 @@
   <section class="w-full py-section pb-16 md:pb-20 lg:pb-28">
     <div class="page-container">
       <h3 class="heading-section mb-8 lg:mb-14"><em>Wissenswertes rund um den</em><br>
-        Ersten Advent <%= Date.today.year %></h3>
+        Ersten Advent
+        <%= Date.today.year %></h3>
 
       <%# TODO: Antworten mit dem Kunden abstimmen %>
       <% faqs = [
