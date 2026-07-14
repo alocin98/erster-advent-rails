@@ -6,9 +6,28 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
-# If running the rails server then create or migrate existing database
+# If running the rails server then create or migrate existing database.
 if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
+  if [ "${SKIP_DB_PREPARE:-false}" != "true" ]; then
+    attempts="${DB_PREPARE_RETRIES:-5}"
+
+    for attempt in $(seq 1 "$attempts"); do
+      echo "Preparing database before boot (attempt ${attempt}/${attempts})..."
+
+      if ./bin/rails db:prepare; then
+        break
+      fi
+
+      if [ "$attempt" -eq "$attempts" ]; then
+        echo "Database preparation failed after ${attempts} attempts."
+        exit 1
+      fi
+
+      sleep 5
+    done
+  else
+    echo "Skipping database preparation because SKIP_DB_PREPARE=true."
+  fi
 fi
 
 exec "${@}"
