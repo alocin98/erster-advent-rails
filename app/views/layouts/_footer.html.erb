@@ -1,65 +1,98 @@
-<footer class="w-full py-16 md:py-20">
+<footer class="relative z-[5] w-full bg-base-200 py-16 md:py-20 lg:py-28">
   <div class="page-container">
-    <div class="responsive-grid gap-y-8 md:gap-y-12 text-center md:text-left">
+    <div class="responsive-grid gap-y-10 md:gap-y-12">
 
-      <div class="col-span-4 md:col-span-4 lg:col-span-6 flex flex-col gap-8">
+      <div
+        class="
+          col-span-4 md:col-span-4 lg:col-span-6 flex flex-col gap-8 lg:gap-12
+        "
+      >
         <section>
-          <h4 class="text-xl font-bold mb-3">Kontakt</h4>
-          <p>
-            Wir stehen allen Geschäften, den Anwohnerinnen und Anwohnern und den
-            Besucherinnen und Besuchern gerne für Fragen und Anregungen zur
+          <h4 class="heading-section mb-3 lg:mb-5">Kontakt</h4>
+          <p class="text-body">
+            Wir stehen allen Geschäften, den Anwohnerinnen und Anwohnern und
+            den Besucherinnen und Besuchern gerne für Fragen und Anregungen zur
             Verfügung.
           </p>
         </section>
         <section>
-          <h4 class="text-xl font-bold mb-3">Verein Erster Advent Bern</h4>
-          <p>
-            Wir stehen allen Geschäften, den Anwohnerinnen und Anwohnern und den
-            Besucherinnen und Besuchern gerne für Fragen und Anregungen zur
-            Verfügung.
+          <h4
+            class="
+              font-jakarta font-extrabold text-lg lg:text-[32px] lg:leading-[40px] mb-2
+              lg:mb-3
+            "
+          >
+            Verein<br>Erster Advent Bern
+          </h4>
+          <p class="text-body">
+            Postlagernd<br>
+            3000 Bern 8<br>
+            <%= mail_to "info@erster-advent-bern.ch",
+            "info@erster-advent-bern.ch",
+            class: "hover:text-secondary" %>
           </p>
         </section>
         <section>
-          <h4 class="text-xl font-bold mb-3">Vertreten durch</h4>
-          <p>
+          <h4
+            class="
+              font-jakarta font-extrabold text-lg lg:text-[32px] lg:leading-[40px] mb-2
+              lg:mb-3
+            "
+          >
+            Vertreten durch
+          </h4>
+          <p class="text-body">
             Kargo Kommunikation<br>
             Tel. 031 311 76 66
           </p>
         </section>
       </div>
 
-      <div class="col-span-4 md:col-span-4 lg:col-span-6 flex flex-col gap-8">
-        <section>
-          Im Namen aller Geschäfte und des Vereins,<b>
-            danken wir den grosszügigen Gönnerbeiträgen unserer langjährigen
+      <div
+        class="
+          col-span-4 md:col-span-4 lg:col-span-6 flex flex-col gap-8 lg:gap-12
+        "
+      >
+        <section
+          class="
+            font-frank font-light text-2xl lg:text-[40px] lg:leading-[55px]
+          "
+        >
+          Im Namen aller Geschäfte und des Vereins,
+          <b class="font-jakarta font-extrabold">danken wir den grosszügigen Gönnerbeiträgen unserer langjährigen
             Unterstützerinnen.</b>
         </section>
 
-        <section class="flex flex-wrap items-center justify-center md:justify-start gap-6">
+        <section class="flex flex-wrap items-center gap-8 lg:gap-12">
           <img
             src="<%= image_path('footer/passive_attack.png') %>"
             alt="Passive Attack Logo"
-            class="w-20 sm:w-24 h-auto"
+            class="w-20 sm:w-24 lg:w-28 h-auto"
           >
 
           <img
             src="<%= image_path('footer/burgergemeinde_bern.png') %>"
             alt="Burgergemeinde Bern Logo"
-            class="w-20 sm:w-24 h-auto"
+            class="w-20 sm:w-24 lg:w-28 h-auto"
           >
 
           <img
             src="<%= image_path('footer/berncity.png') %>"
             alt="BernCity Logo"
-            class="w-20 sm:w-24 h-auto"
+            class="w-20 sm:w-24 lg:w-28 h-auto"
           >
 
           <img
             src="<%= image_path('footer/aquaprint.png') %>"
             alt="Aquaprint Logo"
-            class="w-20 sm:w-24 h-auto"
+            class="w-20 sm:w-24 lg:w-28 h-auto"
           >
         </section>
+
+        <p class="text-body mt-auto">
+          © Verein Erster Advent Bern,
+          <%= Date.today.year %>
+        </p>
       </div>
 
     </div>

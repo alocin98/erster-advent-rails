@@ -61,6 +61,16 @@
   --spacing-content-width: 1640px;
 
   --font-jakarta: "Plus Jakarta Sans", sans-serif;
+  --font-frank: "Frank Ruhl Libre", serif;
+
+  /*
+   * Spacing system, from the 1920px XD artboards:
+   * - "section": half the ~140px rhythm between sections (two adjacent
+   *   sections' paddings add up to the full gap)
+   * - "gutter-wide": the 80px gap between image and text in split sections
+   */
+  --spacing-section: clamp(2rem, 3.65vw, 4.375rem);
+  --spacing-gutter-wide: clamp(1.5rem, 4.17vw, 5rem);
 }
 
 button:has(+ #popover-1:popover-open) .icon-down {
@@ -120,8 +130,207 @@ button:has(+ #popover-1:popover-open) .icon-up {
       xl:py-32;
   }
 
-  .btn-top-nav {
-    @apply btn btn-ghost bg-base-200 hover:bg-black hover:text-primary-content rounded-4xl border-1 border-[#C6C6C6] font-light min-w-[200px] w-fit shrink-0 whitespace-nowrap hover:border-1 hover:border-black;
+  /*
+   * ------------------------------------------------------------------
+   * Typography components, taken 1:1 from the 1920px XD artboards and
+   * scaled fluidly down to mobile (px value at 1920 = vw / 19.2).
+   * ------------------------------------------------------------------
+   */
+
+  /* Hero display line: Frank Ruhl Libre Light 120/120,
+     bold spans: Plus Jakarta Sans Bold 110px */
+  .heading-hero {
+    @apply font-frank font-light;
+    font-size: clamp(2.5rem, 6.25vw, 7.5rem);
+    line-height: 1;
+  }
+  .heading-hero b,
+  .heading-hero strong {
+    @apply font-jakarta font-bold;
+    font-size: 0.9167em;
+  }
+
+  /* Serif section heading: Frank Ruhl Libre Light 44/56,
+     bold spans: Plus Jakarta Sans Bold 40px */
+  .heading-serif {
+    @apply font-frank font-light;
+    font-size: clamp(1.625rem, 2.29vw, 2.75rem);
+    line-height: 1.27;
+  }
+  .heading-serif b,
+  .heading-serif strong {
+    @apply font-jakarta font-bold;
+    font-size: 0.909em;
+  }
+
+  /* Sans section heading: Plus Jakarta Sans Bold 40/56,
+     serif accents (e.g. "Über den"): Frank Ruhl Libre Light 44px via <em> */
+  .heading-section {
+    @apply font-jakarta font-bold;
+    font-size: clamp(1.5rem, 2.083vw, 2.5rem);
+    line-height: 1.4;
+  }
+  .heading-section em {
+    @apply font-frank font-light not-italic;
+    font-size: 1.1em;
+  }
+
+  /* Big serif address line on store detail: Frank Ruhl Libre Light 90/110 */
+  .heading-address {
+    @apply font-frank font-light;
+    font-size: clamp(2rem, 4.69vw, 5.625rem);
+    line-height: 1.22;
+  }
+
+  /* Store name on detail page: Plus Jakarta Sans Bold 110px */
+  .heading-store {
+    @apply font-jakarta font-bold break-words;
+    font-size: clamp(2.5rem, 5.73vw, 6.875rem);
+    line-height: 1.05;
+  }
+
+  /* Serif lead/intro copy: Frank Ruhl Libre Light 44/60,
+     bold spans: Plus Jakarta Sans Bold 40px */
+  .text-lead {
+    @apply font-frank font-light;
+    font-size: clamp(1.375rem, 2.29vw, 2.75rem);
+    line-height: 1.36;
+  }
+  .text-lead b,
+  .text-lead strong {
+    @apply font-jakarta font-bold;
+    font-size: 0.909em;
+  }
+
+  /* Default body copy: Plus Jakarta Sans Light 24/40 */
+  .text-body {
+    @apply font-jakarta font-light;
+    font-size: clamp(1rem, 1.25vw, 1.5rem);
+    line-height: 1.667;
+  }
+
+  /* Large body copy (store detail): Plus Jakarta Sans Light 30/44 */
+  .text-body-lg {
+    @apply font-jakarta font-light;
+    font-size: clamp(1.0625rem, 1.5625vw, 1.875rem);
+    line-height: 1.467;
+  }
+
+  /* "Mehr erfahren" links: Plus Jakarta Sans Bold 24/32, red */
+  .link-more {
+    @apply font-jakarta font-bold text-secondary;
+    font-size: clamp(1rem, 1.25vw, 1.5rem);
+    line-height: 1.333;
+  }
+
+  /*
+   * ------------------------------------------------------------------
+   * Buttons
+   * ------------------------------------------------------------------
+   */
+
+  /* Red outline CTA pill: 78px tall, radius 45, 1px #D03036 border,
+     Plus Jakarta Sans Regular 30/36 */
+  .btn-cta {
+    @apply inline-flex w-fit max-w-full items-center justify-center
+      whitespace-nowrap rounded-full border border-secondary bg-transparent
+      text-center font-jakarta font-normal text-secondary transition-colors
+      hover:bg-secondary hover:text-white;
+    height: clamp(3rem, 4.06vw, 4.875rem);
+    padding-inline: clamp(1.5rem, 2.083vw, 2.5rem);
+    font-size: clamp(1.0625rem, 1.5625vw, 1.875rem);
+    line-height: 1.2;
+  }
+
+  /* White header/nav pill: 56px tall, radius full, 1px #C6C6C6 border,
+     Plus Jakarta Sans Light 25/36 */
+  .btn-navbar {
+    @apply inline-flex w-fit shrink-0 items-center justify-between gap-3
+      whitespace-nowrap rounded-full border border-[#C6C6C6] bg-white
+      text-black font-jakarta font-light transition-colors
+      hover:border-black hover:bg-black hover:text-white;
+    height: clamp(2.5rem, 2.917vw, 3.5rem);
+    padding-inline: clamp(1rem, 1.3vw, 1.5625rem);
+    font-size: clamp(0.9375rem, 1.3vw, 1.5625rem);
+  }
+
+  /*
+   * ------------------------------------------------------------------
+   * Tags, search, accordion
+   * ------------------------------------------------------------------
+   */
+
+  /* Category tag on store cards: black pill 44px, PJS Light 24/32 */
+  .tag-pill {
+    @apply inline-flex w-fit items-center whitespace-nowrap rounded-full
+      bg-black text-white font-jakarta font-light;
+    height: clamp(1.75rem, 2.29vw, 2.75rem);
+    padding-inline: clamp(0.75rem, 1.04vw, 1.25rem);
+    font-size: clamp(0.8125rem, 1.25vw, 1.5rem);
+  }
+
+  /* Larger tag on store detail: black pill 52px, PJS Light 30px */
+  .tag-pill-lg {
+    @apply inline-flex w-fit items-center whitespace-nowrap rounded-full
+      bg-black text-white font-jakarta font-light;
+    height: clamp(2rem, 2.71vw, 3.25rem);
+    padding-inline: clamp(0.875rem, 1.25vw, 1.5rem);
+    font-size: clamp(0.875rem, 1.5625vw, 1.875rem);
+  }
+
+  /* Item in the header dropdown: PJS Light 20px black, hover bold red */
+  .menu-item-nav {
+    @apply rounded-none bg-transparent px-0 py-1.5 font-jakarta font-light
+      text-black text-base lg:text-[20px] hover:bg-transparent hover:font-bold
+      hover:text-secondary active:!bg-transparent active:!text-secondary;
+  }
+
+  /* Search pill: 85px tall, #F2F2F2, PJS Light 30px, placeholder 40% black */
+  .search-pill {
+    @apply block w-full rounded-full border-2 border-transparent bg-[#F2F2F2]
+      font-jakarta font-light text-black focus:border-black focus:outline-none;
+    height: clamp(3.25rem, 4.43vw, 5.3125rem);
+    padding-inline: clamp(1.25rem, 1.875vw, 2.25rem);
+    font-size: clamp(1rem, 1.5625vw, 1.875rem);
+  }
+  .search-pill::placeholder {
+    @apply text-black/40;
+  }
+
+  /* "Besonderes am 1. Advent" list on store detail:
+     PJS Bold 40/56 items with thin #707070 rules between them */
+  .specialities-list :is(p, li) {
+    @apply font-jakarta font-bold border-b border-[#707070] py-2 lg:py-3;
+    font-size: clamp(1.125rem, 2.083vw, 2.5rem);
+    line-height: 1.4;
+  }
+  .specialities-list ul,
+  .specialities-list ol {
+    @apply list-none pl-0;
+  }
+
+  /* Image + text split section (e.g. the "Informationen" blocks on home):
+     two equal columns with the design's 80px wide gutter */
+  .split-section {
+    @apply grid items-start gap-y-8 md:grid-cols-2 gap-x-gutter-wide;
+  }
+
+  /* FAQ accordion row: 1px black rules, title PJS Light 30/44 in #D33D43 */
+  .accordion-row {
+    @apply border-t border-black last:border-b;
+  }
+  .accordion-title {
+    @apply font-jakarta font-light text-[#D33D43];
+    font-size: clamp(1.0625rem, 1.5625vw, 1.875rem);
+    line-height: 1.467;
+  }
+  /* Thin plus icon on the right, vertically centered like in the XD file */
+  .collapse-plus > .accordion-title::after {
+    @apply text-black font-extralight;
+    font-size: clamp(1.75rem, 2.29vw, 2.75rem);
+    top: 50%;
+    right: 0.25rem;
+    transform: translateY(-50%);
   }
 
   .disabled-link {
@@ -130,13 +339,5 @@ button:has(+ #popover-1:popover-open) .icon-up {
     color: gray; /* optional styling */
     text-decoration: none; /* optional: remove underline */
     opacity: 0.6; /* optional: faded look */
-  }
-
-  .btn-cta {
-    @apply btn btn-outline btn-secondary font-normal
-      mt-8 h-[54px] w-full max-w-[280px] rounded-[28px] text-xl
-      sm:mt-10 sm:h-[62px] sm:max-w-[320px] sm:rounded-[34px] sm:text-[23px]
-      md:mt-12 md:h-[70px] md:max-w-[350px] md:rounded-[40px] md:text-[26px]
-      lg:mt-14 lg:h-[78px] lg:max-w-[392px] lg:rounded-[45px] lg:text-[30px];
   }
 }

@@ -1,61 +1,68 @@
-<section class="h-[300px] bg-primary">
+<section class="h-[200px] md:h-[300px] xl:h-[480px] bg-primary">
 </section>
-<section class="page-container mt-12 md:mt-16 mb-8 md:mb-10">
-  <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold">Wir haben geöffnet</h1>
-  <p class="text-2xl sm:text-3xl md:text-4xl">am Ersten Advent</p>
-
+<section class="page-container mt-10 md:mt-14 xl:mt-20 mb-8 md:mb-12">
+  <h1 class="heading-serif"><b>Wir haben geöffnet</b><br>am Ersten Advent</h1>
 </section>
 <section class="page-container items-start">
-  <%= form_with url: marketing_stores_path, method: :get, local: true, html: { class: "w-full max-w-3xl" } do %>
+  <%= form_with url: marketing_stores_path, method: :get, local: true, html: { class: "w-full lg:max-w-[1088px]" } do %>
     <div class="relative" data-controller="search-bar">
       <%= search_field_tag :q,
       @search_term,
       id: "search-bar",
-      class: "block p-4 pr-16 w-full text-sm rounded-4xl bg-gray-200 border-2 border-transparent focus:border-black focus:outline-none [&::-webkit-search-cancel-button]:appearance-none",
+      class: "search-pill pr-16 lg:pr-24 [&::-webkit-search-cancel-button]:appearance-none",
       placeholder: "Nach Geschäft oder Kategorie suchen",
       data: { search_bar_target: "input", action: "input->search-bar#toggleClear" } %>
-      <div class="absolute inset-y-0 right-4 flex items-center gap-2">
+      <div class="absolute inset-y-0 right-5 lg:right-9 flex items-center gap-3">
         <button type="button" class="hidden" data-search-bar-target="clear" data-action="click->search-bar#clear">
-          <%= heroicon "x-mark", options: { class: "h-5 w-5 text-black" } %>
+          <%= heroicon "x-mark", options: { class: "h-5 w-5 lg:h-7 lg:w-7 text-black" } %>
         </button>
-        <%= heroicon "magnifying-glass", options: { class: "h-5 w-5 text-gray-500" } %>
+        <%= heroicon "magnifying-glass", options: { class: "h-5 w-5 lg:h-8 lg:w-8 text-black" } %>
       </div>
     </div>
   <% end %>
 </section>
 
-<section class="page-container mt-10 mb-20 md:mb-28 lg:mb-32">
+<section class="page-container mt-12 md:mt-16 xl:mt-24 mb-20 md:mb-28 lg:mb-32">
 
   <% if @businesses.any? %>
-    <div class="responsive-grid gap-y-8 md:gap-y-12">
+    <div class="responsive-grid gap-y-12 md:gap-y-16 xl:gap-y-24">
       <% @businesses.each do |business| %>
-        <div class="col-span-4 md:col-span-4 lg:col-span-4 w-full">
-          <div class="rounded-lg h-64 overflow-hidden">
+        <div class="col-span-4 md:col-span-4 lg:col-span-4 w-full flex flex-col items-start">
+          <div class="relative w-full aspect-[4/3] rounded-[15px] overflow-hidden">
             <% if business.main_image.present? %>
               <%= image_tag business.main_image,
               alt: business.business_name,
               class: "object-cover object-center h-full w-full" %>
             <% else %>
-              <div
-                class="
-                  flex h-full w-full items-center justify-center bg-primary text-gray-400 text-sm
-                "
-              >
+              <div class="flex h-full w-full items-center justify-center bg-primary">
                 <%= image_tag "logo.png", alt: "Logo", class: "h-16" %>
               </div>
             <% end %>
+            <% categories = Array(business.categories).compact_blank %>
+            <% if categories.any? %>
+              <div class="absolute top-5 left-5 flex flex-wrap gap-2">
+                <% categories.each do |tag| %>
+                  <span class="tag-pill"><%= tag %></span>
+                <% end %>
+              </div>
+            <% end %>
           </div>
-          <h2 class="text-xl font-medium title-font text-black mt-5"><%= business.business_name %></h2>
-          <p class=" text-base text-black leading-relaxed mt-2 line-clamp-5 "><%= business.description&.to_plain_text %></p>
-          <%= link_to marketing_store_path(business), class: "text-secondary inline-flex items-center mt-3" do %>
-            Mehr erfahren
+          <h2 class="font-jakarta font-bold text-xl lg:text-[32px] lg:leading-[40px] mt-5 lg:mt-6">
+            <%= business.business_name %>
+          </h2>
+          <% if business.address.present? %>
+            <p class="text-body mt-1 lg:mt-2"><%= business.address %></p>
           <% end %>
+          <p class="text-body mt-3 lg:mt-4 line-clamp-3"><%= business.description&.to_plain_text %></p>
+          <%= link_to "Mehr erfahren",
+          marketing_store_path(business),
+          class: "link-more mt-4 lg:mt-6 hover:underline" %>
         </div>
       <% end %>
     </div>
 
   <% else %>
-    <p class="text-center text-gray-600">Aktuell sind noch keine Geschäfte eingetragen.</p>
+    <p class="text-body text-center">Aktuell sind noch keine Geschäfte eingetragen.</p>
   <% end %>
 
 </section>
