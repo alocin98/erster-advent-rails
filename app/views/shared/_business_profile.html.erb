@@ -19,15 +19,17 @@
 <% end %>
 
 <% if gallery_images.any? %>
-  <section class="mt-8 md:mt-12 lg:mt-16 overflow-x-auto">
-    <div class="page-container">
-      <div class="flex flex-row gap-4 w-max">
-        <% gallery_images.each do |image| %>
-          <div class="rounded-[20px] overflow-hidden bg-base-200 h-64 md:h-96 xl:h-[700px]">
-            <%= image_tag image, class: "h-full w-auto max-w-none object-cover", alt: business.business_name %>
-          </div>
-        <% end %>
-      </div>
+  <% gallery_repeat_count = [(8.0 / gallery_images.size).ceil, 2].max %>
+  <% repeated_gallery_images = gallery_images * gallery_repeat_count %>
+  <section class="business-gallery-slider mt-8 md:mt-12 lg:mt-16 overflow-hidden" data-controller="gallery-slider">
+    <div class="flex w-max flex-row will-change-transform" data-gallery-slider-target="track">
+      <% repeated_gallery_images.each_with_index do |image, index| %>
+        <div class="overflow-hidden bg-base-200 h-64 md:h-96 xl:h-[700px]">
+          <%= image_tag image,
+                        class: "h-full w-auto max-w-none object-cover",
+                        alt: index < gallery_images.size ? business.business_name : "" %>
+        </div>
+      <% end %>
     </div>
   </section>
 <% end %>

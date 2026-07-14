@@ -322,12 +322,27 @@ button:has(+ #popover-1:popover-open) .icon-up {
     @apply text-black/40;
   }
 
+  .business-gallery-slider {
+    overscroll-behavior-x: none;
+    scrollbar-width: none;
+    touch-action: pan-y;
+    -ms-overflow-style: none;
+  }
+  .business-gallery-slider::-webkit-scrollbar {
+    display: none;
+  }
+
   /* "Besonderes am 1. Advent" list on store detail:
-     PJS Bold 40/56 items with thin #707070 rules between them */
+     PJS Bold 40/56 items with short #D9D9D9 leader lines */
   .specialities-list :is(p, li) {
-    @apply font-jakarta font-bold border-b border-[#707070] py-2 lg:py-3;
+    @apply flex items-center gap-3 font-jakarta font-bold;
     font-size: clamp(1.125rem, 2.083vw, 2.5rem);
     line-height: 1.4;
+  }
+  .specialities-list :is(p, li)::before {
+    @apply block shrink-0 bg-[#505050] content-[""];
+    width: clamp(1.5rem, 2.08vw, 2.5rem);
+    height: 1px;
   }
   .specialities-list ul,
   .specialities-list ol {
