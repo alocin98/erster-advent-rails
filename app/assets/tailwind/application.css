@@ -59,6 +59,8 @@
   --spacing-header-height: 32px;
   --spacing-content-height: calc(100vh - 48px);
   --spacing-content-width: 1024pxpx;
+
+  --font-jakarta: "Plus Jakarta Sans", sans-serif;
 }
 
 button:has(+ #popover-1:popover-open) .icon-down {
@@ -70,6 +72,10 @@ button:has(+ #popover-1:popover-open) .icon-up {
 
 @utility badge {
   @apply rounded-full font-light;
+}
+
+@utility special-bold {
+  @apply font-bold font-jakarta;
 }
 
 @layer components {
@@ -90,5 +96,9 @@ button:has(+ #popover-1:popover-open) .icon-up {
     color: gray; /* optional styling */
     text-decoration: none; /* optional: remove underline */
     opacity: 0.6; /* optional: faded look */
+  }
+
+  .btn-cta {
+    @apply btn btn-outline btn-secondary font-normal mt-8 sm:mt-10 md:mt-12 lg:mt-14 rounded-[28px] sm:rounded-[34px] md:rounded-[40px] lg:rounded-[45px] w-[260px] sm:w-[310px] md:w-[350px] lg:w-[392px] h-[54px] sm:h-[62px] md:h-[70px] lg:h-[78px] text-[20px] sm:text-[23px] md:text-[26px] lg:text-[30px];
   }
 }
