@@ -1,4 +1,4 @@
-<section class="h-[200px] md:h-[300px] xl:h-[480px] bg-primary">
+<section class="h-[200px] md:h-[300px] xl:h-[480px] bg-primary" data-nav-boundary="bottom">
 </section>
 <section class="page-container mt-10 md:mt-14 xl:mt-20 mb-8 md:mb-12">
   <h1 class="heading-serif"><b>Wir haben geöffnet</b><br>am Ersten Advent</h1>
@@ -35,7 +35,7 @@
               class: "object-cover object-center h-full w-full" %>
             <% else %>
               <div class="flex h-full w-full items-center justify-center bg-primary">
-                <%= image_tag "logo.png", alt: "Logo", class: "h-16" %>
+                <%= image_tag "logo.svg", alt: "Logo", class: "h-16" %>
               </div>
             <% end %>
             <% categories = Array(business.categories).compact_blank %>

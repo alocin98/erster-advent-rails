@@ -88,6 +88,25 @@ button:has(+ #popover-1:popover-open) .icon-up {
   @apply font-bold font-jakarta;
 }
 
+/*
+ * Expanded (hero) navbar geometry, from the 1920px XD artboards:
+ * logo and nav pills sit 90px below the top edge; the logo itself is
+ * 160px tall on desktop. The scroll-nav controller reads these values
+ * to know where the bottom of the logo sits (see scroll_nav_controller.js).
+ */
+:root {
+  --nav-top-offset: clamp(1.25rem, 4.6875vw, 5.625rem);
+  --nav-logo-height: 7rem;
+  --nav-small-height: 5rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nav-logo-height: 10rem;
+    --nav-small-height: 8.75rem;
+  }
+}
+
 @layer components {
   .full-flex {
     @apply flex flex-col w-full;

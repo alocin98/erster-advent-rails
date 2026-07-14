@@ -9,11 +9,13 @@
   <% end %>
 </section>
 
-<%= render "shared/business_profile", business: @business, images: @images do %>
+<div data-nav-boundary>
+  <%= render "shared/business_profile", business: @business, images: @images do %>
   <% if current_user&.id == @owner&.id %>
     <%= link_to edit_app_mystore_path, class: "btn btn-ghost btn-circle" do %>
       <span class="sr-only">Geschäft bearbeiten</span>
       <%= heroicon "pencil-square", options: { class: "h-8 w-8" } %>
     <% end %>
   <% end %>
-<% end %>
+  <% end %>
+</div>

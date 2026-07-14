@@ -1,9 +1,10 @@
 <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
 <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-<%= favicon_link_tag "logo.png" %>
+<%= favicon_link_tag "logo.svg", type: "image/svg+xml" %>
 
-<link rel="icon" href="<%= asset_path("logo.png") %>" type="image/png">
+<link rel="icon" href="<%= asset_path("logo.svg") %>" type="image/svg+xml">
+<%# Safari/iOS does not support SVG apple-touch-icons, keep the PNG here %>
 <link rel="apple-touch-icon" href="<%=asset_path("logo.png") %>">
 
 <%# Includes all stylesheet files in app/assets/stylesheets %>
