@@ -1,13 +1,13 @@
 <% categories = Array(business.categories).compact_blank %>
 <% gallery_images = Array(images).compact_blank %>
 
-<section class="content-container flex flex-row justify-between items-baseline">
-  <h1 class=" text-3xl md:text-5xl mt-10 font-bold"><%= business.business_name %></h1>
+<section class="page-container flex flex-row justify-between items-baseline">
+  <h1 class="text-3xl sm:text-4xl md:text-5xl mt-10 font-bold"><%= business.business_name %></h1>
   <div class="ml-6 flex items-center gap-4">
     <%= yield if block_given? %>
   </div>
 </section>
-<section class="content-container mt-5 md:mb-5">
+<section class="page-container mt-5 md:mb-5">
   <% if categories.present? %>
     <div class="flex flex-wrap gap-1 text-sm text-base-content/60 mb-6">
       <% categories.each do |tag| %>
@@ -17,9 +17,9 @@
   <% end %>
 </section>
 
-<section class="content-container my-3 md:my-10 overflow-x-scroll">
+<section class="page-container my-3 md:my-10 overflow-x-auto">
   <% if gallery_images.any? %>
-    <div class="flex flex-row overflow-x-scroll justify-center min-w-screen w-max">
+    <div class="flex flex-row gap-4 w-max mx-auto">
       <% gallery_images.each do |image| %>
         <div class="rounded-xl overflow-hidden bg-base-200 h-96">
 
@@ -40,8 +40,8 @@
 </section>
 
 <% if business.address.present? %>
-  <section class="content-container my-5 ">
-    <h3 class="text-2xl md:text-4xl font-light">
+  <section class="page-container my-5 ">
+    <h3 class="text-2xl sm:text-3xl md:text-4xl font-light">
       <%= business.address %>
     </h3>
   </section>
@@ -49,17 +49,17 @@
 <% end %>
 
 <% if business.first_advent_specialities.present? %>
-  <section class="content-container md:my-5">
+  <section class="page-container md:my-5">
     <h3 class="text-xl mb-2"><b>Besonderes am</b>
       1. Advent</h3>
     <p><%= business.first_advent_specialities %></p>
   </section>
 <% end %>
-<section class="content-container md:my-5 list-disc">
+<section class="page-container md:my-5 list-disc">
   <p><%= business.description %></p>
 </section>
 
-<section class="content-container my-5">
+<section class="page-container my-5">
   <% if business.phone.present? %>
     <p class="font-bold">
       Tel:

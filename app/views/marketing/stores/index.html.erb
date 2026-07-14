@@ -1,11 +1,11 @@
 <section class="h-[300px] bg-primary">
 </section>
-<section class="content-container mt-16 mb-10 text-3xl">
-  <h1 class="font-bold">Wir haben geöffnet</h1>
-  <p>am Ersten Advent</p>
+<section class="page-container mt-12 md:mt-16 mb-8 md:mb-10">
+  <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold">Wir haben geöffnet</h1>
+  <p class="text-2xl sm:text-3xl md:text-4xl">am Ersten Advent</p>
 
 </section>
-<section class="content-container items-start">
+<section class="page-container items-start">
   <%= form_with url: marketing_stores_path, method: :get, local: true, html: { class: "w-full max-w-3xl" } do %>
     <div class="relative" data-controller="search-bar">
       <%= search_field_tag :q,
@@ -24,12 +24,12 @@
   <% end %>
 </section>
 
-<section class="content-container mt-10 mb-32">
+<section class="page-container mt-10 mb-20 md:mb-28 lg:mb-32">
 
   <% if @businesses.any? %>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="responsive-grid gap-y-8 md:gap-y-12">
       <% @businesses.each do |business| %>
-        <div class="w-full">
+        <div class="col-span-4 md:col-span-4 lg:col-span-4 w-full">
           <div class="rounded-lg h-64 overflow-hidden">
             <% if business.main_image.present? %>
               <%= image_tag business.main_image,

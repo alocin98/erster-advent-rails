@@ -58,7 +58,7 @@
 @theme {
   --spacing-header-height: 32px;
   --spacing-content-height: calc(100vh - 48px);
-  --spacing-content-width: 1024pxpx;
+  --spacing-content-width: 1640px;
 
   --font-jakarta: "Plus Jakarta Sans", sans-serif;
 }
@@ -82,8 +82,42 @@ button:has(+ #popover-1:popover-open) .icon-up {
   .full-flex {
     @apply flex flex-col w-full;
   }
-  .content-container {
-    @apply max-w-[1024px] w-full mx-auto px-4 lg:px-0;
+
+  /*
+   * Global layout grid, derived from the 1920px XD artboard:
+   * 1640px max content width, 12 columns / 16px gutter on desktop,
+   * 8 columns on tablet, 4 columns on mobile.
+   */
+  .page-container {
+    @apply mx-auto w-full max-w-[1640px]
+      px-5
+      sm:px-8
+      md:px-12
+      lg:px-16
+      xl:px-20
+      2xl:px-0;
+  }
+
+  /* When containers nest (e.g. a partial with its own container rendered
+     inside an already-contained layout), the inner one collapses to a plain
+     full-width block so padding and max-width are applied exactly once. */
+  .page-container .page-container {
+    @apply max-w-none px-0;
+  }
+
+  .responsive-grid {
+    @apply grid
+      grid-cols-4
+      gap-x-4
+      md:grid-cols-8
+      lg:grid-cols-12;
+  }
+
+  .section-spacing {
+    @apply py-16
+      md:py-20
+      lg:py-28
+      xl:py-32;
   }
 
   .btn-top-nav {
@@ -99,6 +133,10 @@ button:has(+ #popover-1:popover-open) .icon-up {
   }
 
   .btn-cta {
-    @apply btn btn-outline btn-secondary font-normal mt-8 sm:mt-10 md:mt-12 lg:mt-14 rounded-[28px] sm:rounded-[34px] md:rounded-[40px] lg:rounded-[45px] w-[260px] sm:w-[310px] md:w-[350px] lg:w-[392px] h-[54px] sm:h-[62px] md:h-[70px] lg:h-[78px] text-[20px] sm:text-[23px] md:text-[26px] lg:text-[30px];
+    @apply btn btn-outline btn-secondary font-normal
+      mt-8 h-[54px] w-full max-w-[280px] rounded-[28px] text-xl
+      sm:mt-10 sm:h-[62px] sm:max-w-[320px] sm:rounded-[34px] sm:text-[23px]
+      md:mt-12 md:h-[70px] md:max-w-[350px] md:rounded-[40px] md:text-[26px]
+      lg:mt-14 lg:h-[78px] lg:max-w-[392px] lg:rounded-[45px] lg:text-[30px];
   }
 }

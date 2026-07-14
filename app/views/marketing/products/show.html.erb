@@ -1,10 +1,10 @@
-<div class="min-h-screen bg-base-200 py-12 px-6">
-  <div class="max-w-5xl mx-auto space-y-8">
+<div class="min-h-screen bg-base-200 py-16 md:py-20">
+  <div class="page-container space-y-8">
     <%= link_to "Zurück zur Übersicht", marketing_products_path, class: "btn btn-ghost" %>
 
     <section class="card bg-base-100 shadow-xl">
-      <div class="card-body grid gap-8 md:grid-cols-2">
-        <div class="space-y-4">
+      <div class="card-body responsive-grid gap-y-8">
+        <div class="col-span-4 md:col-span-4 lg:col-span-6 space-y-4">
           <% if @product.main_product_image.present? %>
             <figure class="aspect-[4/5] rounded-2xl overflow-hidden bg-base-200">
               <%= image_tag @product.main_product_image, class: "w-full h-full object-cover", alt: @product.title %>
@@ -22,12 +22,12 @@
           <% end %>
         </div>
 
-        <div class="flex flex-col gap-6">
+        <div class="col-span-4 md:col-span-4 lg:col-span-6 flex flex-col gap-6">
           <header class="space-y-2">
             <span class="text-sm uppercase tracking-wide opacity-60">
               <%= @seller&.business&.business_name || "Direkt von Erster Advent" %>
             </span>
-            <h1 class="text-4xl font-bold tracking-tight"><%= @product.title %></h1>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight"><%= @product.title %></h1>
             <p class="opacity-75"><%= simple_format(@product.description) %></p>
           </header>
 
@@ -66,9 +66,9 @@
         <header class="mb-4">
           <h2 class="text-2xl font-semibold">Weitere Produkte</h2>
         </header>
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div class="responsive-grid gap-y-6">
           <% @related_products.each do |product| %>
-            <article class="card bg-base-100 shadow">
+            <article class="col-span-4 md:col-span-4 lg:col-span-3 card bg-base-100 shadow">
               <% if product.main_product_image.present? %>
                 <figure class="aspect-square overflow-hidden">
                   <%= image_tag product.main_product_image, class: "w-full h-full object-cover", alt: product.title %>

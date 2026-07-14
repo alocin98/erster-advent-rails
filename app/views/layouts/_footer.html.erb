@@ -1,68 +1,67 @@
-<footer class="w-full flex justify-center overflow-hidden">
+<footer class="w-full py-16 md:py-20">
+  <div class="page-container">
+    <div class="responsive-grid gap-y-8 md:gap-y-12 text-center md:text-left">
 
-  <div
-    class="
-      content-container grid grid-cols-1 grid-flow-col md:grid-cols-2 gap-8 py-8
-      text-center md:text-left
-    "
-  >
-    <section class="mb-4 row-start-1">
-      <h4 class="text-xl font-bold mb-3">Kontakt</h4>
-      <p>
-        Wir stehen allen Geschäften, den Anwohnerinnen und Anwohnern und den
-        Besucherinnen und Besuchern gerne für Fragen und Anregungen zur
-        Verfügung.
-      </p>
-    </section>
-    <section class="mb-4 row-start-2">
-      <h4 class="text-xl font-bold mb-3">Verein Erster Advent Bern</h4>
-      <p>
-        Wir stehen allen Geschäften, den Anwohnerinnen und Anwohnern und den
-        Besucherinnen und Besuchern gerne für Fragen und Anregungen zur
-        Verfügung.
-      </p>
-    </section>
-    <section class="mb-4 row-start-3">
-      <h4 class="text-xl font-bold mb-3">Vertreten durch</h4>
-      <p>
-        Kargo Kommunikation<br>
-        Tel. 031 311 76 66
-      </p>
-    </section>
+      <div class="col-span-4 md:col-span-4 lg:col-span-6 flex flex-col gap-8">
+        <section>
+          <h4 class="text-xl font-bold mb-3">Kontakt</h4>
+          <p>
+            Wir stehen allen Geschäften, den Anwohnerinnen und Anwohnern und den
+            Besucherinnen und Besuchern gerne für Fragen und Anregungen zur
+            Verfügung.
+          </p>
+        </section>
+        <section>
+          <h4 class="text-xl font-bold mb-3">Verein Erster Advent Bern</h4>
+          <p>
+            Wir stehen allen Geschäften, den Anwohnerinnen und Anwohnern und den
+            Besucherinnen und Besuchern gerne für Fragen und Anregungen zur
+            Verfügung.
+          </p>
+        </section>
+        <section>
+          <h4 class="text-xl font-bold mb-3">Vertreten durch</h4>
+          <p>
+            Kargo Kommunikation<br>
+            Tel. 031 311 76 66
+          </p>
+        </section>
+      </div>
 
-    <section class="mb-4 row-start-4 md:row-start-1">
-      Im Namen aller Geschäfte und des Vereins,<b>
-        danken wir den grosszügigen Gönnerbeiträgen unserer langjährigen
-        Unterstützerinnen.</b>
-    </section>
+      <div class="col-span-4 md:col-span-4 lg:col-span-6 flex flex-col gap-8">
+        <section>
+          Im Namen aller Geschäfte und des Vereins,<b>
+            danken wir den grosszügigen Gönnerbeiträgen unserer langjährigen
+            Unterstützerinnen.</b>
+        </section>
 
-    <section
-      class="mb-4 row-start-5 md:row-start-2 flex items-center justify-around"
-    >
-      <img
-        src="<%= image_path('footer/passive_attack.png') %>"
-        alt="Qauaprint Logo"
-        class="w-24"
-      >
+        <section class="flex flex-wrap items-center justify-center md:justify-start gap-6">
+          <img
+            src="<%= image_path('footer/passive_attack.png') %>"
+            alt="Passive Attack Logo"
+            class="w-20 sm:w-24 h-auto"
+          >
 
-      <img
-        src="<%= image_path('footer/burgergemeinde_bern.png') %>"
-        alt="Qauaprint Logo"
-        class="w-24 h-auto"
-      >
+          <img
+            src="<%= image_path('footer/burgergemeinde_bern.png') %>"
+            alt="Burgergemeinde Bern Logo"
+            class="w-20 sm:w-24 h-auto"
+          >
 
-      <img
-        src="<%= image_path('footer/berncity.png') %>"
-        alt="Qauaprint Logo"
-        class="w-24 h-auto"
-      >
+          <img
+            src="<%= image_path('footer/berncity.png') %>"
+            alt="BernCity Logo"
+            class="w-20 sm:w-24 h-auto"
+          >
 
-      <img
-        src="<%= image_path('footer/aquaprint.png') %>"
-        alt="Qauaprint Logo"
-        class="w-24 h-auto"
-      >
-    </section>
+          <img
+            src="<%= image_path('footer/aquaprint.png') %>"
+            alt="Aquaprint Logo"
+            class="w-20 sm:w-24 h-auto"
+          >
+        </section>
+      </div>
 
+    </div>
   </div>
 </footer>

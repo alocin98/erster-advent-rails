@@ -1,18 +1,24 @@
 <% if block.image_1 %>
-  <section class="w-full my-8 content-container grid grid-cols-2 gap-4">
-    <div class="col-span-2 md:col-span-1 md:block hidden h-56 md:h-96 w-full">
-      <%= image_tag block.image_1,
-      alt: "Erster Advent Bern",
-      class: "object-cover w-full h-full rounded-xl" %>
-    </div>
+  <section class="w-full py-8 md:py-10">
+    <div class="page-container">
+      <div class="responsive-grid gap-y-8">
+        <div class="hidden md:block md:col-span-4 lg:col-span-6 h-56 md:h-96">
+          <%= image_tag block.image_1,
+          alt: "Erster Advent Bern",
+          class: "object-cover w-full h-full rounded-xl" %>
+        </div>
 
-    <div class="col-span-2 md:col-span-1 h-56 md:h-96 w-full">
-      <%= raw block.text %>
+        <div class="col-span-4 md:col-span-4 lg:col-span-6">
+          <%= raw block.text %>
+        </div>
+      </div>
     </div>
   </section>
 <% end %>
 <% if !block.image_1 %>
-  <section class="w-full my-8 content-container">
-    <%= raw block.text %>
+  <section class="w-full py-8 md:py-10">
+    <div class="page-container">
+      <%= raw block.text %>
+    </div>
   </section>
 <% end %>

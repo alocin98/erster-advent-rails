@@ -34,7 +34,7 @@ button:has(+ #popover-1:popover-open) .icon-up {
     >
       <header
         class="
-          navbar bg-transparent content-container h-full items-start duration-300
+          navbar bg-transparent page-container h-full items-start duration-300
           ease-in-out transition-[height,background-color] group-[.small]:bg-primary
           group-[.small]:h-20 group-[.large]:h-32
         "
@@ -111,7 +111,7 @@ button:has(+ #popover-1:popover-open) .icon-up {
       <%= yield %>
 
     </main>
-  </body>
 
-  <%= render "layouts/footer" %>
+    <%= render "layouts/footer" %>
+  </body>
 </html>
