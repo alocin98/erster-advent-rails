@@ -343,13 +343,14 @@ button:has(+ #popover-1:popover-open) .icon-up {
     font-size: clamp(1.0625rem, 1.5625vw, 1.875rem);
     line-height: 1.467;
   }
-  /* Thin plus icon on the right, vertically centered like in the XD file */
-  .collapse-plus > .accordion-title::after {
-    @apply text-black font-extralight;
-    font-size: clamp(1.75rem, 2.29vw, 2.75rem);
-    top: 50%;
-    right: 0.25rem;
-    transform: translateY(-50%);
+  /* Thin chevron on the right, vertically centered; rotation on open comes
+     from daisyUI's collapse-arrow rules, so only size/stroke/position here */
+  .collapse-arrow > .accordion-title::after {
+    @apply text-black;
+    width: clamp(0.625rem, 0.83vw, 1rem);
+    height: clamp(0.625rem, 0.83vw, 1rem);
+    box-shadow: 1.5px 1.5px;
+    inset-inline-end: 0.5rem;
   }
 
   .disabled-link {
