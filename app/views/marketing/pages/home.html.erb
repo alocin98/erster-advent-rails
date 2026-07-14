@@ -40,23 +40,33 @@
       <% end %>
     </div>
   </section>
-  <% require "ostruct" %>
+  <section class="w-full my-8 content-container">
+    <div class="grid grid-cols-2 gap-3 sm:gap-4 items-end">
+      <div class="flex flex-col gap-3 sm:gap-4">
+        <%= image_tag image_path("home/bild_1.png"),
+        alt: "Erster Advent Bern",
+        class: "w-full h-auto rounded-xl" %>
+        <%= image_tag image_path("home/bild_3.png"),
+        alt: "Erster Advent Bern",
+        class: "w-full h-auto rounded-xl" %>
+      </div>
 
-  <% imageblock1 =
-    OpenStruct.new(
-      image_1: image_path("home/bild_1.png"),
-      image_2: image_path("home/bild_2.png"),
-    ) %>
+      <div class="flex flex-col gap-3 sm:gap-4">
+        <%= image_tag image_path("home/bild_2.png"),
+        alt: "Erster Advent Bern",
+        class: "w-full h-auto rounded-xl" %>
+        <%= image_tag image_path("home/bild_4.png"),
+        alt: "Erster Advent Bern",
+        class: "w-full h-auto rounded-xl" %>
+      </div>
+    </div>
 
-  <%= render "cms/blocks/images_block", block: imageblock1 %>
-  <% imageblock2 =
-    OpenStruct.new(
-      image_1: image_path("home/bild_3.png"),
-      image_2: image_path("home/bild_4.png"),
-    ) %>
-  <%= render "cms/blocks/images_block", block: imageblock2 %>
-  <% imageblock3 = OpenStruct.new(image_1: image_path("home/bild_5.png")) %>
-  <%= render "cms/blocks/images_block", block: imageblock3 %>
+    <div class="mt-3 sm:mt-4 w-full">
+      <%= image_tag image_path("home/bild_5.png"),
+      alt: "Erster Advent Bern",
+      class: "w-full h-auto rounded-xl" %>
+    </div>
+  </section>
 
   <section class="w-full my-8 content-container grid grid-cols-2 gap-4">
     <div class="col-span-2 md:col-span-1 md:block hidden h-56 md:h-96 w-full">
@@ -112,6 +122,7 @@
     </div>
   </section>
 
+  <% require "ostruct" %>
   <% imageblock4 = OpenStruct.new(image_1: image_path("home/bild_7.png")) %>
   <%= render "cms/blocks/images_block", block: imageblock4 %>
 

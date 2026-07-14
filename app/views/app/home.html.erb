@@ -1,2 +1,29 @@
 <%= content_for :title, "Home Page" %>
-<div>Content</div>
+
+<div class="content-container my-8">
+  <div class="grid grid-cols-2 gap-3 sm:gap-4 items-end">
+    <div class="flex flex-col gap-3 sm:gap-4">
+      <%= image_tag image_path("home/bild_1.png"),
+      alt: "Erster Advent Bern",
+      class: "w-full h-auto rounded-xl" %>
+      <%= image_tag image_path("home/bild_3.png"),
+      alt: "Erster Advent Bern",
+      class: "w-full h-auto rounded-xl" %>
+    </div>
+
+    <div class="flex flex-col gap-3 sm:gap-4">
+      <%= image_tag image_path("home/bild_2.png"),
+      alt: "Erster Advent Bern",
+      class: "w-full h-auto rounded-xl" %>
+      <%= image_tag image_path("home/bild_4.png"),
+      alt: "Erster Advent Bern",
+      class: "w-full h-auto rounded-xl" %>
+    </div>
+  </div>
+
+  <div class="mt-3 sm:mt-4 w-full">
+    <%= image_tag image_path("home/bild_5.png"),
+    alt: "Erster Advent Bern",
+    class: "w-full h-auto rounded-xl" %>
+  </div>
+</div>
